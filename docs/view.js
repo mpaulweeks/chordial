@@ -2,6 +2,7 @@
 const domPlay = document.getElementById("play");
 const domStop = document.getElementById("stop");
 const domLoad = document.getElementById("load");
+const domLoadPlay = document.getElementById("load-play");
 const domKey = document.getElementById("key");
 const domSpeed = document.getElementById("speed");
 const domDurations = document.getElementById("durations");
@@ -9,6 +10,10 @@ const domChords = document.getElementById("chords");
 let currPhrase = null;
 
 const loadPhrase = function(){
+  if (currPhrase){
+    currPhrase.stop();
+  }
+
   const tonic = parseFloat(domKey.value);
   const speed = parseFloat(domSpeed.value);
   const phraseSteps = domChords.value
@@ -22,9 +27,6 @@ const loadPhrase = function(){
     .filter(d => d !== '' && !d.startsWith('//'))
     .map(d => parseFloat(d) * speed);
 
-  if (currPhrase){
-    currPhrase.stop();
-  }
   currPhrase = new Phrase(tonic, phraseSteps, durations);
 }
 const playPhrase = function(){
@@ -46,6 +48,10 @@ for (var i = 0; i < 36; i++){
 domPlay.addEventListener('click', playPhrase);
 domStop.addEventListener('click', stopPhrase);
 domLoad.addEventListener('click', loadPhrase);
+domLoadPlay.addEventListener('click', () => {
+  loadPhrase();
+  playPhrase();
+});
 
 // defaults
 domKey.value = -10;
@@ -57,8 +63,8 @@ domDurations.value = `
 1
 3
 1
-2
-2
+3
+1
 4
 
 `;

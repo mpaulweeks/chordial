@@ -45,10 +45,10 @@ class Phrase {
   }
   play() {
     if (this.chords){
-      this.stop(chords);
+      this.stop();
     }
     this.chords = this.phraseSteps.map((chordSteps, ci) => {
-      return new Chord(chordSteps, this.tonic, this.durations[ci & this.phraseSteps.length]);
+      return new Chord(chordSteps, this.tonic, this.durations[ci % this.durations.length]);
     });
 
     let start = audioCtx.currentTime;
