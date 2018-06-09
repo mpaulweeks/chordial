@@ -57,27 +57,51 @@ domLoadPlay.addEventListener('click', () => {
 domKey.value = -10;
 domSpeed.value = `0.77`;
 domDurations.value = `
-// durations
+// 2018/06/08
 
-3
+1
+1
 1
 3
 1
-3
 1
-4
+1
+3
+
+// vampire
+// duration 0.77
+
+// 3
+// 1
+// 3
+// 1
+// 3
+// 1
+// 4
 
 `;
 domChords.value = `
-// chords for https://www.youtube.com/watch?v=lLD0Z_PRyQc&t=1m
+// 2018/06/08
 
- 0, 4, 7
--1, 4, 8
- 0, 5, 9
- 0, 4, 7
--1, 2, 7
- 0, 4, 7
- 0, 5, 9
+1, 5, 8, 17
+1, 5, 8, 20
+1, 5, 8, 17
+1, 7, 10, 15
+1, 6, 9, 15
+1, 6, 9, 13
+1, 6, 9, 15
+1, 5, 8, 17
+
+// chords for https://www.youtube.com/watch?v=lLD0Z_PRyQc&t=1m
+// key B1
+
+//  0, 4, 7
+// -1, 4, 8
+//  0, 5, 9
+//  0, 4, 7
+// -1, 2, 7
+//  0, 4, 7
+//  0, 5, 9
 
 // reference
 
