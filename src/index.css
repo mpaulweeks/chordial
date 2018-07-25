@@ -1,11 +1,3 @@
-#speed {
-  width: 50px;
-}
-#durations {
-  width: 100px;
-  height: 500px;
-}
-#chords {
-  width: 500px;
-  height: 500px;
+body {
+  margin: 20px;
 }
