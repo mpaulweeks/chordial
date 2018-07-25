@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,OACE,UAAY,CAEd,WACE,YACA,YAAc,CAEhB,QACE,YACA,YAAc","file":"static/css/main.1e26bd29.css","sourcesContent":["#speed {\n  width: 50px;\n}\n#durations {\n  width: 100px;\n  height: 500px;\n}\n#chords {\n  width: 500px;\n  height: 500px;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/index.css"],"sourceRoot":""}
