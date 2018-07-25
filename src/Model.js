@@ -1,6 +1,6 @@
 const audioCtx = new AudioContext();
 
-class Note {
+export class Note {
   constructor(step) {
     this.step = step;
     const osc = audioCtx.createOscillator();
@@ -16,7 +16,7 @@ class Note {
   }
 }
 
-class Chord {
+export class Chord {
   constructor(steps, tonic, duration) {
     tonic = tonic || 0;
     this.notes = steps.map(step => {
@@ -36,7 +36,7 @@ class Chord {
   }
 }
 
-class Phrase {
+export class Phrase {
   constructor(tonic, phraseSteps, durations) {
     this.tonic = tonic;
     this.phraseSteps = phraseSteps;
