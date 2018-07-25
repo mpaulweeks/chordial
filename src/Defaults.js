@@ -33,7 +33,7 @@ const domDurations = `
 // 3
 `;
 const domChords = `
-// chords for https://www.youtube.com/watch?v=lLD0Z_PRyQc&t=1m
+// https://www.youtube.com/watch?v=lLD0Z_PRyQc&t=1m
 // key B1
 
  0, 4, 7

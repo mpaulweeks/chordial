@@ -16,7 +16,7 @@ const Durations = styled.textarea`
   height: 500px;
 `;
 const Chords = styled.textarea`
-  width: 200px;
+  width: 350px;
   height: 500px;
 `;
 
