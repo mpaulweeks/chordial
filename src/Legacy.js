@@ -20,7 +20,7 @@ const Chords = styled.textarea`
   height: 500px;
 `;
 
-class App extends Component {
+class Beta extends Component {
   componentDidMount(){
     loadPhrase();
   }
@@ -54,4 +54,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Beta;

@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import App from './App';
+import Beta from './Beta';
+import Legacy from './Legacy';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootElm = document.getElementById('root');
+if (window.location.pathname.includes('beta')){
+  ReactDOM.render(<Beta/>, rootElm);
+} else {
+  ReactDOM.render(<Legacy/>, rootElm);
+}
