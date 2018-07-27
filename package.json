@@ -19,6 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test-flow": "yarn flow check",
     "eject": "react-scripts eject"
   }
 }
