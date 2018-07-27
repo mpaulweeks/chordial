@@ -24,15 +24,13 @@ export class Phrase {
     let start = 0;
     this.chords.forEach((chord, ci) => {
       const duration = this.durations[ci % this.durations.length];
-      const stop = start + duration;
-      chord.playAt(start);
-      chord.stopAt(stop);
-      start = stop;
+      chord.play(start, duration);
+      start += duration;
     });
   }
   stop() {
     this.chords.forEach(chord => {
-      chord.stopNow();
+      chord.stop();
     });
   }
 }

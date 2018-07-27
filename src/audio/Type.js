@@ -1,5 +1,11 @@
 // @flow
 
+// todo interface
+// export type NoteController = {
+//   play: function,
+//   stop: function,
+// };
+
 const keyModes = {
   major: 'major mode',
   minor: 'minor mode',
