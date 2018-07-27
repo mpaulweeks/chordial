@@ -8,6 +8,10 @@ const ChordButtonContainer = styled.div`
   cursor: pointer;
 
   margin: 10px;
+
+  ${props => props.isFocused && `
+    border-color: var(--highlight);
+  `};
 `;
 const ButtonHeader = styled.div`
   background-color: var(--foreground);
@@ -53,6 +57,40 @@ export class DiatonicFunctionButton extends Component {
         </ButtonTextLarge>
       </ChordButtonContainer>
     );
+  }
+}
+
+export class CommandButton extends Component {
+  render() {
+    const {
+      isFocused,
+    } = this.props;
+    const {
+      key,
+      df,
+    } = this.props.command;
+    if (df){
+      const role = df.getFunctionRole();
+      return (
+        <ChordButtonContainer isFocused={isFocused}>
+          <ButtonHeader>{ role.tonicSymbol }</ButtonHeader>
+          <ButtonTextLarge>
+            { role.chordSymbol }
+            { role.superScript && <sup>{ role.superScript }</sup> }
+          </ButtonTextLarge>
+          <ButtonHeader>{ key }</ButtonHeader>
+        </ChordButtonContainer>
+      );
+    } else {
+      return (
+        <ChordButtonContainer isFocused={isFocused}>
+          <ButtonTextLarge>
+            ...
+          </ButtonTextLarge>
+          <ButtonHeader>{ key }</ButtonHeader>
+        </ChordButtonContainer>
+      );
+    }
   }
 }
 

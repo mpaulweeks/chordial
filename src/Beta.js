@@ -8,6 +8,7 @@ import { PresetChord, BaseChord } from './audio/Chord';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import MidiLoader from './view/MidiLoader';
+import CommandRow from './view/CommandRow';
 import {
   ChordButton,
   DiatonicFunctionButton,
@@ -66,6 +67,7 @@ class App extends Component {
     return (
       <div>
         <MidiLoader />
+        <CommandRow />
         <ButtonRow>
           {chords.map((chord, ci) => (
             <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />
