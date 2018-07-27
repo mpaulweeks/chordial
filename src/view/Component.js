@@ -64,33 +64,27 @@ export class CommandButton extends Component {
   render() {
     const {
       isFocused,
+      callback,
     } = this.props;
     const {
       key,
       df,
     } = this.props.command;
-    if (df){
-      const role = df.getFunctionRole();
-      return (
-        <ChordButtonContainer isFocused={isFocused}>
-          <ButtonHeader>{ role.tonicSymbol }</ButtonHeader>
-          <ButtonTextLarge>
-            { role.chordSymbol }
-            { role.superScript && <sup>{ role.superScript }</sup> }
-          </ButtonTextLarge>
-          <ButtonHeader>{ key }</ButtonHeader>
-        </ChordButtonContainer>
-      );
-    } else {
-      return (
-        <ChordButtonContainer isFocused={isFocused}>
-          <ButtonTextLarge>
-            ...
-          </ButtonTextLarge>
-          <ButtonHeader>{ key }</ButtonHeader>
-        </ChordButtonContainer>
-      );
-    }
+    const {
+      tonicSymbol,
+      chordSymbol,
+      superScript,
+    } = df ? df.getFunctionRole() : {};
+    return (
+      <ChordButtonContainer onClick={() => callback(key)} isFocused={isFocused}>
+        <ButtonHeader>{ tonicSymbol }</ButtonHeader>
+        <ButtonTextLarge>
+          { chordSymbol || '...'}
+          { superScript && <sup>{ superScript }</sup> }
+        </ButtonTextLarge>
+        <ButtonHeader>{ key }</ButtonHeader>
+      </ChordButtonContainer>
+    );
   }
 }
 

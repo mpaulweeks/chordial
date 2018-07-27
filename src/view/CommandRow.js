@@ -44,13 +44,13 @@ export default class CommandRow extends Component {
   }
   stepFocus(delta: number) {
     const { focusIndex } = this.state;
-    const oldNum = parseFloat(focusIndex);
-    const newNum = (oldNum + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
+    const keysIndex = COMMAND_KEYS.indexOf(focusIndex);
+    const commandIndex = (keysIndex + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
     this.setState({
-      focusIndex: '' + newNum,
+      focusIndex: COMMAND_KEYS[commandIndex],
     });
   }
-  setFocus(key: string) {
+  setFocus = (key: string) => {
     console.log('setting focus', key);
     this.setState({
       focusIndex: key,
@@ -68,7 +68,7 @@ export default class CommandRow extends Component {
             <CommandButton
               key={'command-'+c.key}
               command={c}
-              onClick={() => this.setFocus(c.key)}
+              callback={this.setFocus}
               isFocused={focusIndex === c.key}
             />
           );
