@@ -16,13 +16,9 @@ export class Note {
   }
 }
 
-export class Chord {
-  constructor(steps, tonic, duration) {
-    tonic = tonic || 0;
-    this.notes = steps.map(step => {
-      return new Note(tonic + step);
-    });
-    this.duration = duration;
+class BaseChord {
+  constructor(){
+    this.notes = [];
   }
   play(when) {
     this.notes.forEach(note => {
@@ -32,6 +28,16 @@ export class Chord {
   stop(when) {
     this.notes.forEach(note => {
       note.stop(when);
+    });
+  }
+}
+
+export class ManualChord extends BaseChord {
+  constructor(steps, tonic) {
+    super();
+    tonic = tonic || 0;
+    this.notes = steps.map(step => {
+      return new Note(tonic + step);
     });
   }
 }
@@ -47,13 +53,14 @@ export class Phrase {
     if (this.chords){
       this.stop();
     }
-    this.chords = this.phraseSteps.map((chordSteps, ci) => {
-      return new Chord(chordSteps, this.tonic, this.durations[ci % this.durations.length]);
+    this.chords = this.phraseSteps.map(chordSteps => {
+      return new ManualChord(chordSteps, this.tonic);
     });
 
     let start = audioCtx.currentTime;
-    this.chords.forEach(chord => {
-      const stop = start + chord.duration;
+    this.chords.forEach((chord, ci) => {
+      const duration = this.durations[ci % this.durations.length];
+      const stop = start + duration;
       chord.play(start);
       chord.stop(stop);
       start = stop;
