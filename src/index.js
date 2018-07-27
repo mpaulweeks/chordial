@@ -6,7 +6,7 @@ import Beta from './Beta';
 import Legacy from './Legacy';
 
 const rootElm = document.getElementById('root');
-if (window.location.pathname.includes('beta')){
+if (window.location.search.includes('beta')){
   ReactDOM.render(<Beta/>, rootElm);
 } else {
   ReactDOM.render(<Legacy/>, rootElm);
