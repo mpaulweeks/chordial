@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MIDISounds from 'midi-sounds-react';
 
 import {
   chordTypes,
@@ -62,8 +63,16 @@ class App extends Component {
       chords,
       functions,
     } = this;
+
+    const midiClick = () => {
+      this.midiSounds.playChordNow(3, [60, 64, 67, 70], 2.5);
+    }
     return (
       <div>
+        <div>
+          <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[3]} />
+          <button onClick={ midiClick }>midi test</button>
+        </div>
         <ButtonRow>
           {chords.map((chord, ci) => (
             <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />
