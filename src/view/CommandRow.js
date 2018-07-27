@@ -5,34 +5,56 @@ import {
   ButtonRow,
 } from './Component';
 
-const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 export default class CommandRow extends Component {
   constructor() {
     super();
 
-    const commands = KEYS.map(key => {
-      return {
+    const commands = COMMAND_KEYS.reduce((map, key) => {
+      map[key] = {
         key: key,
         df: null,
       };
-    });
+      return map;
+    }, {});
     this.state = {
       commands: commands,
-      focusIndex: 0,
+      focusIndex: '1',
     };
   }
 
-  setFocus(key: number) {
-    console.log('setting focus', key);
-    let focusIndex = 0;
-    this.commands.forEach((c, i) => {
-      if (c.key === key){
-        focusIndex = i;
-      }
-    });
+  handleKeyPress(event) {
+    const { commands, focusIndex } = this.state;
+    const key = event.key.toLowerCase();
+
+    if (COMMAND_KEYS.includes(key)){
+      this.setState({
+        focusIndex: key,
+      });
+    }
+    if (key === 'arrowleft'){
+      this.stepFocus(-1);
+    }
+    if (key === 'arrowright'){
+      this.stepFocus(1);
+    }
+    if (['backspace', 'delete'].includes(key)){
+      // delete df
+    }
+  }
+  stepFocus(delta: number) {
+    const { focusIndex } = this.state;
+    const oldNum = parseFloat(focusIndex);
+    const newNum = (oldNum + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
     this.setState({
-      focusIndex: focusIndex,
+      focusIndex: '' + newNum,
+    });
+  }
+  setFocus(key: string) {
+    console.log('setting focus', key);
+    this.setState({
+      focusIndex: key,
     })
   }
   render() {
@@ -42,16 +64,18 @@ export default class CommandRow extends Component {
     } = this.state;
     return (
       <ButtonRow>
-        {commands.map((command, ci) => (
-          <CommandButton
-            key={'command-'+ci}
-            command={command}
-            onClick={() => this.setFocus(command.key)}
-            isFocused={ci === focusIndex}
-          />
-        ))}
+        {COMMAND_KEYS.map((key, ci) => {
+          const c = commands[key];
+          return (
+            <CommandButton
+              key={'command-'+c.key}
+              command={c}
+              onClick={() => this.setFocus(c.key)}
+              isFocused={focusIndex === c.key}
+            />
+          );
+        })}
       </ButtonRow>
-
     );
   }
 }

@@ -41,6 +41,12 @@ class App extends Component {
       )
     );
   }
+  componentDidMount() {
+    document.addEventListener('keydown', event => {
+      console.log(event);
+      this.commandRow.handleKeyPress(event);
+    });
+  }
   stopAll = () => {
     this.chords.forEach(c => {
       c.stop();
@@ -67,7 +73,7 @@ class App extends Component {
     return (
       <div>
         <MidiLoader />
-        <CommandRow />
+        <CommandRow ref={(ref) => (this.commandRow = ref)}/>
         <ButtonRow>
           {chords.map((chord, ci) => (
             <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />
