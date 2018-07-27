@@ -98,8 +98,8 @@ export class PresetChord extends BaseChord {
 
     this.notes = notes;
   }
-  getRootPitch() {
-    return this.notes[0].getPitch();
+  getRootPitch(isSharp: ?boolean) {
+    return this.notes[0].getPitch(isSharp);
   }
 }
 

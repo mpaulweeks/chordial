@@ -47,7 +47,7 @@ export default class Note {
     this.playNow();
     this.stopAt(duration || 1);
   }
-  getPitch(isSharp: boolean) {
+  getPitch(isSharp: ?boolean) {
     let adjustedStep = this.step;
     let octave = 4;
     while (adjustedStep < 0){

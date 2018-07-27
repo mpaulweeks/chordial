@@ -1,16 +1,22 @@
+// @flow
+
 import { ManualChord } from './Chord';
 
 export class Phrase {
-  constructor(tonic, phraseSteps, durations) {
+  tonic: number;
+  phraseSteps: Array<Array<number>>;
+  durations: Array<number>;
+  chords: Array<ManualChord>;
+
+  constructor(tonic: number, phraseSteps: Array<Array<number>>, durations: Array<number>) {
     this.tonic = tonic;
     this.phraseSteps = phraseSteps;
     this.durations = durations;
-    this.chords = null;
+    this.chords = [];
   }
   play() {
-    if (this.chords){
-      this.stop();
-    }
+    this.stop();
+
     this.chords = this.phraseSteps.map(chordSteps => {
       return new ManualChord(chordSteps, this.tonic);
     });
@@ -25,10 +31,8 @@ export class Phrase {
     });
   }
   stop() {
-    if (this.chords){
-      this.chords.forEach(chord => {
-        chord.stopNow();
-      });
-    }
+    this.chords.forEach(chord => {
+      chord.stopNow();
+    });
   }
 }
