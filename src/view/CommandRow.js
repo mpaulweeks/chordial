@@ -5,7 +5,7 @@ import {
   ButtonRow,
 } from './Component';
 
-const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+const COMMAND_KEYS = ['1', '2', '3', '4', '5'] //, '6', '7', '8', '9', '0'];
 
 export default class CommandRow extends Component {
   constructor() {
@@ -19,13 +19,12 @@ export default class CommandRow extends Component {
       return map;
     }, {});
     this.state = {
-      commands: commands,
-      focusIndex: '1',
+      ...commands,
+      focusIndex: COMMAND_KEYS[0],
     };
   }
 
   handleKeyPress(event) {
-    const { commands, focusIndex } = this.state;
     const key = event.key.toLowerCase();
 
     if (COMMAND_KEYS.includes(key)){
@@ -59,13 +58,12 @@ export default class CommandRow extends Component {
   }
   render() {
     const {
-      commands,
       focusIndex,
     } = this.state;
     return (
       <ButtonRow>
         {COMMAND_KEYS.map((key, ci) => {
-          const c = commands[key];
+          const c = this.state[key];
           return (
             <CommandButton
               key={'command-'+c.key}

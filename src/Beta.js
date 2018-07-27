@@ -43,7 +43,6 @@ class App extends Component {
   }
   componentDidMount() {
     document.addEventListener('keydown', event => {
-      console.log(event);
       this.commandRow.handleKeyPress(event);
     });
   }
