@@ -60,17 +60,26 @@ export class PresetChord extends BaseChord {
 
     const notes = pitches.map(p => new Note(p + tonic));
     notes.forEach(n => n.shiftOctave(octave));
+
+    let inversionIndex;
     switch (inversion) {
       case inversions.first:
-        notes[1].shiftOctave(-1);
-        notes[2].shiftOctave(-1);
+        inversionIndex = 1;
         break;
       case inversions.second:
-        notes[2].shiftOctave(-1);
+        inversionIndex = 2;
+        break;
+      case inversions.third:
+        inversionIndex = 3;
         break;
       default:
-        // do nothing
+        inversionIndex = null;
     }
+    notes.forEach((n, index) => {
+      if (inversionIndex && index >= inversionIndex){
+        n.shiftOctave(-1);
+      }
+    });
 
     this.notes = notes;
   }

@@ -12,8 +12,9 @@ export type ChordType = $Values<typeof chordTypes>;
 
 const inversions = {
   none: 'none',
-  first: 'first',
-  second: 'second',
+  first: 'first',   // 6
+  second: 'second', // 6 4
+  third: 'third',   // 4 2
 }
 export type Inversion = $Values<typeof inversions>;
 
