@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import MIDISounds from 'midi-sounds-react';
 
-import Controller from './audio/Controller';
 import {
   chordTypes,
   inversions,
@@ -9,8 +7,8 @@ import {
 import { PresetChord, BaseChord } from './audio/Chord';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
+import MidiLoader from './view/MidiLoader';
 import {
-  Hidden,
   ChordButton,
   DiatonicFunctionButton,
   ButtonRow,
@@ -42,9 +40,6 @@ class App extends Component {
       )
     );
   }
-  componentDidMount() {
-    Controller.setMidiSounds(this.midiSounds);
-  }
   stopAll = () => {
     this.chords.forEach(c => {
       c.stop();
@@ -70,13 +65,7 @@ class App extends Component {
     } = this;
     return (
       <div>
-        <Hidden>
-          <MIDISounds
-            ref={(ref) => (this.midiSounds = ref)}
-            appElementName="root"
-            instruments={Controller.midiInstruments}
-          />
-        </Hidden>
+        <MidiLoader />
         <ButtonRow>
           {chords.map((chord, ci) => (
             <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />

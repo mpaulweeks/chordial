@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const Hidden = styled.div`
-  display: none;
-`;
-
 const ChordButtonContainer = styled.div`
   border: 1px solid var(--foreground);
   border-radius: 5px;
@@ -65,6 +61,5 @@ const ButtonRow = styled.div`
   flex-wrap: wrap;
 `;
 export {
-  Hidden,
   ButtonRow,
 }

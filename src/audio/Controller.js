@@ -15,8 +15,9 @@ class OscWrapper implements NoteController {
     this.osc = osc;
   }
   play(start: number, duration: number){
-    this.osc.start(this.audioCtx.currentTime + start);
-    this.osc.stop(this.audioCtx.currentTime + start + duration);
+    const oscStart = this.audioCtx.currentTime + start;
+    this.osc.start(oscStart);
+    this.osc.stop(oscStart + duration);
   }
   stop(){
     this.osc.stop();
@@ -31,11 +32,12 @@ class MidiWrapper implements NoteController {
     this.step = step;
   }
   play(start: number, duration: number){
+    const midiStart = this.midiSounds.contextTime() + start;
     const midiStep = this.step + 60; // todo confirm match osc
-    this.midiSounds.playChordAt(start, 3, [midiStep], duration);
+    this.midiSounds.playChordAt(midiStart, 3, [midiStep], duration);
   }
   stop(){
-    // todo nothing?
+    this.midiSounds.cancelQueue();
   }
 }
 
