@@ -44,7 +44,10 @@ export class DiatonicFunctionButton extends Component {
     const pitch = df.chord.getRootPitch();
     return (
       <ChordButtonContainer onClick={() => callback(df)}>
-        <ChordButtonLarge>{ role.symbol }</ChordButtonLarge>
+        <ChordButtonLarge>
+          { role.symbol }
+          { role.superScript && <sup>{ role.superScript }</sup> }
+        </ChordButtonLarge>
         <ChordButtonSmall>{ pitch.letter }{ pitch.octave }</ChordButtonSmall>
       </ChordButtonContainer>
     );

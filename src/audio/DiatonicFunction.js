@@ -1,4 +1,6 @@
-import type { FunctionConfig } from './Types';
+// @flow
+
+import type { FunctionConfig } from './Type';
 import { chordTypes, inversions } from './Type';
 import { PresetChord } from './Chord';
 
@@ -62,18 +64,36 @@ const minorFunctions = [
   },
   {
     roman: 'v',
+    minorNonLeading: true,
     pitchOffset: 7,
     chordType: chordTypes.triadMinor,
   },
   {
     roman: 'vi',
+    minorNonLeading: true,
     pitchOffset: 8,
     chordType: chordTypes.triadMajor,
   },
   {
     roman: 'vii',
+    minorNonLeading: true,
     pitchOffset: 10,
     chordType: chordTypes.triadMajor,
+  },
+  {
+    roman: 'v',
+    pitchOffset: 7,
+    chordType: chordTypes.triadMajor,
+  },
+  {
+    roman: 'vi',
+    pitchOffset: 9,
+    chordType: chordTypes.triadMinor,
+  },
+  {
+    roman: 'vii',
+    pitchOffset: 11,
+    chordType: chordTypes.triadDiminished,
   },
 ];
 export {
@@ -82,6 +102,10 @@ export {
 };
 
 export default class DiatonicFunction {
+  config: FunctionConfig;
+  tonic: number;
+  chord: PresetChord;
+
   constructor(tonic: number, config: FunctionConfig){
     this.config = config;
     this.tonic = tonic;
@@ -111,6 +135,9 @@ export default class DiatonicFunction {
         break;
       default:
         symbol = '???';
+    }
+    if (this.config.minorNonLeading){
+      symbol = '♭' + symbol;
     }
     return {
       symbol: symbol,

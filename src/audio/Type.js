@@ -1,6 +1,6 @@
 // @flow
 
-export type PlatonicPitch = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+type RomanNumeral = 'i' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii';
 export type Pitch = {
   letter: number,
   octave: number,
@@ -23,13 +23,14 @@ const inversions = {
 export type Inversion = $Values<typeof inversions>;
 
 export type ChordConfig = {
-  root: PlatonicPitch,
+  root: number,
   chordType: ChordType,
   inversion: Inversion,
 };
 
 export type FunctionConfig = {
-  roman: string,
+  roman: RomanNumeral,
+  minorNonLeading: ?boolean,
   pitchOffset: number,
   chordType: ChordType,
 };
