@@ -15,15 +15,30 @@ class BaseChord {
   constructor(){
     this.notes = [];
   }
-  play(when: number) {
+  playAt(offset: number) {
     this.notes.forEach(note => {
-      note.play(when);
+      note.playAt(offset);
     });
   }
-  stop(when: number) {
+  stopAt(offset: number) {
     this.notes.forEach(note => {
-      note.stop(when);
+      note.stopAt(offset);
     });
+  }
+  playNow() {
+    this.notes.forEach(note => {
+      note.playNow();
+    });
+  }
+  stopNow() {
+    this.notes.forEach(note => {
+      note.stopNow();
+    });
+  }
+  playShort(duration: ?number) {
+    this.notes.forEach(note => {
+      note.playShort(duration);
+    })
   }
 }
 

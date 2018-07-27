@@ -1,4 +1,3 @@
-import Context from './Context';
 import { ManualChord } from './Chord';
 
 export class Phrase {
@@ -16,19 +15,19 @@ export class Phrase {
       return new ManualChord(chordSteps, this.tonic);
     });
 
-    let start = Context.currentTime;
+    let start = 0;
     this.chords.forEach((chord, ci) => {
       const duration = this.durations[ci % this.durations.length];
       const stop = start + duration;
-      chord.play(start);
-      chord.stop(stop);
+      chord.playAt(start);
+      chord.stopAt(stop);
       start = stop;
     });
   }
   stop() {
     if (this.chords){
       this.chords.forEach(chord => {
-        chord.stop();
+        chord.stopNow();
       });
     }
   }

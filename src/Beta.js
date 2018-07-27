@@ -37,12 +37,12 @@ class App extends Component {
   }
   stopAll = () => {
     this.chords.forEach(c => {
-      c.stop();
+      c.stopNow();
     });
   }
   onChordClick = (chord: BaseChord) => {
     this.stopAll();
-    chord.play();
+    chord.playShort();
   }
   render() {
     const {

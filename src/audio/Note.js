@@ -13,25 +13,39 @@ export default class Note {
     this.step = step;
   }
   shiftOctave(octave: number) {
-    this.stop();
+    this.stopAt(0);
     this.step += 12 * octave;
   }
-  play(when: ?number) {
+  playAt(offset: number) {
     // ensure we stop any existing oscillator
-    this.stop();
+    this.stopNow();
 
     const osc = Context.createOscillator();
     osc.frequency.value = 440 * Math.pow(2, this.step/12);
     osc.connect(Context.destination);
-    osc.start(when || Context.currentTime);
 
+    osc.start(Context.currentTime + offset);
     this.osc = osc;
+    window.osc = osc;
   }
-  stop(when: ?number) {
+  stopAt(offset: number) {
     if (this.osc){
-      this.osc.stop(when || Context.currentTime);
-      this.osc = null;
+      this.osc.stop(Context.currentTime + offset);
+      if (offset <= 0){
+        // don't cleanup until its definitely done
+        this.osc = null;
+      }
     }
+  }
+  playNow() {
+    this.playAt(0);
+  }
+  stopNow() {
+    this.stopAt(0);
+  }
+  playShort(duration: ?number) {
+    this.playNow();
+    this.stopAt(duration || 1);
   }
   getPitch(isSharp: boolean) {
     let adjustedStep = this.step;
