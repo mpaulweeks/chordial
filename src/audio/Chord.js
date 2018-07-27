@@ -69,8 +69,7 @@ export class PresetChord extends BaseChord {
         pitches = [0, 4, 7, 10];
         break;
       default:
-        // throw 'invalid chord type:' + chordType;
-        pitches = [0];
+        throw Error(`invalid chord type: ${chordType}`);
     }
 
     const notes = pitches.map(p => new Note(p + root));
