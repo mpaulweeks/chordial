@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const ChordButtonContainer = styled.div`
-  padding: 15px 30px;
   border: 1px solid var(--foreground);
   border-radius: 5px;
   text-align: center;
@@ -10,12 +9,17 @@ const ChordButtonContainer = styled.div`
 
   margin: 10px;
 `;
-const ChordButtonLarge = styled.div`
+const ButtonHeader = styled.div`
+  background-color: var(--foreground);
+  color: var(--background);
+
+  font-size: 14px;
+  padding: 2px;
+`;
+const ButtonTextLarge = styled.div`
+  padding: 15px 30px;
   font-size: 24px;
   font-weight: bold;
-`;
-const ChordButtonSmall = styled.div`
-  font-size: 14px;
 `;
 
 export class ChordButton extends Component {
@@ -27,8 +31,7 @@ export class ChordButton extends Component {
     const pitch = chord.getRootPitch();
     return (
       <ChordButtonContainer onClick={() => callback(chord)}>
-        <ChordButtonLarge>{ pitch.letter }</ChordButtonLarge>
-        <ChordButtonSmall>{ pitch.octave }</ChordButtonSmall>
+        <ButtonTextLarge>{ pitch.letter }</ButtonTextLarge>
       </ChordButtonContainer>
     );
   }
@@ -41,14 +44,13 @@ export class DiatonicFunctionButton extends Component {
       callback,
     } = this.props;
     const role = df.getFunctionRole();
-    const pitch = df.chord.getRootPitch();
     return (
       <ChordButtonContainer onClick={() => callback(df)}>
-        <ChordButtonLarge>
-          { role.symbol }
+        <ButtonHeader>{ role.tonicSymbol }</ButtonHeader>
+        <ButtonTextLarge>
+          { role.chordSymbol }
           { role.superScript && <sup>{ role.superScript }</sup> }
-        </ChordButtonLarge>
-        <ChordButtonSmall>{ pitch.letter }{ pitch.octave }</ChordButtonSmall>
+        </ButtonTextLarge>
       </ChordButtonContainer>
     );
   }

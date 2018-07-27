@@ -1,10 +1,18 @@
 // @flow
 
+const keyModes = {
+  major: 'major mode',
+  minor: 'minor mode',
+};
+export type KeyMode = $Values<typeof keyModes>;
+
 type RomanNumeral = 'i' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii';
+
 export type Pitch = {
   letter: number,
   octave: number,
 };
+
 const chordTypes = {
   triadMajor: 'major triad',
   triadMinor: 'minor triad',
@@ -29,13 +37,36 @@ export type ChordConfig = {
 };
 
 export type FunctionConfig = {
+  keyMode: KeyMode,
   roman: RomanNumeral,
   minorNonLeading: ?boolean,
   pitchOffset: number,
   chordType: ChordType,
 };
 
+const sharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+const flats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'];
+function convertStepToPitch(step: number, isSharp: ?boolean){
+  let adjustedStep = step;
+  let octave = 4;
+  while (adjustedStep < 0){
+    adjustedStep += 12;
+    octave -= 1;
+  }
+  while (adjustedStep >= 12){
+    adjustedStep -= 12;
+    octave += 1;
+  }
+  adjustedStep %= 12;
+  return {
+    letter: isSharp ? sharps[adjustedStep] : flats[adjustedStep],
+    octave: octave,
+  };
+}
+
 export {
+  keyModes,
   chordTypes,
   inversions,
+  convertStepToPitch,
 };

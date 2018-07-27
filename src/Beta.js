@@ -17,8 +17,7 @@ class App extends Component {
   constructor() {
     super();
     const root = 3;
-    this.chords = [
-      {
+    this.chords = [{
         root: root + 0,
         chordType: chordTypes.triadMajor,
         inversion: inversions.second,
@@ -33,18 +32,22 @@ class App extends Component {
         chordType: chordTypes.sevenDominant,
         inversion: inversions.none,
       },
-    ].map(config =>  new PresetChord(config));
-    this.functions = [...majorFunctions, ...minorFunctions].map(fc => {
-      return new DiatonicFunction(root, fc);
-    });
+    ].map(config => new PresetChord(config));
+    this.functions = [majorFunctions, minorFunctions].map(
+      funcList => funcList.map(
+        fc => new DiatonicFunction(root, fc)
+      )
+    );
   }
   stopAll = () => {
     this.chords.forEach(c => {
       c.stopNow();
     });
-    this.functions.forEach(f => {
-      f.chord.stopNow();
-    })
+    this.functions.forEach(
+      fl => fl.forEach(
+        df => df.chord.stopNow()
+      )
+    );
   }
   onChordClick = (chord: BaseChord) => {
     this.stopAll();
@@ -62,15 +65,17 @@ class App extends Component {
     return (
       <div>
         <ButtonRow>
-          {chords.map((chord, index) => (
-            <ChordButton key={ 'cb-'+index } chord={ chord } callback={ this.onChordClick } />
+          {chords.map((chord, ci) => (
+            <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />
           ))}
         </ButtonRow>
-        <ButtonRow>
-          {functions.map((df, index) => (
-            <DiatonicFunctionButton key={ 'df-'+index } df={ df } callback={ this.onFunctionClick } />
-          ))}
-        </ButtonRow>
+        {functions.map((fl, fli) => (
+          <ButtonRow key={'fl-' + fli}>
+            {fl.map((df, dfi) => (
+              <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
+            ))}
+          </ButtonRow>
+        ))}
       </div>
     );
   }
