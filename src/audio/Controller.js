@@ -65,7 +65,7 @@ class _Controller {
     return newMidi;
   }
   play(step: number, start: number, duration: number){
-    if (this.midiSounds){
+    if (this.midiSounds && false){ // temp
       return this.playMidi(step, start, duration);
     }
     return this.playOsc(step, start, duration);

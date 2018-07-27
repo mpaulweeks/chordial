@@ -30,6 +30,8 @@ export default class CommandRow extends Component {
     if (COMMAND_KEYS.includes(key)){
       this.setState({
         focusIndex: key,
+      }, () => {
+        this.playCurrent();
       });
     }
     if (key === 'arrowleft'){
@@ -39,7 +41,7 @@ export default class CommandRow extends Component {
       this.stepFocus(1);
     }
     if (['backspace', 'delete'].includes(key)){
-      // delete df
+      this.setDiatonicFunction(null);
     }
   }
   stepFocus(delta: number) {
@@ -55,6 +57,24 @@ export default class CommandRow extends Component {
     this.setState({
       focusIndex: key,
     })
+  }
+  setDiatonicFunction(df: DiatonicFunction) {
+    const { focusIndex } = this.state;
+    const newState = {};
+    newState[focusIndex] = {
+      ...this.state[focusIndex],
+      df: df,
+    };
+    this.setState(newState);
+  }
+  getFocus(){
+    return this.state[this.state.focusIndex];
+  }
+  playCurrent(){
+    const current = this.getFocus();
+    if (current.df){
+      current.df.chord.play(0, 1);
+    }
   }
   render() {
     const {
