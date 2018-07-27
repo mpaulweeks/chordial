@@ -10,6 +10,7 @@ import { PresetChord, BaseChord } from './audio/Chord';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import {
+  Hidden,
   ChordButton,
   DiatonicFunctionButton,
   ButtonRow,
@@ -18,7 +19,7 @@ import {
 class App extends Component {
   constructor() {
     super();
-    const root = 3;
+    const root = 0;
     this.chords = [{
         root: root + 0,
         chordType: chordTypes.triadMajor,
@@ -67,16 +68,15 @@ class App extends Component {
       chords,
       functions,
     } = this;
-
-    const midiClick = () => {
-      this.midiSounds.playChordNow(3, [60, 64, 67, 70], 2.5);
-    }
     return (
       <div>
-        <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[3]} />
-        <div>
-          <button onClick={ midiClick }>midi test</button>
-        </div>
+        <Hidden>
+          <MIDISounds
+            ref={(ref) => (this.midiSounds = ref)}
+            appElementName="root"
+            instruments={Controller.midiInstruments}
+          />
+        </Hidden>
         <ButtonRow>
           {chords.map((chord, ci) => (
             <ChordButton key={'cb-'+ci} chord={chord} callback={this.onChordClick} />

@@ -20,13 +20,30 @@ class OscWrapper {
     this.osc.stop();
   }
 }
+class MidiWrapper {
+  midiSounds: any;
+
+  constructor(midiSounds: any, step: number) {
+    this.midiSounds = midiSounds;
+    this.step = step;
+  }
+  play(start: number, duration: number){
+    const midiStep = this.step + 60; // todo confirm match osc
+    this.midiSounds.playChordAt(start, 3, [midiStep], duration);
+  }
+  stop(){
+    // todo nothing?
+  }
+}
 
 class _Controller {
   audioCtx: AudioContext;
+  midiInstruments: Array<number>;
   midiSounds: ?any;
 
   constructor() {
     this.audioCtx = new AudioContext();
+    this.midiInstruments = [3];
     this.midiSounds = null;
   }
   setMidiSounds(midiSounds: any) {
@@ -37,7 +54,15 @@ class _Controller {
     newOsc.play(start, duration);
     return newOsc;
   }
+  playMidi(step: number, start: number, duration: number){
+    const newMidi = new MidiWrapper(this.midiSounds, step);
+    newMidi.play(start, duration);
+    return newMidi;
+  }
   play(step: number, start: number, duration: number){
+    if (this.midiSounds){
+      return this.playMidi(step, start, duration);
+    }
     return this.playOsc(step, start, duration);
   }
 }
