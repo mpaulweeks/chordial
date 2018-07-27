@@ -5,7 +5,7 @@ import {
   ButtonRow,
 } from './Component';
 
-const COMMAND_KEYS = ['1', '2', '3', '4', '5'] //, '6', '7', '8', '9', '0'];
+const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 export default class CommandRow extends Component {
   constructor() {

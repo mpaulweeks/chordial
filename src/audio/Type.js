@@ -68,10 +68,22 @@ function convertStepToPitch(step: number, isSharp: ?boolean){
     octave: octave,
   };
 }
+function convertPitchToStep(letter: string){
+  const sharpsIndex = sharps.indexOf(letter);
+  if (sharpsIndex >= 0){
+    return sharpsIndex;
+  }
+  return flats.indexOf(letter);
+}
+const allKeys = [...sharps, ...flats].map(letter => ({
+  letter: letter,
+  step: convertPitchToStep(letter),
+}));
 
 export {
   keyModes,
   chordTypes,
   inversions,
   convertStepToPitch,
+  allKeys,
 };
