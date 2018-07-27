@@ -6,11 +6,11 @@ export type Pitch = {
   octave: number,
 };
 const chordTypes = {
-  triadMajor: 'major third',
-  triadMinor: 'minor third',
-  triadDimished: 'dimished third',
-  triadAugmented: 'augmented third',
-  sevenMajor: 'major seventh',
+  triadMajor: 'major triad',
+  triadMinor: 'minor triad',
+  triadDiminished: 'dimished triad',
+  triadAugmented: 'augmented triad',
+  sevenDominant: 'dominant seventh',
 };
 export type ChordType = $Values<typeof chordTypes>;
 
@@ -23,10 +23,15 @@ const inversions = {
 export type Inversion = $Values<typeof inversions>;
 
 export type ChordConfig = {
-  tonic: PlatonicPitch,
-  octave: number,
+  root: PlatonicPitch,
   chordType: ChordType,
   inversion: Inversion,
+};
+
+export type FunctionConfig = {
+  roman: string,
+  pitchOffset: number,
+  chordType: ChordType,
 };
 
 export {

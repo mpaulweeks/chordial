@@ -46,8 +46,7 @@ export class PresetChord extends BaseChord {
   constructor(config: ChordConfig){
     super();
     const {
-      tonic,
-      octave,
+      root,
       chordType,
       inversion,
     } = config;
@@ -60,21 +59,21 @@ export class PresetChord extends BaseChord {
       case chordTypes.triadMinor:
         pitches = [0, 3, 7];
         break;
-      case chordTypes.triadDimished:
+      case chordTypes.triadDiminished:
         pitches = [0, 3, 6];
         break;
       case chordTypes.triadAugmented:
         pitches = [0, 4, 8];
         break;
-      case chordTypes.sevenMajor:
+      case chordTypes.sevenDominant:
         pitches = [0, 4, 7, 10];
         break;
       default:
+        // throw 'invalid chord type:' + chordType;
         pitches = [0];
     }
 
-    const notes = pitches.map(p => new Note(p + tonic));
-    notes.forEach(n => n.shiftOctave(octave));
+    const notes = pitches.map(p => new Note(p + root));
 
     let inversionIndex;
     switch (inversion) {
@@ -104,10 +103,10 @@ export class PresetChord extends BaseChord {
 }
 
 export class ManualChord extends BaseChord {
-  constructor(steps: Array<number>, tonic: number) {
+  constructor(steps: Array<number>, root: number) {
     super();
     this.notes = steps.map((step: number) => {
-      return new Note(tonic + step);
+      return new Note(root + step);
     });
   }
 }

@@ -34,9 +34,27 @@ export class ChordButton extends Component {
   }
 }
 
-const ChordRow = styled.div`
+export class DiatonicFunctionButton extends Component {
+  render() {
+    const {
+      df,
+      callback,
+    } = this.props;
+    const role = df.getFunctionRole();
+    const pitch = df.chord.getRootPitch();
+    return (
+      <ChordButtonContainer onClick={() => callback(df)}>
+        <ChordButtonLarge>{ role.symbol }</ChordButtonLarge>
+        <ChordButtonSmall>{ pitch.letter }{ pitch.octave }</ChordButtonSmall>
+      </ChordButtonContainer>
+    );
+  }
+}
+
+const ButtonRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 export {
-  ChordRow,
+  ButtonRow,
 }
