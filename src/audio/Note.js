@@ -2,6 +2,9 @@
 
 import Context from './Context';
 
+const sharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+const flats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'];
+
 export default class Note {
   step: number;
   osc: ?any;
@@ -29,5 +32,22 @@ export default class Note {
       this.osc.stop(when || Context.currentTime);
       this.osc = null;
     }
+  }
+  getPitch(isSharp: boolean) {
+    let adjustedStep = this.step;
+    let octave = 4;
+    while (adjustedStep < 0){
+      adjustedStep += 12;
+      octave -= 1;
+    }
+    while (adjustedStep >= 12){
+      adjustedStep -= 12;
+      octave += 1;
+    }
+    adjustedStep %= 12;
+    return {
+      letter: isSharp ? sharps[adjustedStep] : flats[adjustedStep],
+      octave: octave,
+    };
   }
 }

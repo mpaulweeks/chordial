@@ -83,6 +83,9 @@ export class PresetChord extends BaseChord {
 
     this.notes = notes;
   }
+  getRootPitch() {
+    return this.notes[0].getPitch();
+  }
 }
 
 export class ManualChord extends BaseChord {

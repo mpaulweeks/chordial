@@ -1,13 +1,17 @@
 // @flow
 
-export type Pitch = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type PlatonicPitch = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type Pitch = {
+  letter: number,
+  octave: number,
+};
 const chordTypes = {
   triadMajor: 'major third',
   triadMinor: 'minor third',
   triadDimished: 'dimished third',
   triadAugmented: 'augmented third',
   sevenMajor: 'major seventh',
-}
+};
 export type ChordType = $Values<typeof chordTypes>;
 
 const inversions = {
@@ -15,11 +19,11 @@ const inversions = {
   first: 'first',   // 6
   second: 'second', // 6 4
   third: 'third',   // 4 2
-}
+};
 export type Inversion = $Values<typeof inversions>;
 
 export type ChordConfig = {
-  tonic: Pitch,
+  tonic: PlatonicPitch,
   octave: number,
   chordType: ChordType,
   inversion: Inversion,
