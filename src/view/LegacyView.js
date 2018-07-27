@@ -1,6 +1,6 @@
 import {
   Phrase,
-} from './Model.js';
+} from '../audio/Phrase';
 let currPhrase = null;
 
 const loadPhrase = function(){

@@ -5,7 +5,7 @@ import {
   playPhrase,
   stopPhrase,
   loadAndPlay,
-} from './View.js';
+} from './view/LegacyView';
 import Defaults from './Defaults.js';
 
 const DurationInput = styled.input`
