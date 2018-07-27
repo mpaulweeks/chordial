@@ -1,6 +1,8 @@
 // @flow
 
-class OscWrapper {
+import type { NoteController } from './Type';
+
+class OscWrapper implements NoteController {
   audioCtx: AudioContext;
   osc: OscillatorNode;
 
@@ -20,8 +22,9 @@ class OscWrapper {
     this.osc.stop();
   }
 }
-class MidiWrapper {
+class MidiWrapper implements NoteController {
   midiSounds: any;
+  step: number;
 
   constructor(midiSounds: any, step: number) {
     this.midiSounds = midiSounds;

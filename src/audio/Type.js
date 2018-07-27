@@ -1,10 +1,9 @@
 // @flow
 
-// todo interface
-// export type NoteController = {
-//   play: function,
-//   stop: function,
-// };
+export interface NoteController {
+  play(number, number): any, // todo null
+  stop(): any,
+};
 
 const keyModes = {
   major: 'major mode',

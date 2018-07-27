@@ -1,11 +1,12 @@
 // @flow
 
 import Controller from './Controller';
+import type { NoteController } from './Type';
 import { convertStepToPitch } from './Type';
 
 export default class Note {
   step: number;
-  audio: ?any;
+  audio: ?NoteController;
 
   constructor(step: number) {
     this.step = step;
