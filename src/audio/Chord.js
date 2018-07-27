@@ -1,22 +1,25 @@
+// @flow
+
 import Note from './Note';
 
-// type ChordConfig {
-//   tonic: Number,
-//   octave: Number,
-//   type: string, // major third, minor third, major seventh
-//   inversion: string, // none, first, second
-// };
+type ChordConfig = {
+  tonic: number,
+  octave: number,
+  type: string, // major third, minor third, major seventh
+  inversion: string, // none, first, second
+};
 
 class BaseChord {
+  notes: Array<Note>;
   constructor(){
     this.notes = [];
   }
-  play(when) {
+  play(when: number) {
     this.notes.forEach(note => {
       note.play(when);
     });
   }
-  stop(when) {
+  stop(when: number) {
     this.notes.forEach(note => {
       note.stop(when);
     });
@@ -24,7 +27,7 @@ class BaseChord {
 }
 
 export class PresetChord extends BaseChord {
-  constructor(config){
+  constructor(config: any){
     super();
 
     let pitches = [0];
@@ -47,14 +50,14 @@ export class PresetChord extends BaseChord {
     }
 
     const notes = pitches.map(p => new Note(p));
-    notes.forEach(n => n.shift(config.octave));
+    notes.forEach(n => n.shiftOctave(config.octave));
     switch (config.inversion) {
       case 'first':
-        notes[1].shift(-1);
+        notes[1].shiftOctave(-1);
         break;
       case 'second':
-        notes[1].shift(-1);
-        notes[2].shift(-1);
+        notes[1].shiftOctave(-1);
+        notes[2].shiftOctave(-1);
         break;
     }
 
@@ -63,9 +66,9 @@ export class PresetChord extends BaseChord {
 }
 
 export class ManualChord extends BaseChord {
-  constructor(steps, tonic) {
+  constructor(steps: Array<number>, tonic: number) {
     super();
-    this.notes = steps.map(step => {
+    this.notes = steps.map((step: number) => {
       return new Note(tonic + step);
     });
   }

@@ -1,14 +1,19 @@
+// @flow
+
 import Context from './Context';
 
 export default class Note {
-  constructor(step) {
+  step: number;
+  osc: ?any;
+
+  constructor(step: number) {
     this.step = step;
   }
-  shiftOctave(octave) {
+  shiftOctave(octave: number) {
     this.stop();
     this.step += 12 * octave;
   }
-  play(when) {
+  play(when: number) {
     // ensure we stop any existing oscillator
     this.stop();
 
@@ -19,7 +24,7 @@ export default class Note {
 
     this.osc = osc;
   }
-  stop(when) {
+  stop(when: ?number) {
     if (this.osc){
       this.osc.stop(when);
       this.osc = null;
