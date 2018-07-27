@@ -1,16 +1,17 @@
 // @flow
 
+import type {
+  ChordConfig,
+} from './Type';
+import {
+  chordTypes,
+  inversions,
+} from './Type';
 import Note from './Note';
-
-type ChordConfig = {
-  tonic: number,
-  octave: number,
-  type: string, // major third, minor third, major seventh
-  inversion: string, // none, first, second
-};
 
 class BaseChord {
   notes: Array<Note>;
+
   constructor(){
     this.notes = [];
   }
@@ -27,38 +28,48 @@ class BaseChord {
 }
 
 export class PresetChord extends BaseChord {
-  constructor(config: any){
+  constructor(config: ChordConfig){
     super();
+    const {
+      tonic,
+      octave,
+      chordType,
+      inversion,
+    } = config;
 
-    let pitches = [0];
-    switch (config.type) {
-      case 'majorThird':
+    let pitches;
+    switch (chordType) {
+      case chordTypes.triadMajor:
         pitches = [0, 4, 7];
         break;
-      case 'minorThird':
+      case chordTypes.triadMinor:
         pitches = [0, 3, 7];
         break;
-      case 'diminishedThird':
+      case chordTypes.triadDimished:
         pitches = [0, 3, 6];
         break;
-      case 'augmentedThird':
+      case chordTypes.triadAugmented:
         pitches = [0, 4, 8];
         break;
-      case 'majorSeventh':
+      case chordTypes.sevenMajor:
         pitches = [0, 4, 7, 10];
         break;
+      default:
+        pitches = [0];
     }
 
-    const notes = pitches.map(p => new Note(p));
-    notes.forEach(n => n.shiftOctave(config.octave));
-    switch (config.inversion) {
-      case 'first':
-        notes[1].shiftOctave(-1);
-        break;
-      case 'second':
+    const notes = pitches.map(p => new Note(p + tonic));
+    notes.forEach(n => n.shiftOctave(octave));
+    switch (inversion) {
+      case inversions.first:
         notes[1].shiftOctave(-1);
         notes[2].shiftOctave(-1);
         break;
+      case inversions.second:
+        notes[2].shiftOctave(-1);
+        break;
+      default:
+        // do nothing
     }
 
     this.notes = notes;
