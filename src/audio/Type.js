@@ -49,8 +49,8 @@ export type FunctionConfig = {
   chordType: ChordType,
 };
 
-const sharpKeys = ['C', 'G', 'D', 'A', 'E', 'B', 'F#'];
-const flatKeys = ['C', 'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'];
+const sharpKeys = ['C', 'G', 'D', 'A', 'E', 'B'];
+const flatKeys = ['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'];
 const sharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 const flats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'];
 function checkKeyIsSharp(step: number){
@@ -81,10 +81,24 @@ function convertPitchToStep(letter: string){
   }
   return flats.indexOf(letter);
 }
-const allKeys = [...sharpKeys, ...flatKeys].map((letter: string) => ({
-  letter: letter,
-  step: convertPitchToStep(letter),
-}));
+function getAllKeys(){
+  const allKeys = [];
+  for (var i = 0; i < 12; i++) {
+    let letter;
+    const shortIndex = Math.floor(i / 2);
+    if (i % 2 === 0) {
+      letter = sharpKeys[shortIndex];
+    }
+    else {
+      letter = flatKeys[shortIndex];
+    }
+    allKeys.push({
+      letter: letter,
+      step: convertPitchToStep(letter),
+    });
+  }
+  return allKeys;
+}
 
 export {
   keyModes,
@@ -92,5 +106,5 @@ export {
   inversions,
   checkKeyIsSharp,
   convertStepToPitch,
-  allKeys,
+  getAllKeys,
 };

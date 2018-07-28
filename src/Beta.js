@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { allKeys } from './audio/Type';
+import { getAllKeys } from './audio/Type';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import MidiLoader from './view/MidiLoader';
@@ -56,6 +56,7 @@ class App extends Component {
       functions,
     } = this.state
     const octaves = [-2, -1, 0, 1, 2];
+    const allKeys = getAllKeys();
     return (
       <div>
         <MidiLoader />
