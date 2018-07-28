@@ -53,7 +53,6 @@ export default class CommandRow extends Component {
     });
   }
   setFocus = (key: string) => {
-    console.log('setting focus', key);
     this.setState({
       focusIndex: key,
     })

@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const ChordButtonContainer = styled.div`
-  border: 1px solid var(--foreground);
+  border: 4px solid var(--foreground);
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
 
   margin: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
   ${props => props.isFocused && `
     border-color: var(--highlight);
@@ -17,8 +22,15 @@ const ButtonHeader = styled.div`
   background-color: var(--foreground);
   color: var(--background);
 
+  min-height: 10px;
+  width: 100%;
+
   font-size: 14px;
-  padding: 2px;
+  padding: 2px 0px;
+
+  ${props => props.isFocused && `
+    background-color: var(--highlight);
+  `};
 `;
 const ButtonTextLarge = styled.div`
   padding: 15px 30px;
@@ -43,47 +55,38 @@ export class ChordButton extends Component {
 
 export class DiatonicFunctionButton extends Component {
   render() {
+    const { df, isFocused, callback } = this.props;
     const {
-      df,
-      callback,
-    } = this.props;
-    const role = df.getFunctionRole();
+      tonicSymbol,
+      chordSymbol,
+      superScript,
+    } = df ? df.getFunctionRole() : {};
+    const onClick = callback ? () => callback(df) : () => {};
     return (
-      <ChordButtonContainer onClick={() => callback(df)}>
-        <ButtonHeader>{ role.tonicSymbol }</ButtonHeader>
+      <ChordButtonContainer onClick={onClick} isFocused={isFocused}>
+        <ButtonHeader isFocused={isFocused}>{ tonicSymbol }</ButtonHeader>
         <ButtonTextLarge>
-          { role.chordSymbol }
-          { role.superScript && <sup>{ role.superScript }</sup> }
+          { chordSymbol || '...'}
+          { superScript && <sup>{ superScript }</sup> }
         </ButtonTextLarge>
       </ChordButtonContainer>
-    );
+    )
   }
 }
 
 export class CommandButton extends Component {
   render() {
     const {
+      command,
       isFocused,
       callback,
     } = this.props;
-    const {
-      key,
-      df,
-    } = this.props.command;
-    const {
-      tonicSymbol,
-      chordSymbol,
-      superScript,
-    } = df ? df.getFunctionRole() : {};
+    const { key } = command;
     return (
-      <ChordButtonContainer onClick={() => callback(key)} isFocused={isFocused}>
-        <ButtonHeader>{ tonicSymbol }</ButtonHeader>
-        <ButtonTextLarge>
-          { chordSymbol || '...'}
-          { superScript && <sup>{ superScript }</sup> }
-        </ButtonTextLarge>
-        <ButtonHeader>{ key }</ButtonHeader>
-      </ChordButtonContainer>
+      <div onClick={() => callback(key)}>
+        <DiatonicFunctionButton df={command.df} isFocused={isFocused} />
+        <h3>{ key }</h3>
+      </div>
     );
   }
 }
