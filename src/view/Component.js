@@ -8,6 +8,7 @@ const ChordButtonContainer = styled.div`
   cursor: pointer;
 
   margin: 10px;
+  min-width: 100px;
 
   display: flex;
   flex-direction: column;
@@ -33,9 +34,12 @@ const ButtonHeader = styled.div`
   `};
 `;
 const ButtonTextLarge = styled.div`
-  padding: 15px 30px;
-  font-size: 24px;
+  padding: 15px 0px;
+  font-size: 1.5rem;
   font-weight: bold;
+`;
+const ButtonTextSmall = styled.div`
+  font-size: 0.8rem;
 `;
 const CommandLabel = styled.div`
   text-align: center;
@@ -66,6 +70,7 @@ export class DiatonicFunctionButton extends Component {
       tonicSymbol,
       chordSymbol,
       superScript,
+      notes,
     } = df ? df.getFunctionRole() : {};
     const onClick = callback ? () => callback(df) : () => {};
     return (
@@ -75,6 +80,7 @@ export class DiatonicFunctionButton extends Component {
           { chordSymbol || '...'}
           { superScript && <sup>{ superScript }</sup> }
         </ButtonTextLarge>
+        { notes && <ButtonTextSmall>{ notes.join(' ') }</ButtonTextSmall> }
       </ChordButtonContainer>
     )
   }

@@ -178,6 +178,7 @@ export default class DiatonicFunction {
       tonicSymbol: tonicSymbol,
       chordSymbol: chordSymbol,
       superScript: superScript,
+      notes: this.chord.notes.map(n => n.getPitch().letter),
     }
   }
 }
