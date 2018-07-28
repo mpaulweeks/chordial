@@ -17,3 +17,15 @@ simple web page to try out chords
   - keyboard should have numbers on keys
     - match current tonic
   - keyboard lights up when playing
+- hunt down and refactor this:
+```
+this.instrumentInfo = function (n) {
+  var key = this.instrumentKeys()[n];
+  var p = 1 * key.substr(0, 3);
+  return {
+    variable: '_tone_' + key,
+    url: 'https://surikov.github.io/webaudiofontdata/sound/' + key + '.js',
+    title: this.instrumentTitles()[p]
+  };
+};
+```
