@@ -81,7 +81,7 @@ function convertPitchToStep(letter: string){
   }
   return flats.indexOf(letter);
 }
-const allKeys = [...sharps, ...flats].map(letter => ({
+const allKeys = [...sharpKeys, ...flatKeys].map((letter: string) => ({
   letter: letter,
   step: convertPitchToStep(letter),
 }));
