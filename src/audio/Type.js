@@ -49,8 +49,14 @@ export type FunctionConfig = {
   chordType: ChordType,
 };
 
+const sharpKeys = ['C', 'G', 'D', 'A', 'E', 'B', 'F#'];
+const flatKeys = ['C', 'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'];
 const sharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 const flats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'];
+function checkKeyIsSharp(step: number){
+  const s = convertStepToPitch(step, true);
+  return sharpKeys.includes(s.letter);
+}
 function convertStepToPitch(step: number, isSharp: ?boolean){
   let adjustedStep = step;
   let octave = 4;
@@ -84,6 +90,7 @@ export {
   keyModes,
   chordTypes,
   inversions,
+  checkKeyIsSharp,
   convertStepToPitch,
   allKeys,
 };

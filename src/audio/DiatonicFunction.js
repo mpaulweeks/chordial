@@ -5,6 +5,7 @@ import {
   keyModes,
   chordTypes,
   inversions,
+  checkKeyIsSharp,
   convertStepToPitch,
 } from './Type';
 import { PresetChord } from './Chord';
@@ -138,7 +139,9 @@ export default class DiatonicFunction {
     });
   }
   getFunctionRole() {
-    let tonicSymbol = convertStepToPitch(this.tonic).letter;
+    let isSharp = checkKeyIsSharp(this.tonic);
+
+    let tonicSymbol = convertStepToPitch(this.tonic, isSharp).letter;
     switch (this.config.keyMode) {
       case keyModes.major:
         tonicSymbol = tonicSymbol.toUpperCase() + ' Major';
@@ -178,7 +181,7 @@ export default class DiatonicFunction {
       tonicSymbol: tonicSymbol,
       chordSymbol: chordSymbol,
       superScript: superScript,
-      notes: this.chord.notes.map(n => n.getPitch().letter),
+      notes: this.chord.notes.map(n => n.getPitch(isSharp).letter),
     }
   }
 }
