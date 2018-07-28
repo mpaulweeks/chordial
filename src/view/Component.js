@@ -37,6 +37,12 @@ const ButtonTextLarge = styled.div`
   font-size: 24px;
   font-weight: bold;
 `;
+const CommandLabel = styled.div`
+  text-align: center;
+  padding: 5px 0px;
+  font-weight: bold;
+  font-size: 1.5rem;
+`;
 
 export class ChordButton extends Component {
   render() {
@@ -85,7 +91,7 @@ export class CommandButton extends Component {
     return (
       <div onClick={() => callback(key)}>
         <DiatonicFunctionButton df={command.df} isFocused={isFocused} />
-        <h3>{ key }</h3>
+        <CommandLabel>Key: { key }</CommandLabel>
       </div>
     );
   }
