@@ -28,20 +28,17 @@ class OscWrapper implements NoteController {
 class MidiWrapper implements NoteController {
   audioCtx: AudioContext;
   audioFont: any;
-  player: WebAudioFontPlayer;
+  midiPlayer: WebAudioFontPlayer;
   midiStep: number;
 
-  constructor(audioCtx: AudioContext, step: number) {
-    const player = new WebAudioFontPlayer();
-    player.adjustPreset(audioCtx, audioFont);
-
+  constructor(audioCtx: AudioContext, audioFont: any, midiPlayer: WebAudioFontPlayer, step: number) {
     this.audioCtx = audioCtx;
-    this.player = player;
     this.audioFont = audioFont;
+    this.midiPlayer = midiPlayer;
     this.midiStep = step + 60;  // todo confirm match osc
   }
   play(start: number, duration: number){
-    this.player.queueWaveTable(
+    this.midiPlayer.queueWaveTable(
       this.audioCtx,
       this.audioCtx.destination,
       this.audioFont,
@@ -51,18 +48,24 @@ class MidiWrapper implements NoteController {
     );
   }
   stop(){
-    this.player.cancelQueue(this.audioCtx);
+    this.midiPlayer.cancelQueue(this.audioCtx);
   }
 }
 
 class _Controller {
   audioCtx: AudioContext;
-  useMidi: boolean;
+  audioFont: any;
+  midiPlayer: WebAudioFontPlayer;
 
   constructor() {
     const AudioContextFunc = window.AudioContext || window.webkitAudioContext;
-    this.audioCtx = new AudioContextFunc();
-    this.useMidi = true;
+    const audioCtx = new AudioContextFunc();
+    const midiPlayer = new WebAudioFontPlayer();
+    midiPlayer.adjustPreset(audioCtx, audioFont);
+
+    this.audioCtx = audioCtx
+    this.audioFont = audioFont;
+    this.midiPlayer = midiPlayer;
   }
   playOsc(step: number, start: number, duration: number){
     const newOsc = new OscWrapper(this.audioCtx, step);
@@ -70,12 +73,12 @@ class _Controller {
     return newOsc;
   }
   playMidi(step: number, start: number, duration: number){
-    const newMidi = new MidiWrapper(this.audioCtx, step);
+    const newMidi = new MidiWrapper(this.audioCtx, this.audioFont, this.midiPlayer, step);
     newMidi.play(start, duration);
     return newMidi;
   }
   play(step: number, start: number, duration: number){
-    if (this.useMidi){
+    if (this.midiPlayer){
       return this.playMidi(step, start, duration);
     }
     return this.playOsc(step, start, duration);
