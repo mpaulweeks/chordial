@@ -28,6 +28,8 @@ class BaseChord {
 }
 
 export class PresetChord extends BaseChord {
+  config: ChordConfig;
+
   constructor(config: ChordConfig){
     super();
     const {
@@ -82,8 +84,16 @@ export class PresetChord extends BaseChord {
     this.notes = notes;
     this.config = config;
   }
-  getRootPitch(isSharp: ?boolean) {
+  getRootPitch(isSharp?: boolean) {
     return this.notes[0].getPitch(isSharp);
+  }
+  sortNotesWithInversion(): Array<Note> {
+    function compareNotes(a: Note, b: Note) {
+      return a.step - b.step;
+    }
+    const copyNotes = this.notes.concat();
+    copyNotes.sort(compareNotes);
+    return copyNotes;
   }
 }
 

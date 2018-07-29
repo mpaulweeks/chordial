@@ -198,12 +198,16 @@ export default class DiatonicFunction {
         inversionText = '?';
     }
 
+    const chordNoteLetters = this.chord
+      .sortNotesWithInversion()
+      .map(n => n.getPitch(isSharp).letter);
+
     return {
       tonicSymbol: tonicSymbol,
       chordSymbol: chordSymbol,
       superScript: superScript,
       inversionText: inversionText,
-      notes: this.chord.notes.map(n => n.getPitch(isSharp).letter),
+      notes: chordNoteLetters,
     }
   }
 }

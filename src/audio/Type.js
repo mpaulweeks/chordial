@@ -5,7 +5,11 @@ export interface NoteController {
   stop(): any,
 };
 
-function toOption(obj){
+export type Option = {
+  label: string,
+  value: any,
+};
+function toOption(obj: Object): Array<Option>{
   return Object.keys(obj).map(key => ({
     label: key,
     value: obj[key],
