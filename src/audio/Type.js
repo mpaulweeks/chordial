@@ -5,6 +5,12 @@ export interface NoteController {
   stop(): any,
 };
 
+function toOption(obj){
+  return Object.keys(obj).map(key => ({
+    label: key,
+    value: obj[key],
+  }));
+}
 const keyModes = {
   major: 'major mode',
   minor: 'minor mode',
@@ -101,6 +107,7 @@ function getAllKeys(){
 }
 
 export {
+  toOption,
   keyModes,
   chordTypes,
   inversions,

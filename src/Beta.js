@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import type { KeyMode } from './audio/Type';
+import {
+  keyModes,
+} from './audio/Type';
 import Preset from './audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import CommandRow from './view/CommandRow';
+import SelectMode from './view/SelectMode';
 import SelectKey from './view/SelectKey';
 import SelectOctave from './view/SelectOctave';
 import {
@@ -23,6 +28,7 @@ class App extends Component {
     this.state = {
       rootKey: 0,
       octave: 0,
+      mode: keyModes.major,
       functions: [],
     }
   }
@@ -33,15 +39,33 @@ class App extends Component {
     this.commandRow.loadDiatonicFunctions(Preset.dfs);
   }
   reloadFunctions() {
-    const rootStep = this.state.rootKey + (12*this.state.octave);
-    const functions = [majorFunctions, minorFunctions].map(
-      funcList => funcList.map(
-        fc => new DiatonicFunction(rootStep, fc)
-      )
-    );
+    const {
+      rootKey,
+      octave,
+      mode,
+    } = this.state;
+    const rootStep = rootKey + (12*octave);
+    let baseFunctions = [];
+    switch (mode){
+      case keyModes.major:
+        baseFunctions = majorFunctions;
+        break;
+      case keyModes.minor:
+        baseFunctions = minorFunctions;
+        break;
+      default:
+        throw Error('unsupported mode: ' + mode);
+    }
     this.setState({
-      functions: functions,
+      functions: baseFunctions.map(
+        fc => new DiatonicFunction(rootStep, fc)
+      ),
     })
+  }
+  setMode = (mode: KeyMode) => {
+    this.setState({
+      mode: mode,
+    }, this.reloadFunctions);
   }
   setRootKey = (rootKey: number) => {
     this.setState({
@@ -67,6 +91,7 @@ class App extends Component {
   }
   render() {
     const {
+      mode,
       rootKey,
       octave,
       functions,
@@ -76,16 +101,17 @@ class App extends Component {
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
         <SelectContainer>
           <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+        </SelectContainer>
+        <SelectContainer>
+          <SelectMode currentMode={mode} setMode={this.setMode} />
           <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
         </SelectContainer>
 
-        {functions.map((fl, fli) => (
-          <ButtonRow key={'fl-' + fli}>
-            {fl.map((df, dfi) => (
-              <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
-            ))}
-          </ButtonRow>
-        ))}
+        <ButtonRow>
+          {functions.map((df, dfi) => (
+            <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
+          ))}
+        </ButtonRow>
       </Beta>
     );
   }

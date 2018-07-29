@@ -110,7 +110,8 @@ const OptionButtonContainer = styled.div`
   cursor: pointer;
 
   height: 40px;
-  width: 60px;
+  min-width: 40px;
+  padding: 0px 10px;
   margin: 10px;
   font-size: 1.2em;
 
