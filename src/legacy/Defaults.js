@@ -1,12 +1,11 @@
 
 const tonics = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 const keys = [];
-for (var i = 0; i < 36; i++){
-  const value = i - 12;
-  const name = tonics[i % 12] + (1 + Math.floor(i/12));
+for (var i = 36; i < 84; i++){
+  const name = tonics[i % 12] + (Math.floor(i/12) - 1);
   keys.push({
     label: name,
-    value: value,
+    value: i,
   });
 }
 const domDurations = `

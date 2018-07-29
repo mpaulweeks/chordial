@@ -6,8 +6,8 @@ import {
   playPhrase,
   stopPhrase,
   loadAndPlay,
-} from './view/LegacyView';
-import Defaults from './Defaults.js';
+} from './legacy/View';
+import Defaults from './legacy/Defaults.js';
 
 const DurationInput = styled.input`
   width: 50px;
@@ -37,7 +37,7 @@ class Beta extends Component {
         <br/>
         <div>
           choose your key:
-          <select id="key" defaultValue={-10}>
+          <select id="key" defaultValue={50}>
             {Defaults.keys.map((key, index) => (
               <option key={"key-"+index} value={key.value}>{key.label}</option>
             ))}
