@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 import Preset from './audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import CommandRow from './view/CommandRow';
 import SelectKey from './view/SelectKey';
+import SelectOctave from './view/SelectOctave';
 import {
   DiatonicFunctionButton,
+  SelectContainer,
   ButtonRow,
 } from './view/Component';
+
+const Beta = styled.div`
+  text-align: center;
+`;
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       rootKey: 0,
+      octave: 0,
       functions: [],
     }
   }
@@ -24,20 +32,26 @@ class App extends Component {
     });
     this.commandRow.loadDiatonicFunctions(Preset.dfs);
   }
-  setRootKey = (rootKey: number) => {
+  reloadFunctions() {
+    const rootStep = this.state.rootKey + (12*this.state.octave);
     const functions = [majorFunctions, minorFunctions].map(
       funcList => funcList.map(
-        fc => new DiatonicFunction(rootKey, fc)
+        fc => new DiatonicFunction(rootStep, fc)
       )
     );
     this.setState({
-      rootKey: rootKey,
       functions: functions,
     })
   }
-  setOctave(octave: number){
-    const rawRoot = (this.state.rootKey + 12000) % 12;
-    this.setRootKey(rawRoot + (octave * 12));
+  setRootKey = (rootKey: number) => {
+    this.setState({
+      rootKey: rootKey,
+    }, this.reloadFunctions);
+  }
+  setOctave = (octave: number) => {
+    this.setState({
+      octave: octave,
+    }, this.reloadFunctions);
   }
   stopAll = () => {
     this.state.functions.forEach(
@@ -54,18 +68,17 @@ class App extends Component {
   render() {
     const {
       rootKey,
+      octave,
       functions,
     } = this.state
-    const octaves = [-2, -1, 0, 1, 2];
     return (
-      <div>
+      <Beta>
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
-        <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
-        <select onChange={e => this.setOctave(parseFloat(e.target.value))}>
-          {octaves.map((oct, octi) => (
-            <option key={'oct'+octi} value={oct}>{oct + 4}</option>
-          ))}
-        </select>
+        <SelectContainer>
+          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
+        </SelectContainer>
+
         {functions.map((fl, fli) => (
           <ButtonRow key={'fl-' + fli}>
             {fl.map((df, dfi) => (
@@ -73,7 +86,7 @@ class App extends Component {
             ))}
           </ButtonRow>
         ))}
-      </div>
+      </Beta>
     );
   }
 }

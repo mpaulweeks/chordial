@@ -8,36 +8,35 @@ import {
   OptionButton,
 } from './Component';
 
-export default class SelectKey extends Component {
+export default class SelectOctave extends Component {
   constructor(props){
     super(props);
     this.state = {
-      allKeys: getAllKeys(),
+      octaves: [-2, -1, 0, 1, 2],
     };
   }
   componentDidMount() {
-    this.props.setRootKey(this.state.allKeys[0].step);
+    this.props.setOctave(0);
   }
   render() {
     const {
-      currentRootKey,
-      setRootKey,
+      currentOctave,
+      setOctave,
     } = this.props;
     const {
-      allKeys,
+      octaves,
     } = this.state;
-    const rawRootKey = (currentRootKey + 12000) % 12;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Key </SelectSectionHeader>
+        <SelectSectionHeader> Select Octave </SelectSectionHeader>
         <ButtonRow>
-          {allKeys.map((ak, aki) => (
+          {octaves.map((oct, octi) => (
             <OptionButton
-              key={'root'+aki}
-              value={ak.step}
-              label={ak.letter}
-              callback={setRootKey}
-              isFocused={ak.step === rawRootKey}
+              key={'octave'+octi}
+              value={oct}
+              label={oct + 4}
+              callback={setOctave}
+              isFocused={oct === currentOctave}
             />
           ))}
         </ButtonRow>

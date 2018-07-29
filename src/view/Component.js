@@ -103,10 +103,69 @@ export class CommandButton extends Component {
   }
 }
 
+const OptionButtonContainer = styled.div`
+  border: 4px solid var(--foreground);
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+
+  height: 40px;
+  width: 60px;
+  margin: 10px;
+  font-size: 1.2em;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  ${props => props.isFocused && `
+    border-color: var(--highlight);
+    background-color: var(--highlight);
+    color: var(--background);
+  `};
+`;
+export class OptionButton extends Component {
+  render() {
+    const {
+      label,
+      value,
+      callback,
+      isFocused,
+    } = this.props;
+    const onClick = () => callback(value);
+    return (
+      <OptionButtonContainer onClick={onClick} isFocused={isFocused}>
+        { label }
+      </OptionButtonContainer>
+    );
+  }
+}
+
 const ButtonRow = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
+const SelectContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+const SelectSectionContainer = styled.div`
+  flex: 1;
+`;
+const SelectSectionHeader = styled.div`
+  font-size: 2em;
+  font-weight: bold;
+
+  margin: 20px;
+`;
+
+
 export {
   ButtonRow,
+  SelectContainer,
+  SelectSectionContainer,
+  SelectSectionHeader,
 }
