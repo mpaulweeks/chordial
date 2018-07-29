@@ -1,18 +1,14 @@
 # chordial
+
+https://mpaulweeks.github.io/chordial/
+
 simple web page to try out chords
-
-## original idea
-
-- Pick key
-- Represent chords by harmonic function and/or custom
-- Drag chords into qwerty keys bay
-- Press key to play chord
 
 ## todo
 
-- store songs in json
-  - select for loading song configs
+- store / load commands in json
+  - select for loading preset / song configs
+- add support for 7ths and 9ths
 - display keyboard
-  - keyboard should have numbers on keys
-    - match current tonic
-  - keyboard lights up when playing
+  - numbers on keys
+  - lights up when playing
