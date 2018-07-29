@@ -111,7 +111,7 @@ class App extends Component {
     } = this.state
     return (
       <Beta>
-        <SelectSectionHeader> Select a Slot </SelectSectionHeader>
+        <SelectSectionHeader> Select a Keyboard Shortcut </SelectSectionHeader>
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
 
         <SelectContainer>

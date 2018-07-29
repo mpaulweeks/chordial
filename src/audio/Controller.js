@@ -10,7 +10,8 @@ class OscWrapper implements NoteController {
 
   constructor(audioCtx: AudioContext, step: number) {
     const osc = audioCtx.createOscillator();
-    osc.frequency.value = 440 * Math.pow(2, step/12);
+    const oscStep = step - 60;
+    osc.frequency.value = 440 * Math.pow(2, oscStep/12);
     osc.connect(audioCtx.destination);
 
     this.audioCtx = audioCtx;
@@ -35,7 +36,7 @@ class MidiWrapper implements NoteController {
     this.audioCtx = audioCtx;
     this.audioFont = audioFont;
     this.midiPlayer = midiPlayer;
-    this.midiStep = step + 60;  // todo confirm match osc
+    this.midiStep = step + 9;  // todo confirm match osc
   }
   play(start: number, duration: number){
     this.midiPlayer.queueWaveTable(

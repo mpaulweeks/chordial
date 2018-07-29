@@ -8,7 +8,21 @@ const dfs = [
     tonic: 3,
     config: majorFunctions[0],
     additional: {
-      octave: -1,
+      octave: 3,
+    },
+  },
+  {
+    tonic: 3,
+    config: majorFunctions[0],
+    additional: {
+      octave: 4,
+    },
+  },
+  {
+    tonic: 3,
+    config: majorFunctions[0],
+    additional: {
+      octave: 5,
     },
   },
   {
@@ -22,7 +36,7 @@ const dfs = [
     tonic: 3,
     config: majorFunctions[3],
     additional: {
-      octave: -1,
+      octave: 3,
     },
   },
   {
@@ -36,14 +50,14 @@ const dfs = [
     tonic: 3,
     config: majorFunctions[4],
     additional: {
-      octave: -1,
+      octave: 3,
     },
   },
   {
     tonic: 3,
     config: majorFunctions[7],
     additional: {
-      octave: -1,
+      octave: 3,
       inversion: inversions.third,
     },
   },

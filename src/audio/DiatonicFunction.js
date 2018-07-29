@@ -143,7 +143,7 @@ export default class DiatonicFunction {
     this.tonic = tonic;
     this.chord = new PresetChord({
       root: tonic + config.pitchOffset,
-      octave: 0,
+      octave: 4,
       chordType: config.chordType,
       inversion: inversions.none,
       ...additionalChordConfig,
@@ -216,7 +216,7 @@ export default class DiatonicFunction {
 
     return {
       tonicSymbol: tonicSymbol,
-      octave: this.chord.config.octave + 4,
+      octave: this.chord.config.octave,
       chordSymbol: chordSymbol,
       superScript: superScript,
       inversionText: inversionText,

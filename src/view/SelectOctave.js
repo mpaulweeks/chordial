@@ -11,11 +11,11 @@ export default class SelectOctave extends Component {
   constructor(props){
     super(props);
     this.state = {
-      octaves: [-2, -1, 0, 1, 2],
+      octaves: [2, 3, 4, 5, 6],
     };
   }
   componentDidMount() {
-    this.props.setOctave(0);
+    this.props.setOctave(4);
   }
   render() {
     const {
@@ -33,7 +33,7 @@ export default class SelectOctave extends Component {
             <OptionButton
               key={'octave'+octi}
               value={oct}
-              label={oct + 4}
+              label={oct}
               callback={setOctave}
               isFocused={oct === currentOctave}
             />
