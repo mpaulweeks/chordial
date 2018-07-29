@@ -1,19 +1,30 @@
+import {
+  inversions,
+} from './Type';
 import DiatonicFunction, { majorFunctions } from './DiatonicFunction';
 
 const dfs = [
   {
-    tonic: 0,
+    tonic: 3,
     config: majorFunctions[0],
+    inversion: inversions.none,
   },
   {
-    tonic: 0,
+    tonic: 3,
     config: majorFunctions[3],
+    inversion: inversions.none,
   },
   {
-    tonic: 0,
-    config: majorFunctions[4],
+    tonic: 3,
+    config: majorFunctions[0],
+    inversion: inversions.second,
   },
-].map(obj => new DiatonicFunction(obj.tonic, obj.config));
+  {
+    tonic: 3,
+    config: majorFunctions[4],
+    inversion: inversions.none,
+  },
+].map(obj => new DiatonicFunction(obj.tonic, obj.config, obj.inversion));
 
 export default {
   dfs,
