@@ -10,16 +10,10 @@ const Hidden = styled.div`
 
 export default class MidiLoader extends Component {
   componentDidMount() {
-    Controller.setMidiSounds(this.midiSounds);
   }
   render() {
     return (
       <Hidden>
-        <MIDISounds
-          ref={(ref) => (this.midiSounds = ref)}
-          appElementName="root"
-          instruments={Controller.midiInstruments}
-        />
       </Hidden>
     );
   }

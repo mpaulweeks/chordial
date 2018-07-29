@@ -1,5 +1,7 @@
 // @flow
 
+import webaudiofont from 'webaudiofont';
+import tone_0000_GeneralUserGS_sf2_file from './Font';
 import type { NoteController } from './Type';
 
 class OscWrapper implements NoteController {
@@ -24,20 +26,30 @@ class OscWrapper implements NoteController {
   }
 }
 class MidiWrapper implements NoteController {
-  midiSounds: any;
-  step: number;
+  audioCtx: AudioContext;
+  player: WebAudioFontPlayer;
+  midiStep: number;
 
-  constructor(midiSounds: any, step: number) {
-    this.midiSounds = midiSounds;
-    this.step = step;
+  constructor(audioCtx: AudioContext, step: number) {
+    const player = new webaudiofont.WebAudioFontPlayer();
+    player.loader.decodeAfterLoading(audioCtx, '_tone_0000_GeneralUserGS_sf2_file');
+
+    this.audioCtx = audioCtx;
+    this.player = player;
+    this.step = step + 60;  // todo confirm match osc
   }
   play(start: number, duration: number){
-    const midiStart = this.midiSounds.contextTime() + start;
-    const midiStep = this.step + 60; // todo confirm match osc
-    this.midiSounds.playChordAt(midiStart, 3, [midiStep], duration);
+    this.player.queueWaveTable(
+      this.audioCtx,
+      this.audioCtx.destination,
+      tone_0000_GeneralUserGS_sf2_file,
+      this.audioCtx.currentTime + start,
+      this.step,
+      duration
+    );
   }
   stop(){
-    this.midiSounds.cancelQueue();
+    // todo
   }
 }
 
@@ -47,7 +59,8 @@ class _Controller {
   midiSounds: ?any;
 
   constructor() {
-    this.audioCtx = new AudioContext();
+    const AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+    this.audioCtx = new AudioContextFunc();
     this.midiInstruments = [3];
     this.midiSounds = null;
   }
