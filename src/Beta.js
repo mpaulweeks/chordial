@@ -20,6 +20,7 @@ import SelectOctave from './view/SelectOctave';
 import {
   DiatonicFunctionButton,
   SelectContainer,
+  SelectSectionHeader,
   ButtonRow,
 } from './view/Component';
 
@@ -108,20 +109,24 @@ class App extends Component {
     return (
       <Beta>
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
-        <SelectContainer>
-          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
-        </SelectContainer>
-        <SelectContainer>
-          <SelectMode currentMode={mode} setMode={this.setMode} />
-          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
-          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
-        </SelectContainer>
 
+        <hr/>
+
+        <SelectSectionHeader> Add Chord </SelectSectionHeader>
         <ButtonRow>
           {functions.map((df, dfi) => (
             <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
           ))}
         </ButtonRow>
+
+        <SelectContainer>
+          <SelectMode currentMode={mode} setMode={this.setMode} />
+          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
+          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
+        </SelectContainer>
+        <SelectContainer>
+          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+        </SelectContainer>
       </Beta>
     );
   }

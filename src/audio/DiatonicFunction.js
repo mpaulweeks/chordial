@@ -147,10 +147,10 @@ export default class DiatonicFunction {
     let tonicSymbol = convertStepToPitch(this.tonic, isSharp).letter;
     switch (this.config.keyMode) {
       case keyModes.major:
-        tonicSymbol = tonicSymbol.toUpperCase() + ' Major';
+        tonicSymbol = tonicSymbol.toUpperCase();
         break;
       case keyModes.minor:
-        tonicSymbol = tonicSymbol.toLowerCase() + ' minor';
+        tonicSymbol = tonicSymbol.toLowerCase();
         break;
       default:
         tonicSymbol = '???';

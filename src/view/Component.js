@@ -9,6 +9,8 @@ const ChordButtonContainer = styled.div`
 
   margin: 10px;
   min-width: 100px;
+  min-height: 90px;
+  padding-bottom: 5px;
 
   display: flex;
   flex-direction: column;
@@ -23,18 +25,16 @@ const ButtonHeader = styled.div`
   background-color: var(--foreground);
   color: var(--background);
 
-  min-height: 10px;
   width: 100%;
-
-  font-size: 14px;
-  padding: 2px 0px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 18px;
 
   ${props => props.isFocused && `
     background-color: var(--highlight);
   `};
 `;
 const ButtonTextLarge = styled.div`
-  padding: 15px 0px;
   font-size: 1.5rem;
   font-weight: bold;
 `;
