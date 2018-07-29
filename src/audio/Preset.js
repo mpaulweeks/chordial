@@ -1,12 +1,3 @@
-
-import type { FunctionConfig } from './Type';
-import {
-  keyModes,
-  chordTypes,
-  inversions,
-  checkKeyIsSharp,
-  convertStepToPitch,
-} from './Type';
 import DiatonicFunction, { majorFunctions } from './DiatonicFunction';
 
 const dfs = [

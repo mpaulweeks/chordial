@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import { getAllKeys } from './audio/Type';
 import Preset from './audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import CommandRow from './view/CommandRow';
+import SelectKey from './view/SelectKey';
 import {
   DiatonicFunctionButton,
   ButtonRow,
@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      root: 0,
+      rootKey: 0,
       functions: [],
     }
   }
@@ -22,23 +22,22 @@ class App extends Component {
     document.addEventListener('keydown', event => {
       this.commandRow.handleKeyPress(event);
     });
-    this.setRoot(0);
     this.commandRow.loadDiatonicFunctions(Preset.dfs);
   }
-  setRoot(root: number){
+  setRootKey = (rootKey: number) => {
     const functions = [majorFunctions, minorFunctions].map(
       funcList => funcList.map(
-        fc => new DiatonicFunction(root, fc)
+        fc => new DiatonicFunction(rootKey, fc)
       )
     );
     this.setState({
-      root: root,
+      rootKey: rootKey,
       functions: functions,
     })
   }
   setOctave(octave: number){
-    const rawRoot = (this.state.root + 12000) % 12;
-    this.setRoot(rawRoot + (octave * 12));
+    const rawRoot = (this.state.rootKey + 12000) % 12;
+    this.setRootKey(rawRoot + (octave * 12));
   }
   stopAll = () => {
     this.state.functions.forEach(
@@ -54,18 +53,14 @@ class App extends Component {
   }
   render() {
     const {
+      rootKey,
       functions,
     } = this.state
     const octaves = [-2, -1, 0, 1, 2];
-    const allKeys = getAllKeys();
     return (
       <div>
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
-        <select onChange={e => this.setRoot(parseFloat(e.target.value))}>
-          {allKeys.map((ak, aki) => (
-            <option key={'root'+aki} value={ak.step}>{ak.letter}</option>
-          ))}
-        </select>
+        <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
         <select onChange={e => this.setOctave(parseFloat(e.target.value))}>
           {octaves.map((oct, octi) => (
             <option key={'oct'+octi} value={oct}>{oct + 4}</option>

@@ -44,7 +44,7 @@ export type ChordConfig = {
 export type FunctionConfig = {
   keyMode: KeyMode,
   roman: RomanNumeral,
-  minorNonLeading: ?boolean,
+  minorNonLeading?: boolean,
   pitchOffset: number,
   chordType: ChordType,
 };
