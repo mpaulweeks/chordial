@@ -60,9 +60,9 @@ export type FunctionConfig = {
 };
 
 const sharpKeys = ['C', 'G', 'D', 'A', 'E', 'B'];
-const flatKeys = ['F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'];
+const flatKeys = ['F', 'B♭', 'E♭', 'A♭', 'D♭', 'G♭'];
 const sharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-const flats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab'];
+const flats = ['A', 'B♭', 'B', 'C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭'];
 function checkKeyIsSharp(step: number){
   const s = convertStepToPitch(step, true);
   return sharpKeys.includes(s.letter);

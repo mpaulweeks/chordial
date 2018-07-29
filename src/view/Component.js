@@ -17,6 +17,10 @@ const ChordButtonContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  & > * {
+    width: 100%;
+  }
+
   ${props => props.isFocused && `
     border-color: var(--highlight);
   `};
@@ -25,7 +29,6 @@ const ButtonHeader = styled.div`
   background-color: var(--foreground);
   color: var(--background);
 
-  width: 100%;
   height: 20px;
   line-height: 20px;
   font-size: 18px;
@@ -83,9 +86,11 @@ export class DiatonicFunctionButton extends Component {
     const onClick = callback ? () => callback(df) : () => {};
     return (
       <ChordButtonContainer onClick={onClick} isFocused={isFocused}>
-        <ButtonHeader isFocused={isFocused}>{ tonicSymbol }</ButtonHeader>
+        <ButtonHeader isFocused={isFocused}>
+          <KeyDisplay value={tonicSymbol} />
+        </ButtonHeader>
         <ButtonTextLarge>
-          { chordSymbol || '...'}
+          <KeyDisplay value={chordSymbol || '...'} />
           { superScript && <sup>{ superScript }</sup> }
           { inversionText && (
             <ChordInversionText>
@@ -93,7 +98,11 @@ export class DiatonicFunctionButton extends Component {
             </ChordInversionText>
           )}
         </ButtonTextLarge>
-        { notes && <ButtonTextSmall>{ notes.join(' ') }</ButtonTextSmall> }
+        { notes && (
+          <ButtonTextSmall>
+            <KeyDisplay value={notes.join(' ')} />
+          </ButtonTextSmall>
+        )}
       </ChordButtonContainer>
     )
   }
@@ -150,7 +159,7 @@ export class OptionButton extends Component {
     const onClick = () => callback(value);
     return (
       <OptionButtonContainer onClick={onClick} isFocused={isFocused}>
-        { label }
+        <KeyDisplay value={label} />
       </OptionButtonContainer>
     );
   }
@@ -175,6 +184,23 @@ const SelectSectionHeader = styled.div`
 
   margin: 20px;
 `;
+
+const FlatSign = styled.span`
+  font-size: 0.8em;
+  margin: 0px -0.3em;
+`;
+class KeyDisplay extends Component {
+  render() {
+    const text = String(this.props.value || '');
+    return (
+      <span>
+        {text.split('').map((char, i) => (
+          char !== '♭' ? char : <FlatSign>♭</FlatSign>
+        ))}
+      </span>
+    );
+  }
+}
 
 
 export {
