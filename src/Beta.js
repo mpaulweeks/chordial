@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { getAllKeys } from './audio/Type';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
-import MidiLoader from './view/MidiLoader';
 import CommandRow from './view/CommandRow';
 import {
   DiatonicFunctionButton,
@@ -59,7 +58,6 @@ class App extends Component {
     const allKeys = getAllKeys();
     return (
       <div>
-        <MidiLoader />
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
         <select onChange={e => this.setRoot(parseFloat(e.target.value))}>
           {allKeys.map((ak, aki) => (
