@@ -111,25 +111,25 @@ class App extends Component {
     } = this.state
     return (
       <Beta>
+        <SelectSectionHeader> Select a Slot </SelectSectionHeader>
         <CommandRow ref={(ref) => (this.commandRow = ref)}/>
 
-        <hr/>
+        <SelectContainer>
+          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+        </SelectContainer>
+        <SelectContainer>
+          <SelectMode currentMode={mode} setMode={this.setMode} />
+          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
+          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
+        </SelectContainer>
 
-        <SelectSectionHeader> Add Chord </SelectSectionHeader>
+        <SelectSectionHeader> Add a Chord </SelectSectionHeader>
         <ButtonRow>
           {functions.map((df, dfi) => (
             <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
           ))}
         </ButtonRow>
 
-        <SelectContainer>
-          <SelectMode currentMode={mode} setMode={this.setMode} />
-          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
-          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
-        </SelectContainer>
-        <SelectContainer>
-          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
-        </SelectContainer>
       </Beta>
     );
   }

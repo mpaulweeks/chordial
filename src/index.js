@@ -12,5 +12,5 @@ if (selector.includes('beta')){
 } else if (selector.includes('legacy')){
   ReactDOM.render(<Legacy/>, rootElm);
 } else {
-  ReactDOM.render(<Legacy/>, rootElm);
+  ReactDOM.render(<Beta/>, rootElm);
 }

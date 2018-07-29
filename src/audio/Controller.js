@@ -56,6 +56,7 @@ class _Controller {
   audioCtx: AudioContext;
   audioFont: any;
   midiPlayer: WebAudioFontPlayer;
+  useMidi: boolean;
 
   constructor() {
     const AudioContextFunc = window.AudioContext || window.webkitAudioContext;
@@ -66,6 +67,7 @@ class _Controller {
     this.audioCtx = audioCtx
     this.audioFont = audioFont;
     this.midiPlayer = midiPlayer;
+    this.useMidi = !window.location.search.includes('osc');
   }
   playOsc(step: number, start: number, duration: number){
     const newOsc = new OscWrapper(this.audioCtx, step);
@@ -78,7 +80,7 @@ class _Controller {
     return newMidi;
   }
   play(step: number, start: number, duration: number){
-    if (this.midiPlayer){
+    if (this.useMidi){
       return this.playMidi(step, start, duration);
     }
     return this.playOsc(step, start, duration);
