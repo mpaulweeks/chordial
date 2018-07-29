@@ -15,7 +15,7 @@ const dfs = [
     tonic: 3,
     config: majorFunctions[0],
     additional: {
-      inversion: inversions.second,
+      inversion: inversions.first,
     },
   },
   {
@@ -29,7 +29,7 @@ const dfs = [
     tonic: 3,
     config: majorFunctions[0],
     additional: {
-      inversion: inversions.first,
+      inversion: inversions.second,
     },
   },
   {
@@ -41,7 +41,18 @@ const dfs = [
   },
   {
     tonic: 3,
+    config: majorFunctions[7],
+    additional: {
+      octave: -1,
+      inversion: inversions.third,
+    },
+  },
+  {
+    tonic: 3,
     config: majorFunctions[0],
+    additional: {
+      inversion: inversions.first,
+    },
   },
 ].map(obj => new DiatonicFunction(obj.tonic, obj.config, obj.additional));
 

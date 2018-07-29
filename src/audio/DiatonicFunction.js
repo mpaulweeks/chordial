@@ -56,6 +56,12 @@ const majorFunctions = [
     pitchOffset: 11,
     chordType: chordTypes.triadDiminished,
   },
+  {
+    keyMode: keyModes.major,
+    roman: 'v',
+    pitchOffset: 7,
+    chordType: chordTypes.sevenDominant,
+  },
 ];
 const minorFunctions = [
   {
@@ -174,6 +180,10 @@ export default class DiatonicFunction {
       case chordTypes.triadAugmented:
         chordSymbol = chordSymbol.toUpperCase();
         superScript = '+';
+        break;
+      case chordTypes.sevenDominant:
+        chordSymbol = chordSymbol.toUpperCase();
+        superScript = '7';
         break;
       default:
         chordSymbol = '???';
