@@ -78,6 +78,7 @@ export class DiatonicFunctionButton extends Component {
     const { df, isFocused, callback } = this.props;
     const {
       tonicSymbol,
+      octave,
       chordSymbol,
       superScript,
       inversionText,
@@ -101,6 +102,11 @@ export class DiatonicFunctionButton extends Component {
         { notes && (
           <ButtonTextSmall>
             <KeyDisplay value={notes.join(' ')} />
+          </ButtonTextSmall>
+        )}
+        { octave && (
+          <ButtonTextSmall>
+            {octave}
           </ButtonTextSmall>
         )}
       </ChordButtonContainer>

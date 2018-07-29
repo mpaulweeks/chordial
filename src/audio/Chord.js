@@ -34,6 +34,7 @@ export class PresetChord extends BaseChord {
     super();
     const {
       root,
+      octave,
       chordType,
       inversion,
     } = config;
@@ -60,6 +61,9 @@ export class PresetChord extends BaseChord {
     }
 
     const notes = pitches.map(p => new Note(p + root));
+    notes.forEach((n, index) => {
+      n.shiftOctave(octave);
+    });
 
     let inversionIndex;
     switch (inversion) {

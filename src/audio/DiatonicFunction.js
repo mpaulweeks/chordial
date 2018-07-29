@@ -132,13 +132,15 @@ export default class DiatonicFunction {
   tonic: number;
   chord: PresetChord;
 
-  constructor(tonic: number, config: FunctionConfig, inversion?: Inversion){
+  constructor(tonic: number, config: FunctionConfig, additionalChordConfig: ChordConfig){
     this.config = config;
     this.tonic = tonic;
     this.chord = new PresetChord({
       root: tonic + config.pitchOffset,
+      octave: 0,
       chordType: config.chordType,
-      inversion: inversion || inversions.none,
+      inversion: inversions.none,
+      ...additionalChordConfig,
     });
   }
   getFunctionRole() {
@@ -204,6 +206,7 @@ export default class DiatonicFunction {
 
     return {
       tonicSymbol: tonicSymbol,
+      octave: this.chord.config.octave + 4,
       chordSymbol: chordSymbol,
       superScript: superScript,
       inversionText: inversionText,

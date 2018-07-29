@@ -52,7 +52,10 @@ class App extends Component {
       inversion,
       octave,
     } = this.state;
-    const rootStep = rootKey + (12*octave);
+    const additionalChordConfig = {
+      inversion,
+      octave,
+    };
     let baseFunctions = [];
     switch (mode){
       case keyModes.major:
@@ -66,7 +69,7 @@ class App extends Component {
     }
     this.setState({
       functions: baseFunctions.map(
-        fc => new DiatonicFunction(rootStep, fc, inversion)
+        fc => new DiatonicFunction(rootKey, fc, additionalChordConfig)
       ),
     })
   }

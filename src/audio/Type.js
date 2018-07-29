@@ -47,6 +47,7 @@ export type Inversion = $Values<typeof inversions>;
 
 export type ChordConfig = {
   root: number,
+  octave: number,
   chordType: ChordType,
   inversion: Inversion,
 };

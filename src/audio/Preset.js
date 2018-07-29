@@ -7,32 +7,43 @@ const dfs = [
   {
     tonic: 3,
     config: majorFunctions[0],
+    additional: {
+      octave: -1,
+    },
   },
   {
     tonic: 3,
     config: majorFunctions[0],
-    inversion: inversions.second,
+    additional: {
+      inversion: inversions.second,
+    },
   },
   {
-    // todo pass octave, maybe as chord config?
     tonic: 3,
     config: majorFunctions[3],
+    additional: {
+      octave: -1,
+    },
   },
   {
     tonic: 3,
     config: majorFunctions[0],
-    inversion: inversions.first,
+    additional: {
+      inversion: inversions.first,
+    },
   },
   {
     tonic: 3,
     config: majorFunctions[4],
-    inversion: inversions.none,
+    additional: {
+      octave: -1,
+    },
   },
   {
     tonic: 3,
     config: majorFunctions[0],
   },
-].map(obj => new DiatonicFunction(obj.tonic, obj.config, obj.inversion));
+].map(obj => new DiatonicFunction(obj.tonic, obj.config, obj.additional));
 
 export default {
   dfs,

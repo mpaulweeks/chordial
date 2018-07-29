@@ -28,11 +28,7 @@ export default class CommandRow extends Component {
     const key = event.key.toLowerCase();
 
     if (COMMAND_KEYS.includes(key)){
-      this.setState({
-        focusIndex: key,
-      }, () => {
-        this.playCurrent();
-      });
+      this.setFocus(key);
     }
     if (key === 'arrowleft'){
       this.stepFocus(-1);
@@ -58,14 +54,14 @@ export default class CommandRow extends Component {
     const { focusIndex } = this.state;
     const keysIndex = COMMAND_KEYS.indexOf(focusIndex);
     const commandIndex = (keysIndex + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
-    this.setState({
-      focusIndex: COMMAND_KEYS[commandIndex],
-    });
+    this.setFocus(COMMAND_KEYS[commandIndex]);
   }
   setFocus = (key: string) => {
     this.setState({
       focusIndex: key,
-    })
+    }, () => {
+      this.playCurrent();
+    });
   }
   setDiatonicFunction(df: DiatonicFunction) {
     const { focusIndex } = this.state;
