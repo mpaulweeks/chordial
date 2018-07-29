@@ -2,6 +2,7 @@
 
 import type {
   Inversion,
+  ChordConfig,
   FunctionConfig,
 } from './Type';
 import {
