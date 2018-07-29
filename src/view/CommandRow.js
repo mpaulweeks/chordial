@@ -72,6 +72,7 @@ export default class CommandRow extends Component {
   playCurrent(){
     const current = this.getFocus();
     if (current.df){
+      current.df.chord.stop();
       current.df.chord.play(0, 1);
     }
   }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import MidiLoader from './view/MidiLoader';
 import {
   loadPhrase,
   playPhrase,
@@ -29,7 +28,6 @@ class Beta extends Component {
   render() {
     return (
       <div>
-        <MidiLoader />
         <div>
           <button id="load" onClick={loadPhrase}>load</button>
           <button id="load-play" onClick={loadAndPlay}>load and play</button>
