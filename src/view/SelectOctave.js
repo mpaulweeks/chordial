@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { getAllKeys } from '../audio/Type';
 import {
   ButtonRow,
   SelectSectionContainer,
