@@ -41,6 +41,13 @@ const ButtonTextLarge = styled.div`
 const ButtonTextSmall = styled.div`
   font-size: 0.8rem;
 `;
+const ChordInversionText = styled.div`
+  font-size: 0.5em;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 0px;
+  padding-left: 5px;
+`;
 const CommandLabel = styled.div`
   text-align: center;
   padding: 5px 0px;
@@ -80,7 +87,11 @@ export class DiatonicFunctionButton extends Component {
         <ButtonTextLarge>
           { chordSymbol || '...'}
           { superScript && <sup>{ superScript }</sup> }
-          { inversionText && <sup>{ inversionText }</sup> }
+          { inversionText && (
+            <ChordInversionText>
+              { inversionText }
+            </ChordInversionText>
+          )}
         </ButtonTextLarge>
         { notes && <ButtonTextSmall>{ notes.join(' ') }</ButtonTextSmall> }
       </ChordButtonContainer>
