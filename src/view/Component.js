@@ -70,6 +70,7 @@ export class DiatonicFunctionButton extends Component {
       tonicSymbol,
       chordSymbol,
       superScript,
+      inversionText,
       notes,
     } = df ? df.getFunctionRole() : {};
     const onClick = callback ? () => callback(df) : () => {};
@@ -79,6 +80,7 @@ export class DiatonicFunctionButton extends Component {
         <ButtonTextLarge>
           { chordSymbol || '...'}
           { superScript && <sup>{ superScript }</sup> }
+          { inversionText && <sup>{ inversionText }</sup> }
         </ButtonTextLarge>
         { notes && <ButtonTextSmall>{ notes.join(' ') }</ButtonTextSmall> }
       </ChordButtonContainer>

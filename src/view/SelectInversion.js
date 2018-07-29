@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { toOption, keyModes } from '../audio/Type';
+import { toOption, inversions } from '../audio/Type';
 import {
   ButtonRow,
   SelectSectionContainer,
@@ -8,35 +8,35 @@ import {
   OptionButton,
 } from './Component';
 
-export default class SelectMode extends Component {
+export default class SelectInversion extends Component {
   constructor(props){
     super(props);
     this.state = {
-      modeOptions: toOption(keyModes),
+      inversionOptions: toOption(inversions),
     };
   }
   componentDidMount() {
-    this.props.setMode(keyModes.major);
+    this.props.setInversion(inversions.none);
   }
   render() {
     const {
-      currentMode,
-      setMode,
+      currentInversion,
+      setInversion,
     } = this.props;
     const {
-      modeOptions,
+      inversionOptions,
     } = this.state;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Mode </SelectSectionHeader>
+        <SelectSectionHeader> Select Inversion </SelectSectionHeader>
         <ButtonRow>
-          {modeOptions.map((opt, opti) => (
+          {inversionOptions.map((opt, opti) => (
             <OptionButton
-              key={'mode'+opti}
+              key={'inversion'+opti}
               value={opt.value}
               label={opt.label}
-              callback={setMode}
-              isFocused={opt.value === currentMode}
+              callback={setInversion}
+              isFocused={opt.value === currentInversion}
             />
           ))}
         </ButtonRow>

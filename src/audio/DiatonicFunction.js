@@ -1,6 +1,9 @@
 // @flow
 
-import type { FunctionConfig } from './Type';
+import type {
+  Inversion,
+  FunctionConfig,
+} from './Type';
 import {
   keyModes,
   chordTypes,
@@ -129,13 +132,13 @@ export default class DiatonicFunction {
   tonic: number;
   chord: PresetChord;
 
-  constructor(tonic: number, config: FunctionConfig){
+  constructor(tonic: number, config: FunctionConfig, inversion?: Inversion){
     this.config = config;
     this.tonic = tonic;
     this.chord = new PresetChord({
       root: tonic + config.pitchOffset,
       chordType: config.chordType,
-      inversion: inversions.none,
+      inversion: inversion || inversions.none,
     });
   }
   getFunctionRole() {
@@ -177,10 +180,29 @@ export default class DiatonicFunction {
       chordSymbol = '♭' + chordSymbol;
     }
 
+    let inversionText = '';
+    switch (this.chord.config.inversion) {
+      case inversions.none:
+        inversionText = '';
+        break;
+      case inversions.first:
+        inversionText = '6';
+        break;
+      case inversions.second:
+        inversionText = '6 4';
+        break;
+      case inversions.third:
+        inversionText = '4 2';
+        break;
+      default:
+        inversionText = '?';
+    }
+
     return {
       tonicSymbol: tonicSymbol,
       chordSymbol: chordSymbol,
       superScript: superScript,
+      inversionText: inversionText,
       notes: this.chord.notes.map(n => n.getPitch(isSharp).letter),
     }
   }

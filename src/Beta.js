@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import type { KeyMode } from './audio/Type';
+import type {
+  KeyMode,
+  Inversion,
+} from './audio/Type';
 import {
   keyModes,
+  inversions,
 } from './audio/Type';
 import Preset from './audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import CommandRow from './view/CommandRow';
 import SelectMode from './view/SelectMode';
+import SelectInversion from './view/SelectInversion';
 import SelectKey from './view/SelectKey';
 import SelectOctave from './view/SelectOctave';
 import {
@@ -27,8 +32,9 @@ class App extends Component {
     super();
     this.state = {
       rootKey: 0,
-      octave: 0,
       mode: keyModes.major,
+      octave: 0,
+      inversion: inversions.none,
       functions: [],
     }
   }
@@ -41,8 +47,9 @@ class App extends Component {
   reloadFunctions() {
     const {
       rootKey,
-      octave,
       mode,
+      inversion,
+      octave,
     } = this.state;
     const rootStep = rootKey + (12*octave);
     let baseFunctions = [];
@@ -58,18 +65,23 @@ class App extends Component {
     }
     this.setState({
       functions: baseFunctions.map(
-        fc => new DiatonicFunction(rootStep, fc)
+        fc => new DiatonicFunction(rootStep, fc, inversion)
       ),
     })
+  }
+  setRootKey = (rootKey: number) => {
+    this.setState({
+      rootKey: rootKey,
+    }, this.reloadFunctions);
   }
   setMode = (mode: KeyMode) => {
     this.setState({
       mode: mode,
     }, this.reloadFunctions);
   }
-  setRootKey = (rootKey: number) => {
+  setInversion = (inversion: Inversion) => {
     this.setState({
-      rootKey: rootKey,
+      inversion: inversion,
     }, this.reloadFunctions);
   }
   setOctave = (octave: number) => {
@@ -78,11 +90,7 @@ class App extends Component {
     }, this.reloadFunctions);
   }
   stopAll = () => {
-    this.state.functions.forEach(
-      fl => fl.forEach(
-        df => df.chord.stop()
-      )
-    );
+    this.state.functions.forEach(df => df.chord.stop());
   }
   onFunctionClick = (df: DiatonicFunction) => {
     this.stopAll();
@@ -91,8 +99,9 @@ class App extends Component {
   }
   render() {
     const {
-      mode,
       rootKey,
+      mode,
+      inversion,
       octave,
       functions,
     } = this.state
@@ -104,6 +113,7 @@ class App extends Component {
         </SelectContainer>
         <SelectContainer>
           <SelectMode currentMode={mode} setMode={this.setMode} />
+          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
           <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
         </SelectContainer>
 
