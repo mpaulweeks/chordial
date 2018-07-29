@@ -44,6 +44,16 @@ export default class CommandRow extends Component {
       this.setDiatonicFunction(null);
     }
   }
+  loadDiatonicFunctions(dfs: Array<DiatonicFunction>){
+    const newState = COMMAND_KEYS.reduce((map, key, index) => {
+      map[key] = {
+        ...this.state[key],
+        df: dfs[index] || null,
+      };
+      return map;
+    }, {});
+    this.setState(newState);
+  }
   stepFocus(delta: number) {
     const { focusIndex } = this.state;
     const keysIndex = COMMAND_KEYS.indexOf(focusIndex);

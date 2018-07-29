@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { getAllKeys } from './audio/Type';
+import Preset from './audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from './audio/DiatonicFunction';
 
 import CommandRow from './view/CommandRow';
@@ -22,6 +23,7 @@ class App extends Component {
       this.commandRow.handleKeyPress(event);
     });
     this.setRoot(0);
+    this.commandRow.loadDiatonicFunctions(Preset.dfs);
   }
   setRoot(root: number){
     const functions = [majorFunctions, minorFunctions].map(
