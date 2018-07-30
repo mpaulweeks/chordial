@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { toOption, keyModes } from '../audio/Type';
 import {
-  ButtonRow,
+  OptionRow,
   SelectSectionContainer,
   SelectSectionHeader,
   OptionButton,
@@ -29,7 +29,7 @@ export default class SelectMode extends Component {
     return (
       <SelectSectionContainer>
         <SelectSectionHeader> Select Mode </SelectSectionHeader>
-        <ButtonRow>
+        <OptionRow>
           {modeOptions.map((opt, opti) => (
             <OptionButton
               key={'mode'+opti}
@@ -39,7 +39,7 @@ export default class SelectMode extends Component {
               isFocused={opt.value === currentMode}
             />
           ))}
-        </ButtonRow>
+        </OptionRow>
       </SelectSectionContainer>
     );
   }

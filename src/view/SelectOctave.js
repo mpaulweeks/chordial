@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  ButtonRow,
+  OptionRow,
   SelectSectionContainer,
   SelectSectionHeader,
   OptionButton,
@@ -28,7 +28,7 @@ export default class SelectOctave extends Component {
     return (
       <SelectSectionContainer>
         <SelectSectionHeader> Select Octave </SelectSectionHeader>
-        <ButtonRow>
+        <OptionRow>
           {octaves.map((oct, octi) => (
             <OptionButton
               key={'octave'+octi}
@@ -38,7 +38,7 @@ export default class SelectOctave extends Component {
               isFocused={oct === currentOctave}
             />
           ))}
-        </ButtonRow>
+        </OptionRow>
       </SelectSectionContainer>
     );
   }

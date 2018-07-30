@@ -138,8 +138,7 @@ const OptionButtonContainer = styled.div`
   cursor: pointer;
 
   height: 40px;
-  min-width: 40px;
-  padding: 0px 10px;
+  padding: 0px 15px;
   margin: 10px;
   font-size: 1.2em;
 
@@ -175,6 +174,27 @@ const ButtonRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+`;
+const OptionRow = styled(ButtonRow)`
+  & > * {
+    margin: 0px;
+    border-width: 2px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-radius: 0px;
+
+    --taper: 10%;
+  }
+  & > *:first-child {
+    border-left-width: 2px;
+    border-top-left-radius: var(--taper);
+    border-bottom-left-radius: var(--taper);
+  }
+  & > *:last-child {
+    border-right-width: 2px;
+    border-top-right-radius: var(--taper);
+    border-bottom-right-radius: var(--taper);
+  }
 `;
 const SelectContainer = styled.div`
   display: flex;
@@ -214,6 +234,7 @@ class KeyDisplay extends Component {
 
 export {
   ButtonRow,
+  OptionRow,
   SelectContainer,
   SelectSectionContainer,
   SelectSectionHeader,

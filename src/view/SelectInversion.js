@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { toOption, inversions } from '../audio/Type';
 import {
-  ButtonRow,
+  OptionRow,
   SelectSectionContainer,
   SelectSectionHeader,
   OptionButton,
@@ -29,7 +29,7 @@ export default class SelectInversion extends Component {
     return (
       <SelectSectionContainer>
         <SelectSectionHeader> Select Inversion </SelectSectionHeader>
-        <ButtonRow>
+        <OptionRow>
           {inversionOptions.map((opt, opti) => (
             <OptionButton
               key={'inversion'+opti}
@@ -39,7 +39,7 @@ export default class SelectInversion extends Component {
               isFocused={opt.value === currentInversion}
             />
           ))}
-        </ButtonRow>
+        </OptionRow>
       </SelectSectionContainer>
     );
   }

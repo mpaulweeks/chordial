@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getAllKeys } from '../audio/Type';
 import {
-  ButtonRow,
+  OptionRow,
   SelectSectionContainer,
   SelectSectionHeader,
   OptionButton,
@@ -30,7 +30,7 @@ export default class SelectKey extends Component {
     return (
       <SelectSectionContainer>
         <SelectSectionHeader> Select Key </SelectSectionHeader>
-        <ButtonRow>
+        <OptionRow>
           {allKeys.map((ak, aki) => (
             <OptionButton
               key={'root'+aki}
@@ -40,7 +40,7 @@ export default class SelectKey extends Component {
               isFocused={ak.step === rawRootKey}
             />
           ))}
-        </ButtonRow>
+        </OptionRow>
       </SelectSectionContainer>
     );
   }
