@@ -15,8 +15,8 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "predeploy": "yarn build && cp -r .circleci build/",
+    "deploy": "gh-pages -d build --dotfiles",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
