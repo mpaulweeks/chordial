@@ -135,19 +135,41 @@ export {
 
 export default class DiatonicFunction {
   config: FunctionConfig;
+  chordConfig: ChordConfig;
   tonic: number;
   chord: PresetChord;
 
-  constructor(tonic: number, config: FunctionConfig, additionalChordConfig: ChordConfig){
-    this.config = config;
+  constructor(tonic: number, config: FunctionConfig, chordConfig: ChordConfig){
     this.tonic = tonic;
+    this.config = config;
+    this.chordConfig = chordConfig;
+
     this.chord = new PresetChord({
       root: tonic + config.pitchOffset,
       octave: 4,
       chordType: config.chordType,
       inversion: inversions.none,
-      ...additionalChordConfig,
+      ...chordConfig,
     });
+  }
+  static fromSerialized(serial: string) {
+    const parts = serial.split('|');
+    const tonic = parts[0];
+    const config = JSON.parse(parts[1]);
+    const chordConfig = JSON.parse(parts[2]);
+    return new DiatonicFunction(tonic, config, chordConfig);
+  }
+  toSerialized() {
+    const {
+      tonic,
+      config,
+      chordConfig,
+    } = this;
+    return [
+      tonic,
+      JSON.stringify(config),
+      JSON.stringify(chordConfig),
+    ].join('|');
   }
   getFunctionRole() {
     let isSharp = checkKeyIsSharp(this.tonic);

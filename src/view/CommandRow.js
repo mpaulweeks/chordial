@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
 
 import {
   CommandButton,
@@ -48,7 +49,7 @@ export default class CommandRow extends Component {
       };
       return map;
     }, {});
-    this.setState(newState);
+    this.setState(newState, () => this.afterFunctionSet());
   }
   stepFocus(delta: number) {
     const { focusIndex } = this.state;
@@ -70,7 +71,19 @@ export default class CommandRow extends Component {
       ...this.state[focusIndex],
       df: df,
     };
-    this.setState(newState);
+    this.setState(newState, () => this.afterFunctionSet());
+  }
+  afterFunctionSet() {
+    console.log('after set')
+    const serialized = COMMAND_KEYS.reduce((arr, key) => {
+      const df = this.state[key].df;
+      if (df){
+        const ser = df.toSerialized();
+        arr.push(ser);
+      }
+      return arr;
+    }, []);
+    serialized.forEach(s => console.log(s));
   }
   getFocus(){
     return this.state[this.state.focusIndex];
@@ -86,6 +99,7 @@ export default class CommandRow extends Component {
     const {
       focusIndex,
     } = this.state;
+
     return (
       <ButtonRow>
         {COMMAND_KEYS.map((key, ci) => {
