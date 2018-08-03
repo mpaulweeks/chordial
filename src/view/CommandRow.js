@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
 
 import {
   CommandButton,
@@ -74,16 +73,14 @@ export default class CommandRow extends Component {
     this.setState(newState, () => this.afterFunctionSet());
   }
   afterFunctionSet() {
-    console.log('after set')
-    const serialized = COMMAND_KEYS.reduce((arr, key) => {
+    const dfs = COMMAND_KEYS.reduce((arr, key) => {
       const df = this.state[key].df;
       if (df){
-        const ser = df.toSerialized();
-        arr.push(ser);
+        arr.push(df);
       }
       return arr;
     }, []);
-    serialized.forEach(s => console.log(s));
+    this.props.onCommandUpdate(dfs);
   }
   getFocus(){
     return this.state[this.state.focusIndex];

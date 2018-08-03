@@ -133,6 +133,13 @@ export {
   minorFunctions,
 };
 
+const DF_SPLITTER = '-';
+const keysConfig = ['keyMode', 'roman', 'minorNonLeading', 'pitchOffset', 'chordType'];
+const keysChordConfig = ['root', 'octave', 'chordType', 'inversion'];
+function parseNum(s){
+  return s ? parseFloat(s): s;
+}
+
 export default class DiatonicFunction {
   config: FunctionConfig;
   chordConfig: ChordConfig;
@@ -153,10 +160,31 @@ export default class DiatonicFunction {
     });
   }
   static fromSerialized(serial: string) {
-    const parts = serial.split('|');
-    const tonic = parts[0];
-    const config = JSON.parse(parts[1]);
-    const chordConfig = JSON.parse(parts[2]);
+    const parts = serial.split(DF_SPLITTER);
+    const tonic = parseNum(parts[0]);
+    const config = {};
+    const chordConfig = {};
+    let i = 1;
+    keysConfig.forEach(k => {
+      let v = parts[i];
+      i += 1;
+      if (v !== ''){
+        if (['pitchOffset', 'root', 'octave'].includes(k)){
+          v = parseNum(v);
+        }
+        config[k] = v;
+      }
+    });
+    keysChordConfig.forEach(k => {
+      let v = parts[i];
+      i += 1;
+      if (v !== ''){
+        if (['pitchOffset', 'root', 'octave'].includes(k)){
+          v = parseNum(v);
+        }
+        chordConfig[k] = v;
+      }
+    });
     return new DiatonicFunction(tonic, config, chordConfig);
   }
   toSerialized() {
@@ -167,9 +195,9 @@ export default class DiatonicFunction {
     } = this;
     return [
       tonic,
-      JSON.stringify(config),
-      JSON.stringify(chordConfig),
-    ].join('|');
+      ...keysConfig.map(k => config[k]),
+      ...keysChordConfig.map(k => chordConfig[k]),
+    ].join(DF_SPLITTER);
   }
   getFunctionRole() {
     let isSharp = checkKeyIsSharp(this.tonic);

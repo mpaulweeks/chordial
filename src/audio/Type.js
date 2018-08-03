@@ -16,8 +16,8 @@ function toOption(obj: Object): Array<Option>{
   }));
 }
 const keyModes = {
-  major: 'major mode',
-  minor: 'minor mode',
+  major: 'ma',
+  minor: 'mi',
 };
 export type KeyMode = $Values<typeof keyModes>;
 
@@ -29,19 +29,19 @@ export type Pitch = {
 };
 
 const chordTypes = {
-  triadMajor: 'major triad',
-  triadMinor: 'minor triad',
-  triadDiminished: 'dimished triad',
-  triadAugmented: 'augmented triad',
-  sevenDominant: 'dominant seventh',
+  triadMajor: 'tma',
+  triadMinor: 'tmi',
+  triadDiminished: 'tdi',
+  triadAugmented: 'tau',
+  sevenDominant: '7do',
 };
 export type ChordType = $Values<typeof chordTypes>;
 
 const inversions = {
-  none: 'none',
-  first: 'first',   // 6
-  second: 'second', // 6 4
-  third: 'third',   // 4 2
+  none: '0',
+  first: '1',   // 6
+  second: '2', // 6 4
+  third: '3',   // 4 2
 };
 export type Inversion = $Values<typeof inversions>;
 

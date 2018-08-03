@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 import type {
   KeyMode,
@@ -37,13 +38,25 @@ class App extends Component {
       octave: 0,
       inversion: inversions.none,
       functions: [],
+      shareUrl: '',
     }
   }
   componentDidMount() {
     document.addEventListener('keydown', event => {
       this.commandRow.handleKeyPress(event);
     });
-    this.commandRow.loadDiatonicFunctions(Preset.dfs);
+
+    let dfs = Preset.dfs;
+    const parsed = queryString.parse(window.location.search);
+    let serialized = parsed.df;
+    if (serialized){
+      if (typeof(serialized) === 'string'){
+        serialized = [serialized];
+      }
+      dfs = serialized.map(DiatonicFunction.fromSerialized);
+    }
+
+    this.commandRow.loadDiatonicFunctions(dfs);
   }
   reloadFunctions() {
     const {
@@ -72,6 +85,14 @@ class App extends Component {
         fc => new DiatonicFunction(rootKey, fc, additionalChordConfig)
       ),
     })
+  }
+  onCommandUpdate = (dfs: Array<DiatonicFunction>) => {
+    const qs = queryString.stringify({
+      df: dfs.map(df => df.toSerialized()),
+    });
+    this.setState({
+      shareUrl: '?' + qs,
+    });
   }
   setRootKey = (rootKey: number) => {
     this.setState({
@@ -108,11 +129,15 @@ class App extends Component {
       inversion,
       octave,
       functions,
+      shareUrl,
     } = this.state
     return (
       <Beta>
         <SelectSectionHeader> Select a Keyboard Shortcut </SelectSectionHeader>
-        <CommandRow ref={(ref) => (this.commandRow = ref)}/>
+        <CommandRow ref={(ref) => (this.commandRow = ref)} onCommandUpdate={this.onCommandUpdate} />
+        <h3>
+          <a href={shareUrl}>Share this config</a>
+        </h3>
 
         <SelectContainer>
           <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
