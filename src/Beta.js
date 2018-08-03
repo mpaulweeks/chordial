@@ -60,15 +60,11 @@ class App extends Component {
   }
   reloadFunctions() {
     const {
-      rootKey,
       mode,
+      rootKey,
       inversion,
       octave,
     } = this.state;
-    const additionalChordConfig = {
-      inversion,
-      octave,
-    };
     let baseFunctions = [];
     switch (mode){
       case keyModes.major:
@@ -80,11 +76,18 @@ class App extends Component {
       default:
         throw Error('unsupported mode: ' + mode);
     }
+    const newFunctions = baseFunctions.map(fc => {
+      const mergedConfig = {
+        ...fc,
+        tonic: rootKey,
+        octave: octave,
+        inversion: inversion,
+      };
+      return DiatonicFunction.fromRoughConfig(mergedConfig);
+    });
     this.setState({
-      functions: baseFunctions.map(
-        fc => new DiatonicFunction(rootKey, fc, additionalChordConfig)
-      ),
-    })
+      functions: newFunctions,
+    });
   }
   onCommandUpdate = (dfs: Array<DiatonicFunction>) => {
     const qs = queryString.stringify({

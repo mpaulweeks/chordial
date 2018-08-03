@@ -45,6 +45,17 @@ const inversions = {
 };
 export type Inversion = $Values<typeof inversions>;
 
+export type FunctionConfig = {
+  tonic: number,
+  pitchOffset: number,
+  keyMode: KeyMode,
+  roman: RomanNumeral,
+  minorNonLeading: boolean,
+  octave: number,
+  chordType: ChordType,
+  inversion: Inversion,
+};
+
 export type ChordConfig = {
   root: number,
   octave: number,
@@ -52,13 +63,6 @@ export type ChordConfig = {
   inversion: Inversion,
 };
 
-export type FunctionConfig = {
-  keyMode: KeyMode,
-  roman: RomanNumeral,
-  minorNonLeading?: boolean,
-  pitchOffset: number,
-  chordType: ChordType,
-};
 
 const sharpKeys = ['C', 'G', 'D', 'A', 'E', 'B'];
 const flatKeys = ['F', 'B♭', 'E♭', 'A♭', 'D♭', 'G♭'];

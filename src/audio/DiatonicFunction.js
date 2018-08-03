@@ -1,7 +1,6 @@
 // @flow
 
 import type {
-  ChordConfig,
   FunctionConfig,
 } from './Type';
 import {
@@ -13,7 +12,26 @@ import {
 } from './Type';
 import { PresetChord } from './Chord';
 
-const majorFunctions = [
+function parseNum(value: any, defValue?: number){
+  if (value === 0){
+    return 0;
+  }
+  return parseFloat(value || defValue);
+}
+function presetToConfig(obj: Object): FunctionConfig {
+  return {
+    tonic: parseNum(obj.tonic, 3),
+    pitchOffset: parseNum(obj.pitchOffset),
+    keyMode: obj.keyMode,
+    roman: obj.roman,
+    minorNonLeading: !!obj.minorNonLeading,
+    chordType: obj.chordType,
+    octave: parseNum(obj.octave, 4),
+    inversion: obj.inversion || inversions.none,
+  };
+}
+
+const majorFunctions: Array<FunctionConfig> = [
   {
     keyMode: keyModes.major,
     roman: 'i',
@@ -62,8 +80,8 @@ const majorFunctions = [
     pitchOffset: 7,
     chordType: chordTypes.sevenDominant,
   },
-];
-const minorFunctions = [
+].map(presetToConfig);
+const minorFunctions: Array<FunctionConfig> = [
   {
     keyMode: keyModes.minor,
     roman: 'i',
@@ -127,83 +145,83 @@ const minorFunctions = [
     pitchOffset: 11,
     chordType: chordTypes.triadDiminished,
   },
-];
+].map(presetToConfig);
 export {
   majorFunctions,
   minorFunctions,
 };
 
 const DF_SPLITTER = '-';
-const keysConfig = ['keyMode', 'roman', 'minorNonLeading', 'pitchOffset', 'chordType'];
-const keysChordConfig = ['root', 'octave', 'chordType', 'inversion'];
-function parseNum(s){
-  return s ? parseFloat(s): s;
-}
+const configKeys = [
+  'tonic',
+  'pitchOffset',
+  'keyMode',
+  'roman',
+  'minorNonLeading',
+  'octave',
+  'chordType',
+  'inversion',
+];
 
 export default class DiatonicFunction {
   config: FunctionConfig;
-  chordConfig: ChordConfig;
-  tonic: number;
   chord: PresetChord;
 
-  constructor(tonic: number, config: FunctionConfig, chordConfig: ChordConfig){
-    this.tonic = tonic;
+  constructor(config: FunctionConfig){
     this.config = config;
-    this.chordConfig = chordConfig;
 
-    this.chord = new PresetChord({
-      root: tonic + config.pitchOffset,
-      octave: 4,
+    const chordConfig = {
+      root: config.tonic + config.pitchOffset,
+      octave: config.octave,
       chordType: config.chordType,
-      inversion: inversions.none,
-      ...chordConfig,
-    });
+      inversion: config.inversion,
+    }
+    this.chord = new PresetChord(chordConfig);
   }
+  static fromRoughConfig(newConfig: Object){
+    const cleaned = presetToConfig(newConfig);
+    return new DiatonicFunction(cleaned);
+  }
+
+
   static fromSerialized(serial: string) {
     const parts = serial.split(DF_SPLITTER);
-    const tonic = parseNum(parts[0]);
     const config = {};
-    const chordConfig = {};
-    let i = 1;
-    keysConfig.forEach(k => {
+    configKeys.forEach((k, i) => {
       let v = parts[i];
-      i += 1;
-      if (v !== ''){
-        if (['pitchOffset', 'root', 'octave'].includes(k)){
-          v = parseNum(v);
-        }
-        config[k] = v;
-      }
+      config[k] = v.length ? v : undefined;
     });
-    keysChordConfig.forEach(k => {
-      let v = parts[i];
-      i += 1;
-      if (v !== ''){
-        if (['pitchOffset', 'root', 'octave'].includes(k)){
-          v = parseNum(v);
-        }
-        chordConfig[k] = v;
-      }
-    });
-    return new DiatonicFunction(tonic, config, chordConfig);
+    return DiatonicFunction.fromRoughConfig(config);
   }
   toSerialized() {
+    return configKeys
+      .map(k => {
+        const value = this.config[k];
+        if (value === false){
+          return '';
+        }
+        if (value === true){
+          return 1;
+        }
+        return value;
+      })
+      .join(DF_SPLITTER)
+  }
+
+  getFunctionRole() {
     const {
       tonic,
-      config,
-      chordConfig,
-    } = this;
-    return [
-      tonic,
-      ...keysConfig.map(k => config[k]),
-      ...keysChordConfig.map(k => chordConfig[k]),
-    ].join(DF_SPLITTER);
-  }
-  getFunctionRole() {
-    let isSharp = checkKeyIsSharp(this.tonic);
+      keyMode,
+      roman,
+      minorNonLeading,
+      chordType,
+      octave,
+      inversion,
+    } = this.config;
+    let isSharp = checkKeyIsSharp(tonic);
 
-    let tonicSymbol = convertStepToPitch(this.tonic, isSharp).letter;
-    switch (this.config.keyMode) {
+    let tonicSymbol = convertStepToPitch(tonic, isSharp).letter;
+    switch (keyMode) {
       case keyModes.major:
         tonicSymbol = tonicSymbol.toUpperCase();
         break;
@@ -214,9 +232,9 @@ export default class DiatonicFunction {
         tonicSymbol = '???';
     }
 
-    let chordSymbol = this.config.roman;
+    let chordSymbol = roman;
     let superScript = '';
-    switch (this.config.chordType) {
+    switch (chordType) {
       case chordTypes.triadMajor:
         chordSymbol = chordSymbol.toUpperCase();
         break;
@@ -238,12 +256,12 @@ export default class DiatonicFunction {
       default:
         chordSymbol = '???';
     }
-    if (this.config.minorNonLeading){
+    if (minorNonLeading){
       chordSymbol = '♭' + chordSymbol;
     }
 
     let inversionText = '';
-    switch (this.chord.config.inversion) {
+    switch (inversion) {
       case inversions.none:
         inversionText = '';
         break;
@@ -266,7 +284,7 @@ export default class DiatonicFunction {
 
     return {
       tonicSymbol: tonicSymbol,
-      octave: this.chord.config.octave,
+      octave: octave,
       chordSymbol: chordSymbol,
       superScript: superScript,
       inversionText: inversionText,

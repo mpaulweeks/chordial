@@ -5,70 +5,67 @@ import DiatonicFunction, { majorFunctions } from './DiatonicFunction';
 
 const dfs = [
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       octave: 3,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       octave: 4,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       octave: 5,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       inversion: inversions.first,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[3],
-    additional: {
+    base: majorFunctions[3],
+    transpose: {
       octave: 3,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       inversion: inversions.second,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[4],
-    additional: {
+    base: majorFunctions[4],
+    transpose: {
       octave: 3,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[7],
-    additional: {
+    base: majorFunctions[7],
+    transpose: {
       octave: 3,
       inversion: inversions.third,
     },
   },
   {
-    tonic: 3,
-    config: majorFunctions[0],
-    additional: {
+    base: majorFunctions[0],
+    transpose: {
       inversion: inversions.first,
     },
   },
-].map(obj => new DiatonicFunction(obj.tonic, obj.config, obj.additional));
+].map(obj => {
+  const mergedConfig = {
+    ...obj.base,
+    ...obj.transpose,
+  }
+  return DiatonicFunction.fromRoughConfig(mergedConfig);
+});
 
 export default {
   dfs,
