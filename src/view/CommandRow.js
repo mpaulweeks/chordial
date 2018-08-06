@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import queryString from 'query-string';
 
+import Preset from '../audio/Preset';
 import {
   CommandButton,
   ButtonRow,
 } from './Component';
+
+const UrlContainer = styled.div`
+  text-align: center;
+`;
 
 const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
@@ -21,7 +28,21 @@ export default class CommandRow extends Component {
     this.state = {
       ...commands,
       focusIndex: COMMAND_KEYS[0],
+      shareUrl: '',
     };
+  }
+  componentDidMount() {
+    let dfs = Preset.dfs;
+    const parsed = queryString.parse(window.location.search);
+    let serialized = parsed.df;
+    if (serialized){
+      if (typeof(serialized) === 'string'){
+        serialized = [serialized];
+      }
+      dfs = serialized.map(DiatonicFunction.fromSerialized);
+    }
+
+    this.loadDiatonicFunctions(dfs);
   }
 
   handleKeyPress(event) {
@@ -80,7 +101,12 @@ export default class CommandRow extends Component {
       }
       return arr;
     }, []);
-    this.props.onCommandUpdate(dfs);
+    const qs = queryString.stringify({
+      df: dfs.map(df => df.toSerialized()),
+    });
+    this.setState({
+      shareUrl: '?' + qs,
+    });
   }
   getFocus(){
     return this.state[this.state.focusIndex];
@@ -95,22 +121,28 @@ export default class CommandRow extends Component {
   render() {
     const {
       focusIndex,
+      shareUrl,
     } = this.state;
 
     return (
-      <ButtonRow>
-        {COMMAND_KEYS.map((key, ci) => {
-          const c = this.state[key];
-          return (
-            <CommandButton
-              key={'command-'+c.key}
-              command={c}
-              callback={this.setFocus}
-              isFocused={focusIndex === c.key}
-            />
-          );
-        })}
-      </ButtonRow>
+      <div>
+        <ButtonRow>
+          {COMMAND_KEYS.map((key, ci) => {
+            const c = this.state[key];
+            return (
+              <CommandButton
+                key={'command-'+c.key}
+                command={c}
+                callback={this.setFocus}
+                isFocused={focusIndex === c.key}
+              />
+            );
+          })}
+        </ButtonRow>
+        <UrlContainer>
+          <a href={shareUrl}>Share this config</a>
+        </UrlContainer>
+      </div>
     );
   }
 }
