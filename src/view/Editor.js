@@ -39,19 +39,6 @@ class EditorApp extends Component {
       functions: [],
     }
   }
-  componentDidMount() {
-    let dfs = Preset.dfs;
-    const parsed = queryString.parse(window.location.search);
-    let serialized = parsed.df;
-    if (serialized){
-      if (typeof(serialized) === 'string'){
-        serialized = [serialized];
-      }
-      dfs = serialized.map(DiatonicFunction.fromSerialized);
-    }
-
-    this.commandRow.loadDiatonicFunctions(dfs);
-  }
   reloadFunctions() {
     const {
       mode,

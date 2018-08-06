@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 
 import Preset from '../audio/Preset';
+import DiatonicFunction from '../audio/DiatonicFunction';
 import {
   CommandButton,
   ButtonRow,
@@ -10,6 +11,9 @@ import {
 
 const UrlContainer = styled.div`
   text-align: center;
+  font-weight: bold;
+  font-size: 1.17rem;
+  margin: 1rem;
 `;
 
 const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
