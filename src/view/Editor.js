@@ -16,10 +16,12 @@ import SelectInversion from './SelectInversion';
 import SelectKey from './SelectKey';
 import SelectOctave from './SelectOctave';
 import {
+  Modal,
   DiatonicFunctionButton,
   SelectContainer,
   SelectSectionHeader,
   ButtonRow,
+  BigButton,
 } from './Component';
 
 const EditorContainer = styled.div`
@@ -30,6 +32,7 @@ export default class EditorApp extends Component {
   constructor() {
     super();
     this.state = {
+      modalOpen: false,
       rootKey: 0,
       mode: keyModes.major,
       octave: 0,
@@ -91,6 +94,11 @@ export default class EditorApp extends Component {
   stopAll = () => {
     this.state.functions.forEach(df => df.chord.stop());
   }
+  toggleModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen,
+    });
+  }
   onFunctionClick = (df: DiatonicFunction) => {
     this.stopAll();
     df.chord.play(0, 1);
@@ -98,6 +106,7 @@ export default class EditorApp extends Component {
   }
   render() {
     const {
+      modalOpen,
       rootKey,
       mode,
       inversion,
@@ -107,21 +116,35 @@ export default class EditorApp extends Component {
     return (
       <EditorContainer>
 
-        <SelectContainer>
-          <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
-        </SelectContainer>
-        <SelectContainer>
-          <SelectMode currentMode={mode} setMode={this.setMode} />
-          <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
-          <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
-        </SelectContainer>
+        {modalOpen ? (
+          <Modal>
+            <SelectContainer>
+              <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+            </SelectContainer>
+            <SelectContainer>
+              <SelectMode currentMode={mode} setMode={this.setMode} />
+              <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
+              <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
+            </SelectContainer>
 
-        <SelectSectionHeader> Add a Chord </SelectSectionHeader>
-        <ButtonRow>
-          {functions.map((df, dfi) => (
-            <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
-          ))}
-        </ButtonRow>
+            <SelectSectionHeader> Test or Add a Chord </SelectSectionHeader>
+            <ButtonRow>
+              {functions.map((df, dfi) => (
+                <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
+              ))}
+            </ButtonRow>
+
+            <ButtonRow>
+              <BigButton onClick={this.toggleModal}>
+                Exit
+              </BigButton>
+            </ButtonRow>
+          </Modal>
+        ) : (
+          <ButtonRow>
+            <BigButton onClick={this.toggleModal}>Add Chord</BigButton>
+          </ButtonRow>
+        )}
 
       </EditorContainer>
     );
