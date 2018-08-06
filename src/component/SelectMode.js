@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import { toOption, keyModes } from '../audio/Type';
 import {
-  OptionRow,
   SelectSectionContainer,
-  SelectSectionHeader,
+  SectionHeader,
+} from './Common';
+import {
+  OptionRow,
   OptionButton,
-} from './Component';
+} from './Option';
 
 export default class SelectMode extends Component {
   constructor(props){
@@ -28,7 +30,7 @@ export default class SelectMode extends Component {
     } = this.state;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Mode </SelectSectionHeader>
+        <SectionHeader> Select Mode </SectionHeader>
         <OptionRow>
           {modeOptions.map((opt, opti) => (
             <OptionButton

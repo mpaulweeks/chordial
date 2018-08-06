@@ -5,9 +5,9 @@ import queryString from 'query-string';
 import Preset from '../audio/Preset';
 import DiatonicFunction from '../audio/DiatonicFunction';
 import {
-  CommandButton,
   ButtonRow,
-} from './Component';
+} from '../component/Common';
+import { CommandButton } from '../component/Playable';
 
 const UrlContainer = styled.div`
   text-align: center;

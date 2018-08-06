@@ -5,8 +5,8 @@ import CommandRow from './view/CommandRow';
 import Keyboard from './view/Keyboard';
 import Editor from './view/Editor';
 import {
-  SelectSectionHeader,
-} from './view/Component';
+  SectionHeader,
+} from './component/Common';
 
 const BetaContainer = styled.div`
   text-align: center;
@@ -41,7 +41,7 @@ export default class BetaApp extends Component {
           displayFunc={displayFunc}
         />
 
-        <SelectSectionHeader> Select a Keyboard Shortcut </SelectSectionHeader>
+        <SectionHeader> Select a Keyboard Shortcut </SectionHeader>
         <CommandRow
           ref={(ref) => (this.commandRow = ref)}
           onCommandPlay={this.onCommandPlay}

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import { toOption, inversions } from '../audio/Type';
 import {
-  OptionRow,
   SelectSectionContainer,
-  SelectSectionHeader,
+  SectionHeader,
+} from './Common';
+import {
+  OptionRow,
   OptionButton,
-} from './Component';
+} from './Option';
 
 export default class SelectInversion extends Component {
   constructor(props){
@@ -28,7 +30,7 @@ export default class SelectInversion extends Component {
     } = this.state;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Inversion </SelectSectionHeader>
+        <SectionHeader> Select Inversion </SectionHeader>
         <OptionRow>
           {inversionOptions.map((opt, opti) => (
             <OptionButton

@@ -11,18 +11,18 @@ import {
 } from '../audio/Type';
 import DiatonicFunction, { majorFunctions, minorFunctions } from '../audio/DiatonicFunction';
 
-import SelectMode from './SelectMode';
-import SelectInversion from './SelectInversion';
-import SelectKey from './SelectKey';
-import SelectOctave from './SelectOctave';
+import SelectMode from '../component/SelectMode';
+import SelectInversion from '../component/SelectInversion';
+import SelectKey from '../component/SelectKey';
+import SelectOctave from '../component/SelectOctave';
+import Modal from '../component/Modal';
+import { DiatonicFunctionButton } from '../component/Playable';
 import {
-  Modal,
-  DiatonicFunctionButton,
   SelectContainer,
-  SelectSectionHeader,
+  SectionHeader,
   ButtonRow,
   BigButton,
-} from './Component';
+} from '../component/Common';
 
 const EditorContainer = styled.div`
   text-align: center;
@@ -127,7 +127,7 @@ export default class EditorApp extends Component {
               <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
             </SelectContainer>
 
-            <SelectSectionHeader> Test or Add a Chord </SelectSectionHeader>
+            <SectionHeader> Test or Add a Chord </SectionHeader>
             <ButtonRow>
               {functions.map((df, dfi) => (
                 <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
