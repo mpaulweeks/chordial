@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import queryString from 'query-string';
 
 import type {
   KeyMode,
@@ -10,7 +9,6 @@ import {
   keyModes,
   inversions,
 } from '../audio/Type';
-import Preset from '../audio/Preset';
 import DiatonicFunction, { majorFunctions, minorFunctions } from '../audio/DiatonicFunction';
 
 import SelectMode from './SelectMode';
