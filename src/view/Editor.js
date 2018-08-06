@@ -26,7 +26,7 @@ const EditorContainer = styled.div`
   text-align: center;
 `;
 
-class EditorApp extends Component {
+export default class EditorApp extends Component {
   constructor() {
     super();
     this.state = {
@@ -127,5 +127,3 @@ class EditorApp extends Component {
     );
   }
 }
-
-export default EditorApp;

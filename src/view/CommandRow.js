@@ -120,6 +120,7 @@ export default class CommandRow extends Component {
     if (current.df){
       current.df.chord.stop();
       current.df.chord.play(0, 1);
+      this.props.onCommandPlay(current.df);
     }
   }
   render() {

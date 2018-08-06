@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import CommandRow from './view/CommandRow';
+import Keyboard from './view/Keyboard';
 import Editor from './view/Editor';
 import {
   SelectSectionHeader,
@@ -11,7 +12,13 @@ const BetaContainer = styled.div`
   text-align: center;
 `;
 
-class BetaApp extends Component {
+export default class BetaApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayFunc: null,
+    }
+  }
   componentDidMount() {
     document.addEventListener('keydown', event => {
       this.commandRow.handleKeyPress(event);
@@ -20,16 +27,28 @@ class BetaApp extends Component {
   onFunctionClick = (df: DiatonicFunction) => {
     this.commandRow.setDiatonicFunction(df);
   }
+  onCommandPlay = (df: DiatonicFunction) => {
+    this.setState({
+      displayFunc: df,
+    });
+  }
   render() {
+    const { displayFunc } = this.state;
     return (
       <BetaContainer>
+        <Keyboard
+          ref={(ref) => (this.keyboard = ref)}
+          displayFunc={displayFunc}
+        />
+
         <SelectSectionHeader> Select a Keyboard Shortcut </SelectSectionHeader>
-        <CommandRow ref={(ref) => (this.commandRow = ref)} onCommandUpdate={this.onCommandUpdate} />
+        <CommandRow
+          ref={(ref) => (this.commandRow = ref)}
+          onCommandPlay={this.onCommandPlay}
+        />
 
         <Editor onFunctionClick={this.onFunctionClick} />
       </BetaContainer>
     );
   }
 }
-
-export default BetaApp;

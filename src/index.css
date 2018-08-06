@@ -11,3 +11,11 @@ body {
 a {
   color: var(--foreground);
 }
+@keyframes highlight {
+  from {
+    background-color: var(--highlight);
+  }
+  to {
+    background-color: inherit;
+  }
+}
