@@ -12,3 +12,4 @@ simple web page to try out chords
 - display keyboard
   - numbers on keys
   - lights up when playing
+- https://stackoverflow.com/a/22996293
