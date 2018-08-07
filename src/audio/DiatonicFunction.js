@@ -165,6 +165,7 @@ const configKeys = [
 
 export default class DiatonicFunction {
   config: FunctionConfig;
+  id: string;
   chord: PresetChord;
 
   constructor(config: FunctionConfig){
