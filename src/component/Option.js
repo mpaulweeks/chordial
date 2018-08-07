@@ -6,7 +6,7 @@ import {
 } from './Common';
 
 const OptionRow = styled(ButtonRow)`
-  & > * {
+  & > div {
     margin: 0px;
     border-width: 2px;
     border-left-width: 1px;
@@ -15,12 +15,12 @@ const OptionRow = styled(ButtonRow)`
 
     --taper: 10%;
   }
-  & > *:first-child {
+  & > div:first-child {
     border-left-width: 2px;
     border-top-left-radius: var(--taper);
     border-bottom-left-radius: var(--taper);
   }
-  & > *:last-child {
+  & > div:last-child {
     border-right-width: 2px;
     border-top-right-radius: var(--taper);
     border-bottom-right-radius: var(--taper);
