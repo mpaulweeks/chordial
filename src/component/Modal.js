@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const ModalOuter = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
 
   padding: 20px;
@@ -15,7 +15,7 @@ const ModalOuter = styled.div`
   align-items: center;
 
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  z-index: 20;
 `;
 const ModalInner = styled.div`
   padding: 20px;
