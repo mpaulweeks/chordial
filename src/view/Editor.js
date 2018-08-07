@@ -38,6 +38,7 @@ export default class EditorApp extends Component {
       octave: 0,
       inversion: inversions.none,
       functions: [],
+      selected: null,
     }
   }
   reloadFunctions() {
@@ -102,7 +103,17 @@ export default class EditorApp extends Component {
   onFunctionClick = (df: DiatonicFunction) => {
     this.stopAll();
     df.chord.play(0, 1);
-    this.props.onFunctionClick(df);
+    // this.props.onFunctionClick(df);
+    this.setState({
+      selected: df,
+    })
+  }
+  onSaveClick = () => {
+    const { selected } = this.state;
+    if (selected) {
+      this.props.onFunctionClick(selected);
+      this.toggleModal();
+    }
   }
   render() {
     const {
@@ -112,12 +123,13 @@ export default class EditorApp extends Component {
       inversion,
       octave,
       functions,
-    } = this.state
+      selected,
+    } = this.state;
     return (
       <EditorContainer>
 
         {modalOpen ? (
-          <Modal>
+          <Modal onExit={this.toggleModal}>
             <SelectContainer>
               <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
             </SelectContainer>
@@ -130,13 +142,18 @@ export default class EditorApp extends Component {
             <SectionHeader> Test or Add a Chord </SectionHeader>
             <ButtonRow>
               {functions.map((df, dfi) => (
-                <DiatonicFunctionButton key={'df-'+dfi} df={df} callback={this.onFunctionClick} />
+                <DiatonicFunctionButton
+                  key={'df-'+dfi}
+                  df={df}
+                  isFocused={selected && selected.id === df.id}
+                  callback={this.onFunctionClick}
+                />
               ))}
             </ButtonRow>
 
             <ButtonRow>
-              <BigButton onClick={this.toggleModal}>
-                Exit
+              <BigButton onClick={this.onSaveClick} disabled={!selected}>
+                Add Chord
               </BigButton>
             </ButtonRow>
           </Modal>

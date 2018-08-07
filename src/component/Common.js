@@ -26,12 +26,16 @@ const BigButton = styled.span`
   cursor: pointer;
   padding: 10px;
   font-size: 1.5rem;
-  font-weigth: bold;
+  font-weight: bold;
 
   color: var(--background);
   background-color: var(--foreground);
   border: 2px solid var(--background);
   border-radius: 1rem;
+
+  ${props => props.disabled && `
+    text-decoration: line-through;
+  `}
 `;
 
 export {

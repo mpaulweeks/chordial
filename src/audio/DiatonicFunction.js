@@ -169,6 +169,7 @@ export default class DiatonicFunction {
 
   constructor(config: FunctionConfig){
     this.config = config;
+    this.id = JSON.stringify(this.config);
 
     const chordConfig = {
       root: config.tonic + config.pitchOffset,
