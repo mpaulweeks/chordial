@@ -9,7 +9,29 @@ import {
 } from './component/Common';
 
 const BetaContainer = styled.div`
+  width: 100%;
+  height: 100%;
+
   text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+
+  ${props => props.isDark ? `
+    --foreground: #FFF;
+    --background: #444;
+    --highlight: yellow;
+  ` : `
+    --foreground: black;
+    --background: white;
+    --highlight: blue;
+  `}
+
+  background-color: var(--background);
+  color: var(--foreground);
+
+  & a {
+    color: var(--foreground);
+  }
 `;
 
 export default class BetaApp extends Component {
@@ -34,8 +56,9 @@ export default class BetaApp extends Component {
   }
   render() {
     const { displayFunc } = this.state;
+    const isDark = window.location.search.includes('dark');
     return (
-      <BetaContainer>
+      <BetaContainer isDark={isDark}>
         <Keyboard
           ref={(ref) => (this.keyboard = ref)}
           displayFunc={displayFunc}
