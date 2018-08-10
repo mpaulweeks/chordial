@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
 import {
-  OptionRow,
   SelectSectionContainer,
-  SelectSectionHeader,
+  SectionHeader,
+} from './Common';
+import {
+  OptionRow,
   OptionButton,
-} from './Component';
+} from './Option';
 
 export default class SelectOctave extends Component {
   constructor(props){
@@ -27,7 +29,7 @@ export default class SelectOctave extends Component {
     } = this.state;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Octave </SelectSectionHeader>
+        <SectionHeader> Select Octave </SectionHeader>
         <OptionRow>
           {octaves.map((oct, octi) => (
             <OptionButton

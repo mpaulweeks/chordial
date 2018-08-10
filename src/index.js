@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { withCookies, CookiesProvider } from 'react-cookie';
 
 import Beta from './Beta';
 import Legacy from './Legacy';
 
-const rootElm = document.getElementById('root');
+const render = app => {
+  const CookieApp = withCookies(app);
+  ReactDOM.render(
+    <CookiesProvider>
+      <CookieApp />
+    </CookiesProvider>,
+    document.getElementById('root')
+  );
+}
+
 const selector = window.location.search;
 if (selector.includes('beta')){
-  ReactDOM.render(<Beta/>, rootElm);
+  render(Beta);
 } else if (selector.includes('legacy')){
-  ReactDOM.render(<Legacy/>, rootElm);
+  render(Legacy);
 } else {
-  ReactDOM.render(<Beta/>, rootElm);
+  render(Beta);
 }

@@ -38,7 +38,7 @@ const BlackKey = styled.div`
   margin: 0px -1em;
   border: 2px solid black;
   background-color: black;
-  z-index: 1;
+  z-index: 10;
 
   ${props => props.highlight && `
     border-color: black;

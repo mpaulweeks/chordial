@@ -165,10 +165,12 @@ const configKeys = [
 
 export default class DiatonicFunction {
   config: FunctionConfig;
+  id: string;
   chord: PresetChord;
 
   constructor(config: FunctionConfig){
     this.config = config;
+    this.id = JSON.stringify(this.config);
 
     const chordConfig = {
       root: config.tonic + config.pitchOffset,

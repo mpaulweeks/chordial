@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import { getAllKeys } from '../audio/Type';
 import {
-  OptionRow,
   SelectSectionContainer,
-  SelectSectionHeader,
+  SectionHeader,
+} from './Common';
+import {
+  OptionRow,
   OptionButton,
-} from './Component';
+} from './Option';
 
 export default class SelectKey extends Component {
   constructor(props){
@@ -29,7 +31,7 @@ export default class SelectKey extends Component {
     const rawRootKey = (currentRootKey + 12000) % 12;
     return (
       <SelectSectionContainer>
-        <SelectSectionHeader> Select Key </SelectSectionHeader>
+        <SectionHeader> Select Key </SectionHeader>
         <OptionRow>
           {allKeys.map((ak, aki) => (
             <OptionButton

@@ -5,9 +5,9 @@ import queryString from 'query-string';
 import Preset from '../audio/Preset';
 import DiatonicFunction from '../audio/DiatonicFunction';
 import {
-  CommandButton,
   ButtonRow,
-} from './Component';
+} from '../component/Common';
+import { CommandButton } from '../component/Playable';
 
 const UrlContainer = styled.div`
   text-align: center;
@@ -35,6 +35,11 @@ export default class CommandRow extends Component {
       shareUrl: '',
     };
   }
+  promiseState(newState) {
+    return new Promise((resolve, reject) => {
+      this.setState(newState, resolve);
+    });
+  }
   componentDidMount() {
     let dfs = Preset.dfs;
     const parsed = queryString.parse(window.location.search);
@@ -46,7 +51,16 @@ export default class CommandRow extends Component {
       dfs = serialized.map(DiatonicFunction.fromSerialized);
     }
 
-    this.loadDiatonicFunctions(dfs);
+    const newState = COMMAND_KEYS.reduce((map, key, index) => {
+      map[key] = {
+        ...this.state[key],
+        df: dfs[index] || null,
+      };
+      return map;
+    }, {});
+    this.promiseState(newState)
+      .then(() => this.updateShareUrl())
+      .then(() => this.setFocus(COMMAND_KEYS[0]))
   }
 
   handleKeyPress(event) {
@@ -65,27 +79,18 @@ export default class CommandRow extends Component {
       this.setDiatonicFunction(null);
     }
   }
-  loadDiatonicFunctions(dfs: Array<DiatonicFunction>){
-    const newState = COMMAND_KEYS.reduce((map, key, index) => {
-      map[key] = {
-        ...this.state[key],
-        df: dfs[index] || null,
-      };
-      return map;
-    }, {});
-    this.setState(newState, () => this.afterFunctionSet());
-  }
   stepFocus(delta: number) {
     const { focusIndex } = this.state;
     const keysIndex = COMMAND_KEYS.indexOf(focusIndex);
     const commandIndex = (keysIndex + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
     this.setFocus(COMMAND_KEYS[commandIndex]);
   }
-  setFocus = (key: string) => {
+  setFocus(key: string) {
     this.setState({
       focusIndex: key,
     }, () => {
       this.playCurrent();
+      this.onFocus();
     });
   }
   setDiatonicFunction(df: DiatonicFunction) {
@@ -95,9 +100,21 @@ export default class CommandRow extends Component {
       ...this.state[focusIndex],
       df: df,
     };
-    this.setState(newState, () => this.afterFunctionSet());
+    this.promiseState(newState)
+      .then(() => this.updateShareUrl())
+      .then(() => this.onFocus())
   }
-  afterFunctionSet() {
+  getFocus(){
+    return this.state[this.state.focusIndex];
+  }
+  playCurrent(){
+    const current = this.getFocus();
+    if (current.df){
+      current.df.chord.stop();
+      current.df.chord.play(0, 1);
+    }
+  }
+  updateShareUrl() {
     const dfs = COMMAND_KEYS.reduce((arr, key) => {
       const df = this.state[key].df;
       if (df){
@@ -108,20 +125,15 @@ export default class CommandRow extends Component {
     const qs = queryString.stringify({
       df: dfs.map(df => df.toSerialized()),
     });
-    this.setState({
+    return this.promiseState({
       shareUrl: '?' + qs,
     });
   }
-  getFocus(){
-    return this.state[this.state.focusIndex];
-  }
-  playCurrent(){
-    const current = this.getFocus();
-    if (current.df){
-      current.df.chord.stop();
-      current.df.chord.play(0, 1);
-      this.props.onCommandPlay(current.df);
-    }
+  onFocus(){
+    return new Promise((resolve, reject) => {
+      this.props.onCommandPlay(this.getFocus().df);
+      resolve();
+    });
   }
   render() {
     const {
@@ -138,7 +150,7 @@ export default class CommandRow extends Component {
               <CommandButton
                 key={'command-'+c.key}
                 command={c}
-                callback={this.setFocus}
+                callback={key => this.setFocus(key)}
                 isFocused={focusIndex === c.key}
               />
             );
