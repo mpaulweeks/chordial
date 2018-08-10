@@ -65,7 +65,7 @@ export default class BetaApp extends Component {
       this.commandRow.handleKeyPress(event);
     });
   }
-  onFunctionClick = (df: DiatonicFunction) => {
+  onFunctionSet = (df: DiatonicFunction) => {
     this.commandRow.setDiatonicFunction(df);
   }
   onCommandPlay = (df: DiatonicFunction) => {
@@ -98,7 +98,7 @@ export default class BetaApp extends Component {
         <DarkToggle onClick={this.onToggleDark}>
           {isDark ? 'light mode' : 'dark mode'}
         </DarkToggle>
-        <Editor onFunctionClick={this.onFunctionClick} />
+        <Editor onFunctionSet={this.onFunctionSet} />
       </BetaContainer>
     );
   }

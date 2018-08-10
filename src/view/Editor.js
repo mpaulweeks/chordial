@@ -41,6 +41,9 @@ export default class EditorApp extends Component {
       selected: null,
     }
   }
+  componentDidMount() {
+    this.reloadFunctions();
+  }
   reloadFunctions() {
     const {
       mode,
@@ -103,15 +106,14 @@ export default class EditorApp extends Component {
   onFunctionClick = (df: DiatonicFunction) => {
     this.stopAll();
     df.chord.play(0, 1);
-    // this.props.onFunctionClick(df);
     this.setState({
       selected: df,
-    })
+    });
   }
   onSaveClick = () => {
     const { selected } = this.state;
     if (selected) {
-      this.props.onFunctionClick(selected);
+      this.props.onFunctionSet(selected);
       this.toggleModal();
     }
   }
@@ -146,20 +148,20 @@ export default class EditorApp extends Component {
                   key={'df-'+dfi}
                   df={df}
                   isFocused={selected && selected.id === df.id}
-                  callback={this.onFunctionClick}
+                  callback={() => this.onFunctionClick(df)}
                 />
               ))}
             </ButtonRow>
 
             <ButtonRow>
               <BigButton onClick={this.onSaveClick} disabled={!selected}>
-                Add Chord
+                Set Chord
               </BigButton>
             </ButtonRow>
           </Modal>
         ) : (
           <ButtonRow>
-            <BigButton onClick={this.toggleModal}>Add Chord</BigButton>
+            <BigButton onClick={this.toggleModal}>Set Chord</BigButton>
           </ButtonRow>
         )}
 
