@@ -112,7 +112,7 @@ export default class CommandRow extends Component {
     });
     this.setState({
       shareUrl: '?' + qs,
-    });
+    }, () => this.playCurrent());
   }
   getFocus(){
     return this.state[this.state.focusIndex];
