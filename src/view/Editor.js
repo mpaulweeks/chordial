@@ -41,9 +41,6 @@ export default class EditorApp extends Component {
       selected: null,
     }
   }
-  componentDidMount() {
-    this.reloadFunctions();
-  }
   reloadFunctions() {
     const {
       mode,
@@ -129,42 +126,38 @@ export default class EditorApp extends Component {
     } = this.state;
     return (
       <EditorContainer>
+        <Modal modalOpen={modalOpen} onExit={this.toggleModal}>
+          <SelectContainer>
+            <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
+          </SelectContainer>
+          <SelectContainer>
+            <SelectMode currentMode={mode} setMode={this.setMode} />
+            <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
+            <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
+          </SelectContainer>
 
-        {modalOpen ? (
-          <Modal onExit={this.toggleModal}>
-            <SelectContainer>
-              <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
-            </SelectContainer>
-            <SelectContainer>
-              <SelectMode currentMode={mode} setMode={this.setMode} />
-              <SelectInversion currentInversion={inversion} setInversion={this.setInversion} />
-              <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
-            </SelectContainer>
-
-            <SectionHeader> Test or Add a Chord </SectionHeader>
-            <ButtonRow>
-              {functions.map((df, dfi) => (
-                <DiatonicFunctionButton
-                  key={'df-'+dfi}
-                  df={df}
-                  isFocused={selected && selected.id === df.id}
-                  callback={() => this.onFunctionClick(df)}
-                />
-              ))}
-            </ButtonRow>
-
-            <ButtonRow>
-              <BigButton onClick={this.onSaveClick} disabled={!selected}>
-                Set Chord
-              </BigButton>
-            </ButtonRow>
-          </Modal>
-        ) : (
+          <SectionHeader> Test or Add a Chord </SectionHeader>
           <ButtonRow>
-            <BigButton onClick={this.toggleModal}>Set Chord</BigButton>
+            {functions.map((df, dfi) => (
+              <DiatonicFunctionButton
+                key={'df-'+dfi}
+                df={df}
+                isFocused={selected && selected.id === df.id}
+                callback={() => this.onFunctionClick(df)}
+              />
+            ))}
           </ButtonRow>
-        )}
 
+          <ButtonRow>
+            <BigButton onClick={this.onSaveClick} disabled={!selected}>
+              Set Chord
+            </BigButton>
+          </ButtonRow>
+        </Modal>
+
+        <ButtonRow>
+          <BigButton onClick={this.toggleModal}>Set Chord</BigButton>
+        </ButtonRow>
       </EditorContainer>
     );
   }

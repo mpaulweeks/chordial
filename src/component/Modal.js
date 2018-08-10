@@ -16,6 +16,10 @@ const ModalOuter = styled.div`
 
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 20;
+
+  ${props => !props.modalOpen && `
+    display: none;
+  `}
 `;
 const ModalInner = styled.div`
   position: relative;
@@ -49,7 +53,7 @@ const ExitBig = styled.div`
 export default class Modal extends Component {
   render() {
     return (
-      <ModalOuter>
+      <ModalOuter modalOpen={this.props.modalOpen}>
         <ModalInner>
           {this.props.children}
           <ExitBig onClick={this.props.onExit}>
