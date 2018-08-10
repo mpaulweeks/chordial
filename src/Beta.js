@@ -42,12 +42,22 @@ const DarkToggle = styled.button`
   cursor: pointer;
 `;
 
+const CookieName = {
+  IsDark: 'is_dark',
+};
+const CookieOptions = {
+  maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+};
+
 export default class BetaApp extends Component {
   constructor(props) {
     super(props);
+
+    this.cookies = props.cookies;
+
     this.state = {
       displayFunc: null,
-      isDark: false,
+      isDark: this.cookies.get(CookieName.IsDark) === "true",
     };
   }
   componentDidMount() {
@@ -64,8 +74,10 @@ export default class BetaApp extends Component {
     });
   }
   onToggleDark = () => {
+    const newIsDark = !this.state.isDark;
+    this.cookies.set(CookieName.IsDark, newIsDark, CookieOptions);
     this.setState({
-      isDark: !this.state.isDark,
+      isDark: newIsDark,
     });
   }
   render() {
