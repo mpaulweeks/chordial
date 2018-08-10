@@ -34,12 +34,21 @@ const BetaContainer = styled.div`
   }
 `;
 
+const DarkToggle = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  cursor: pointer;
+`;
+
 export default class BetaApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       displayFunc: null,
-    }
+      isDark: false,
+    };
   }
   componentDidMount() {
     document.addEventListener('keydown', event => {
@@ -54,9 +63,13 @@ export default class BetaApp extends Component {
       displayFunc: df,
     });
   }
+  onToggleDark = () => {
+    this.setState({
+      isDark: !this.state.isDark,
+    });
+  }
   render() {
-    const { displayFunc } = this.state;
-    const isDark = window.location.search.includes('dark');
+    const { displayFunc, isDark } = this.state;
     return (
       <BetaContainer isDark={isDark}>
         <Keyboard
@@ -70,6 +83,9 @@ export default class BetaApp extends Component {
           onCommandPlay={this.onCommandPlay}
         />
 
+        <DarkToggle onClick={this.onToggleDark}>
+          {isDark ? 'light mode' : 'dark mode'}
+        </DarkToggle>
         <Editor onFunctionClick={this.onFunctionClick} />
       </BetaContainer>
     );
