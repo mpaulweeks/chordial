@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import queryString from 'query-string';
 
 import Preset from '../audio/Preset';
 import DiatonicFunction from '../audio/DiatonicFunction';
@@ -17,6 +16,41 @@ const UrlContainer = styled.div`
 `;
 
 const COMMAND_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
+// quick replacement for query-string
+const queryString = {
+  parse: search => {
+    const parts = search.split('?').pop().split('&');
+    const result = {};
+    parts.forEach(p => {
+      const param = p.split('=');
+      const key = param[0];
+      const value = param[1];
+      if (result[key] && Array.isArray(result[key])){
+        result[key].push(value);
+      } else if (result[key]) {
+        result[key] = [result[key], value];
+      } else {
+        result[key] = value;
+      }
+    });
+    return result;
+  },
+  stringify: obj => {
+    const result = [];
+    for (let key in obj){
+      const value = obj[key];
+      if (Array.isArray(value)){
+        value.forEach(elm => {
+          result.push(key + '=' + elm);
+        });
+      } else {
+        result.push(key + '=' + value);
+      }
+    }
+    return result.join('&');
+  },
+};
 
 export default class CommandRow extends Component {
   constructor() {

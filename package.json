@@ -4,7 +4,6 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "query-string": "^6.1.0",
     "react": "^16.4.1",
     "react-cookie": "^2.2.0",
     "react-dom": "^16.4.1",
