@@ -126,6 +126,10 @@ export default class EditorApp extends Component {
     } = this.state;
     return (
       <EditorContainer>
+        <ButtonRow>
+          <BigButton onClick={this.toggleModal}>Set Chord</BigButton>
+        </ButtonRow>
+
         <Modal modalOpen={modalOpen} onExit={this.toggleModal}>
           <SelectContainer>
             <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
@@ -154,10 +158,6 @@ export default class EditorApp extends Component {
             </BigButton>
           </ButtonRow>
         </Modal>
-
-        <ButtonRow>
-          <BigButton onClick={this.toggleModal}>Set Chord</BigButton>
-        </ButtonRow>
       </EditorContainer>
     );
   }

@@ -46,7 +46,9 @@ export default class CommandRow extends Component {
       dfs = serialized.map(DiatonicFunction.fromSerialized);
     }
 
-    this.loadDiatonicFunctions(dfs);
+    this.loadDiatonicFunctions(dfs)
+      .then(() => this.afterFunctionSet())
+      .then(() => this.setFocus(COMMAND_KEYS[0]))
   }
 
   handleKeyPress(event) {
@@ -73,7 +75,7 @@ export default class CommandRow extends Component {
       };
       return map;
     }, {});
-    this.setState(newState, () => this.afterFunctionSet());
+    return new Promise((resolve, reject) => this.setState(newState, resolve));
   }
   stepFocus(delta: number) {
     const { focusIndex } = this.state;
@@ -120,8 +122,8 @@ export default class CommandRow extends Component {
     if (current.df){
       current.df.chord.stop();
       current.df.chord.play(0, 1);
-      this.props.onCommandPlay(current.df);
     }
+    this.props.onCommandPlay(current.df);
   }
   render() {
     const {
