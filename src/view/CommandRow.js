@@ -127,11 +127,12 @@ export default class CommandRow extends Component {
       this.onFocus();
     });
   }
-  setDiatonicFunction(df: DiatonicFunction) {
-    const { focusIndex } = this.state;
+  setDiatonicFunction(df: DiatonicFunction, index?: string) {
+    index = index || this.state.focusIndex;
+
     const newState = {};
-    newState[focusIndex] = {
-      ...this.state[focusIndex],
+    newState[index] = {
+      ...this.state[index],
       df: df,
     };
     this.promiseState(newState)
@@ -177,12 +178,17 @@ export default class CommandRow extends Component {
     const {
       onCommandCreate,
       onCommandEdit,
-      onCommandDelete,
     } = this.props;
 
-    const wrapCommandCreate = (key: string) => {
+    const onCreate = (key: string) => {
       this.setFocus(key);
       onCommandCreate();
+    }
+    const onEdit = (df: DiatonicFunction) => {
+      onCommandEdit(df);
+    }
+    const onDelete = (key: string) => {
+      this.setDiatonicFunction(null, key);
     }
 
     return (
@@ -195,9 +201,9 @@ export default class CommandRow extends Component {
                 key={'command-'+c.key}
                 command={c}
                 callback={key => this.setFocus(key)}
-                onCreate={wrapCommandCreate}
-                onEdit={onCommandEdit}
-                onDelete={onCommandDelete}
+                onCreate={onCreate}
+                onEdit={onEdit}
+                onDelete={onDelete}
                 isFocused={focusIndex === c.key}
               />
             );
