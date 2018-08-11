@@ -22,20 +22,42 @@ const SectionHeader = styled.div`
   margin: 20px;
 `;
 
-const BigButton = styled.span`
+const BaseButton = styled.div`
   cursor: pointer;
-  padding: 10px 20px;
-  font-size: 1.5rem;
-  font-weight: bold;
 
-  color: var(--background);
-  background-color: var(--foreground);
-  border: 2px solid var(--background);
-  border-radius: 1rem;
+  cursor: pointer;
+  color: var(--foreground);
+  background-color: var(--background);
+  border: 2px solid var(--foreground);
+  margin: 0px 2px;
+
+  &:hover {
+    color: var(--background);
+    background-color: var(--foreground);
+  }
 
   ${props => props.disabled && `
     text-decoration: line-through;
   `}
+`;
+
+const BigButton = styled(BaseButton)`
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 1rem;
+`;
+
+const MediumButton = styled(BaseButton)`
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+`;
+
+const SmallButton = styled(BaseButton)`
+  padding: 4px 8px;
+  font-size: 1rem;
+  border-radius: 0.5rem;
 `;
 
 export {
@@ -44,4 +66,6 @@ export {
   SelectSectionContainer,
   SectionHeader,
   BigButton,
+  MediumButton,
+  SmallButton,
 }

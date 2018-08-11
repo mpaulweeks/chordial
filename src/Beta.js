@@ -7,7 +7,7 @@ import Editor from './view/Editor';
 import {
   SectionHeader,
   ButtonRow,
-  BigButton,
+  MediumButton,
 } from './component/Common';
 
 const BetaContainer = styled.div`
@@ -34,14 +34,6 @@ const BetaContainer = styled.div`
   & a {
     color: var(--foreground);
   }
-`;
-
-const DarkToggle = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  cursor: pointer;
 `;
 
 const CookieName = {
@@ -115,10 +107,12 @@ export default class BetaApp extends Component {
           onCommandEdit={this.onCommandEdit}
           onCommandCreate={this.onCommandCreate}
         />
+        <ButtonRow>
+          <MediumButton onClick={this.onToggleDark}>
+            switch to {isDark ? 'light' : 'dark'} mode
+          </MediumButton>
+        </ButtonRow>
 
-        <DarkToggle onClick={this.onToggleDark}>
-          {isDark ? 'light mode' : 'dark mode'}
-        </DarkToggle>
         <Editor
           ref={(ref) => (this.editor = ref)}
           onFunctionSet={this.onFunctionSet}

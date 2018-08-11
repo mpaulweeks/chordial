@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import KeyDisplay from './KeyDisplay';
+import {
+  ButtonRow,
+  SmallButton,
+} from './Common';
 
 const ChordButtonContainer = styled.div`
   border: 4px solid var(--foreground);
@@ -57,16 +61,6 @@ const CommandLabel = styled.div`
   padding: 5px 0px;
   font-weight: bold;
   font-size: 1.5rem;
-`;
-const ModifyButton = styled.span`
-  cursor: pointer;
-
-  color: var(--foreground);
-  background-color: var(--background);
-
-  border: 2px solid var(--foreground);
-  border-radius: 20px;
-  padding: 3px 10px;
 `;
 
 export class DiatonicFunctionButton extends Component {
@@ -140,23 +134,23 @@ export class CommandButton extends Component {
           isFocused={isFocused}
           onEdit={onEdit}
         />
-        <div>
+        <ButtonRow>
           {handleCreate && (
-            <ModifyButton onClick={handleCreate}>
+            <SmallButton onClick={handleCreate}>
               create
-            </ModifyButton>
+            </SmallButton>
           )}
           {handleEdit && (
-            <ModifyButton onClick={handleEdit}>
+            <SmallButton onClick={handleEdit}>
               edit
-            </ModifyButton>
+            </SmallButton>
           )}
           {handleDelete && (
-            <ModifyButton onClick={handleDelete}>
+            <SmallButton onClick={handleDelete}>
               delete
-            </ModifyButton>
+            </SmallButton>
           )}
-        </div>
+        </ButtonRow>
         <CommandLabel>
           Key: { key }
         </CommandLabel>
