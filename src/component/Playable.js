@@ -59,8 +59,11 @@ const CommandLabel = styled.div`
   font-size: 1.5rem;
 `;
 const ModifyButton = styled.span`
+  cursor: pointer;
+
   color: var(--foreground);
   background-color: var(--background);
+
   border: 2px solid var(--foreground);
   border-radius: 20px;
   padding: 3px 10px;
