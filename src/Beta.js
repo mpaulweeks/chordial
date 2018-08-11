@@ -76,6 +76,9 @@ export default class BetaApp extends Component {
       displayFunc: df,
     });
   }
+  onCommandEdit = (df: DiatonicFunction) => {
+    console.log(df);
+  }
   onToggleDark = () => {
     const newIsDark = !this.state.isDark;
     this.cookies.set(CookieName.IsDark, newIsDark, CookieOptions);
@@ -105,6 +108,7 @@ export default class BetaApp extends Component {
         <CommandRow
           ref={(ref) => (this.commandRow = ref)}
           onCommandPlay={this.onCommandPlay}
+          onCommandEdit={this.onCommandEdit}
         />
         <ButtonRow>
           <BigButton onClick={this.onToggleModal}>Set Chord</BigButton>

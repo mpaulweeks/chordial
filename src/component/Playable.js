@@ -13,6 +13,7 @@ const ChordButtonContainer = styled.div`
   min-height: 90px;
   padding-bottom: 5px;
 
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -58,25 +59,31 @@ const CommandLabel = styled.div`
   font-weight: bold;
   font-size: 1.5rem;
 `;
+const EditButton = styled.div`
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
 
-export class ChordButton extends Component {
-  render() {
-    const {
-      chord,
-      callback,
-    } = this.props;
-    const pitch = chord.getRootPitch();
-    return (
-      <ChordButtonContainer onClick={() => callback(chord)}>
-        <ButtonTextLarge>{ pitch.letter }</ButtonTextLarge>
-      </ChordButtonContainer>
-    );
+  color: var(--foreground);
+  background-color: var(--background);
+  border-radius: 20px;
+  text-align: center;
+
+  &:after {
+    content: 'X';
   }
-}
+`;
 
 export class DiatonicFunctionButton extends Component {
   render() {
-    const { df, isFocused, callback } = this.props;
+    const {
+      df,
+      isFocused,
+      callback,
+      onEdit,
+    } = this.props;
     const {
       tonicSymbol,
       octave,
@@ -86,6 +93,10 @@ export class DiatonicFunctionButton extends Component {
       notes,
     } = df ? df.getFunctionRole() : {};
     const onClick = callback ? () => callback(df) : () => {};
+    const handleEdit = df && onEdit && (e => {
+      e.stopPropagation();
+      onEdit(df);
+    });
     return (
       <ChordButtonContainer onClick={onClick} isFocused={isFocused}>
         <ButtonHeader isFocused={isFocused}>
@@ -110,6 +121,9 @@ export class DiatonicFunctionButton extends Component {
             {octave}
           </ButtonTextSmall>
         )}
+        { handleEdit && (
+          <EditButton onClick={handleEdit} />
+        )}
       </ChordButtonContainer>
     )
   }
@@ -121,12 +135,19 @@ export class CommandButton extends Component {
       command,
       isFocused,
       callback,
+      onEdit,
     } = this.props;
     const { key } = command;
     return (
       <div onClick={() => callback(key)}>
-        <DiatonicFunctionButton df={command.df} isFocused={isFocused} />
-        <CommandLabel>Key: { key }</CommandLabel>
+        <DiatonicFunctionButton
+          df={command.df}
+          isFocused={isFocused}
+          onEdit={onEdit}
+        />
+        <CommandLabel>
+          Key: { key }
+        </CommandLabel>
       </div>
     );
   }

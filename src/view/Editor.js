@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
 import type {
   KeyMode,
@@ -134,7 +133,7 @@ export default class EditorApp extends Component {
               key={'df-'+dfi}
               df={df}
               isFocused={selected && selected.id === df.id}
-              callback={() => this.onFunctionClick(df)}
+              callback={this.onFunctionClick}
             />
           ))}
         </ButtonRow>

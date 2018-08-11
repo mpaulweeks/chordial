@@ -185,6 +185,7 @@ export default class CommandRow extends Component {
                 key={'command-'+c.key}
                 command={c}
                 callback={key => this.setFocus(key)}
+                onEdit={this.props.onCommandEdit}
                 isFocused={focusIndex === c.key}
               />
             );
