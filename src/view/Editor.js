@@ -101,6 +101,7 @@ export default class EditorApp extends Component {
     const { selected } = this.state;
     if (selected) {
       this.props.onFunctionSet(selected);
+      this.props.closeModal();
     }
   }
   render() {
@@ -116,7 +117,7 @@ export default class EditorApp extends Component {
       modalOpen,
     } = this.props;
     return (
-      <Modal modalOpen={modalOpen} onExit={this.toggleModal}>
+      <Modal modalOpen={modalOpen} onExit={this.props.closeModal}>
         <SelectContainer>
           <SelectKey currentRootKey={rootKey} setRootKey={this.setRootKey} />
         </SelectContainer>

@@ -24,7 +24,7 @@ const SectionHeader = styled.div`
 
 const BigButton = styled.span`
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 20px;
   font-size: 1.5rem;
   font-weight: bold;
 

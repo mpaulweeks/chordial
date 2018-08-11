@@ -70,7 +70,6 @@ export default class BetaApp extends Component {
   }
   onFunctionSet = (df: DiatonicFunction) => {
     this.commandRow.setDiatonicFunction(df);
-    this.onToggleModal();
   }
   onCommandPlay = (df: DiatonicFunction) => {
     this.setState({
@@ -117,6 +116,7 @@ export default class BetaApp extends Component {
         <Editor
           onFunctionSet={this.onFunctionSet}
           modalOpen={modalOpen}
+          closeModal={this.onToggleModal}
         />
       </BetaContainer>
     );
