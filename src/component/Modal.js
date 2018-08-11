@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {
+  Clickable,
+} from './Common';
 
 const ModalOuter = styled.div`
   position: absolute;
@@ -30,10 +33,8 @@ const ModalInner = styled.div`
   border: 2px solid var(--foreground);
   border-radius: 50px 0px 50px 50px;
 `;
-const ExitBig = styled.div`
+const ExitBig = styled(Clickable)`
   --size: 20px;
-
-  cursor: pointer;
 
   position: absolute;
   top: -2px;
@@ -46,9 +47,6 @@ const ExitBig = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-color: var(--background);
-  border: 2px solid var(--foreground);
 `;
 export default class Modal extends Component {
   render() {

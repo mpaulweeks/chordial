@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+const Clickable = styled.div`
+  cursor: pointer;
+  color: var(--foreground);
+  background-color: var(--background);
+  border: 2px solid var(--foreground);
+
+  &:hover {
+    color: var(--background);
+    background-color: var(--foreground);
+  }
+`;
+
 const ButtonRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -22,19 +34,8 @@ const SectionHeader = styled.div`
   margin: 20px;
 `;
 
-const BaseButton = styled.div`
-  cursor: pointer;
-
-  cursor: pointer;
-  color: var(--foreground);
-  background-color: var(--background);
-  border: 2px solid var(--foreground);
+const BaseButton = styled(Clickable)`
   margin: 0px 2px;
-
-  &:hover {
-    color: var(--background);
-    background-color: var(--foreground);
-  }
 
   ${props => props.disabled && `
     text-decoration: line-through;
@@ -61,6 +62,7 @@ const SmallButton = styled(BaseButton)`
 `;
 
 export {
+  Clickable,
   ButtonRow,
   SelectContainer,
   SelectSectionContainer,
