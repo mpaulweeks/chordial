@@ -75,7 +75,6 @@ export class DiatonicFunctionButton extends Component {
       df,
       isFocused,
       callback,
-      onEdit,
     } = this.props;
     const {
       tonicSymbol,
@@ -128,7 +127,7 @@ export class CommandButton extends Component {
     });
     const handleEdit = command.df && onEdit && (e => {
       e.stopPropagation();
-      onEdit(command.df);
+      onEdit(command);
     });
     const handleDelete = command.df && onDelete && (e => {
       e.stopPropagation();

@@ -119,11 +119,13 @@ export default class CommandRow extends Component {
     const commandIndex = (keysIndex + delta + COMMAND_KEYS.length) % COMMAND_KEYS.length;
     this.setFocus(COMMAND_KEYS[commandIndex]);
   }
-  setFocus(key: string) {
+  setFocus(key: string, mute?: boolean) {
     this.setState({
       focusIndex: key,
     }, () => {
-      this.playCurrent();
+      if (!mute){
+        this.playCurrent();
+      }
       this.onFocus();
     });
   }
@@ -181,11 +183,12 @@ export default class CommandRow extends Component {
     } = this.props;
 
     const onCreate = (key: string) => {
-      this.setFocus(key);
+      this.setFocus(key, true);
       onCommandCreate();
     }
-    const onEdit = (df: DiatonicFunction) => {
-      onCommandEdit(df);
+    const onEdit = (command: Object) => {
+      this.setFocus(command.key, true);
+      onCommandEdit(command.df);
     }
     const onDelete = (key: string) => {
       this.setDiatonicFunction(null, key);

@@ -86,6 +86,13 @@ export default class EditorApp extends Component {
       octave: octave,
     }, this.reloadFunctions);
   }
+  setDefaults = (df: DiatonicFunction) => {
+    this.setState({
+      rootKey: df.config.tonic,
+      inversion: df.config.inversion,
+      octave: df.config.octave,
+    }, this.reloadFunctions);
+  }
   stopAll = () => {
     this.state.functions.forEach(df => df.chord.stop());
   }
@@ -126,7 +133,7 @@ export default class EditorApp extends Component {
           <SelectOctave currentOctave={octave} setOctave={this.setOctave} />
         </SelectContainer>
 
-        <SectionHeader> Test or Add a Chord </SectionHeader>
+        <SectionHeader> Test Chord </SectionHeader>
         <ButtonRow>
           {functions.map((df, dfi) => (
             <DiatonicFunctionButton

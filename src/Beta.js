@@ -80,7 +80,8 @@ export default class BetaApp extends Component {
     this.onToggleModal();
   }
   onCommandEdit = (df: DiatonicFunction) => {
-    console.log(df);
+    this.editor.setDefaults(df);
+    this.onToggleModal();
   }
   onToggleDark = () => {
     const newIsDark = !this.state.isDark;
@@ -114,14 +115,12 @@ export default class BetaApp extends Component {
           onCommandEdit={this.onCommandEdit}
           onCommandCreate={this.onCommandCreate}
         />
-        <ButtonRow>
-          <BigButton onClick={this.onToggleModal}>Set Chord</BigButton>
-        </ButtonRow>
 
         <DarkToggle onClick={this.onToggleDark}>
           {isDark ? 'light mode' : 'dark mode'}
         </DarkToggle>
         <Editor
+          ref={(ref) => (this.editor = ref)}
           onFunctionSet={this.onFunctionSet}
           modalOpen={modalOpen}
           closeModal={this.onToggleModal}
