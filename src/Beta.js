@@ -6,6 +6,8 @@ import Keyboard from './view/Keyboard';
 import Editor from './view/Editor';
 import {
   SectionHeader,
+  ButtonRow,
+  BigButton,
 } from './component/Common';
 
 const BetaContainer = styled.div`
@@ -58,6 +60,7 @@ export default class BetaApp extends Component {
     this.state = {
       displayFunc: null,
       isDark: this.cookies.get(CookieName.IsDark) === "true",
+      modalOpen: false,
     };
   }
   componentDidMount() {
@@ -67,6 +70,7 @@ export default class BetaApp extends Component {
   }
   onFunctionSet = (df: DiatonicFunction) => {
     this.commandRow.setDiatonicFunction(df);
+    this.onToggleModal();
   }
   onCommandPlay = (df: DiatonicFunction) => {
     this.setState({
@@ -80,8 +84,17 @@ export default class BetaApp extends Component {
       isDark: newIsDark,
     });
   }
+  onToggleModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen,
+    });
+  }
   render() {
-    const { displayFunc, isDark } = this.state;
+    const {
+      displayFunc,
+      isDark,
+      modalOpen,
+    } = this.state;
     return (
       <BetaContainer isDark={isDark}>
         <Keyboard
@@ -94,11 +107,17 @@ export default class BetaApp extends Component {
           ref={(ref) => (this.commandRow = ref)}
           onCommandPlay={this.onCommandPlay}
         />
+        <ButtonRow>
+          <BigButton onClick={this.onToggleModal}>Set Chord</BigButton>
+        </ButtonRow>
 
         <DarkToggle onClick={this.onToggleDark}>
           {isDark ? 'light mode' : 'dark mode'}
         </DarkToggle>
-        <Editor onFunctionSet={this.onFunctionSet} />
+        <Editor
+          onFunctionSet={this.onFunctionSet}
+          modalOpen={modalOpen}
+        />
       </BetaContainer>
     );
   }
