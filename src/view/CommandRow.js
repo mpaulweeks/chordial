@@ -174,6 +174,16 @@ export default class CommandRow extends Component {
       focusIndex,
       shareUrl,
     } = this.state;
+    const {
+      onCommandCreate,
+      onCommandEdit,
+      onCommandDelete,
+    } = this.props;
+
+    const wrapCommandCreate = (key: string) => {
+      this.setFocus(key);
+      onCommandCreate();
+    }
 
     return (
       <div>
@@ -185,7 +195,9 @@ export default class CommandRow extends Component {
                 key={'command-'+c.key}
                 command={c}
                 callback={key => this.setFocus(key)}
-                onEdit={this.props.onCommandEdit}
+                onCreate={wrapCommandCreate}
+                onEdit={onCommandEdit}
+                onDelete={onCommandDelete}
                 isFocused={focusIndex === c.key}
               />
             );

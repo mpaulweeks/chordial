@@ -76,6 +76,9 @@ export default class BetaApp extends Component {
       displayFunc: df,
     });
   }
+  onCommandCreate = () => {
+    this.onToggleModal();
+  }
   onCommandEdit = (df: DiatonicFunction) => {
     console.log(df);
   }
@@ -109,6 +112,7 @@ export default class BetaApp extends Component {
           ref={(ref) => (this.commandRow = ref)}
           onCommandPlay={this.onCommandPlay}
           onCommandEdit={this.onCommandEdit}
+          onCommandCreate={this.onCommandCreate}
         />
         <ButtonRow>
           <BigButton onClick={this.onToggleModal}>Set Chord</BigButton>

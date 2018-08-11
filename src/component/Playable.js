@@ -13,7 +13,6 @@ const ChordButtonContainer = styled.div`
   min-height: 90px;
   padding-bottom: 5px;
 
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,21 +58,12 @@ const CommandLabel = styled.div`
   font-weight: bold;
   font-size: 1.5rem;
 `;
-const EditButton = styled.div`
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 20px;
-  height: 20px;
-
+const ModifyButton = styled.span`
   color: var(--foreground);
   background-color: var(--background);
+  border: 2px solid var(--foreground);
   border-radius: 20px;
-  text-align: center;
-
-  &:after {
-    content: 'X';
-  }
+  padding: 3px 10px;
 `;
 
 export class DiatonicFunctionButton extends Component {
@@ -93,10 +83,6 @@ export class DiatonicFunctionButton extends Component {
       notes,
     } = df ? df.getFunctionRole() : {};
     const onClick = callback ? () => callback(df) : () => {};
-    const handleEdit = df && onEdit && (e => {
-      e.stopPropagation();
-      onEdit(df);
-    });
     return (
       <ChordButtonContainer onClick={onClick} isFocused={isFocused}>
         <ButtonHeader isFocused={isFocused}>
@@ -117,9 +103,6 @@ export class DiatonicFunctionButton extends Component {
             <KeyDisplay value={notes.join(' ')} />
           </ButtonTextSmall>
         )}
-        { handleEdit && (
-          <EditButton onClick={handleEdit} />
-        )}
       </ChordButtonContainer>
     )
   }
@@ -131,9 +114,23 @@ export class CommandButton extends Component {
       command,
       isFocused,
       callback,
+      onCreate,
       onEdit,
+      onDelete,
     } = this.props;
     const { key } = command;
+    const handleCreate = !command.df && onCreate && (e => {
+      e.stopPropagation();
+      onCreate(command.key);
+    });
+    const handleEdit = command.df && onEdit && (e => {
+      e.stopPropagation();
+      onEdit(command.df);
+    });
+    const handleDelete = command.df && onDelete && (e => {
+      e.stopPropagation();
+      onDelete(command.key);
+    });
     return (
       <div onClick={() => callback(key)}>
         <DiatonicFunctionButton
@@ -141,6 +138,23 @@ export class CommandButton extends Component {
           isFocused={isFocused}
           onEdit={onEdit}
         />
+        <div>
+          {handleCreate && (
+            <ModifyButton onClick={handleCreate}>
+              create
+            </ModifyButton>
+          )}
+          {handleEdit && (
+            <ModifyButton onClick={handleEdit}>
+              edit
+            </ModifyButton>
+          )}
+          {handleDelete && (
+            <ModifyButton onClick={handleDelete}>
+              delete
+            </ModifyButton>
+          )}
+        </div>
         <CommandLabel>
           Key: { key }
         </CommandLabel>
