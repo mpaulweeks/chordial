@@ -101,6 +101,7 @@ export class DiatonicFunctionButton extends Component {
       <ChordButtonContainer onClick={onClick} isFocused={isFocused}>
         <ButtonHeader isFocused={isFocused}>
           <KeyDisplay value={tonicSymbol} />
+           {octave}
         </ButtonHeader>
         <ButtonTextLarge>
           <KeyDisplay value={chordSymbol || '...'} />
@@ -114,11 +115,6 @@ export class DiatonicFunctionButton extends Component {
         { notes && (
           <ButtonTextSmall>
             <KeyDisplay value={notes.join(' ')} />
-          </ButtonTextSmall>
-        )}
-        { octave && (
-          <ButtonTextSmall>
-            {octave}
           </ButtonTextSmall>
         )}
         { handleEdit && (
