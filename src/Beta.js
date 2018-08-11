@@ -57,7 +57,11 @@ export default class BetaApp extends Component {
   }
   componentDidMount() {
     document.addEventListener('keydown', event => {
-      this.commandRow.handleKeyPress(event);
+      if (this.state.modalOpen){
+        this.editor.handleKeyPress(event);
+      } else {
+        this.commandRow.handleKeyPress(event);
+      }
     });
   }
   onFunctionSet = (df: DiatonicFunction) => {

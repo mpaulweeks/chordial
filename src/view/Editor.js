@@ -35,6 +35,13 @@ export default class EditorApp extends Component {
       selected: null,
     }
   }
+  handleKeyPress(event) {
+    const key = event.key.toLowerCase();
+
+    if (key === 'escape'){
+      this.props.closeModal();
+    }
+  }
   reloadFunctions() {
     const {
       mode,
