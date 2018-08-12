@@ -13,9 +13,11 @@
   "devDependencies": {
     "flow-bin": "^0.77.0",
     "gh-pages": "^1.2.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "source-map-explorer": "^1.5.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer --html build/static/js/main.* > tmp/sme.html",
     "predeploy": "yarn build && cp -r .circleci build/",
     "deploy": "gh-pages -d build --dotfiles",
     "start": "react-scripts start",
