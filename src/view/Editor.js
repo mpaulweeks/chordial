@@ -47,6 +47,10 @@ export default class EditorApp extends Component {
     if (key === 'arrowright'){
       this.stepFocus(1);
     }
+    if (key === ' '){
+      this.playCurrent();
+      event.preventDefault();
+    }
   }
   reloadFunctions() {
     const {

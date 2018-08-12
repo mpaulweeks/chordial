@@ -109,6 +109,10 @@ export default class CommandRow extends Component {
     if (key === 'arrowright'){
       this.stepFocus(1);
     }
+    if (key === ' '){
+      this.playCurrent();
+      event.preventDefault();
+    }
     if (['backspace', 'delete'].includes(key)){
       this.setDiatonicFunction(null);
     }
