@@ -32,7 +32,7 @@ export default class EditorApp extends Component {
       octave: 0,
       inversion: inversions.none,
       functions: [],
-      indexSelected: 0,
+      focusIndex: 0,
     }
   }
   handleKeyPress(event) {
@@ -41,6 +41,12 @@ export default class EditorApp extends Component {
     if (key === 'escape'){
       this.props.closeModal();
     }
+    if (key === 'arrowleft'){
+      this.stepFocus(-1);
+    }
+    if (key === 'arrowright'){
+      this.stepFocus(1);
+    }
   }
   reloadFunctions() {
     const {
@@ -48,7 +54,7 @@ export default class EditorApp extends Component {
       rootKey,
       inversion,
       octave,
-      indexSelected,
+      focusIndex,
     } = this.state;
     let baseFunctions = [];
     switch (mode){
@@ -70,11 +76,10 @@ export default class EditorApp extends Component {
       };
       return DiatonicFunction.fromRoughConfig(mergedConfig);
     });
-    const newIndexSelected = Math.min(indexSelected, newFunctions.length - 1);
+    const newFocusIndex = Math.min(focusIndex, newFunctions.length - 1);
     this.setState({
       functions: newFunctions,
-      indexSelected: newIndexSelected,
-    });
+    }, () => this.setFocus(newFocusIndex));
   }
   setRootKey = (rootKey: number) => {
     this.setState({
@@ -106,21 +111,42 @@ export default class EditorApp extends Component {
   stopAll = () => {
     this.state.functions.forEach(df => df.chord.stop());
   }
-  getSelected =  () => {
-    const { functions, indexSelected } = this.state;
-    return indexSelected < functions.length ? functions[indexSelected] : null;
+  stepFocus(delta: number) {
+    const { functions, focusIndex } = this.state;
+    const newIndex = (functions.length + focusIndex + delta) % functions.length;
+    this.setFocus(newIndex);
+  }
+  setFocus(index: number, mute?: boolean) {
+    this.setState({
+      focusIndex: index,
+    }, () => {
+      if (!mute){
+        this.playCurrent();
+      }
+    });
+  }
+  playCurrent(){
+    const current = this.getFocus();
+    if (current){
+      current.chord.stop();
+      current.chord.play(0, 1);
+    }
+  }
+  getFocus =  () => {
+    const { functions, focusIndex } = this.state;
+    return focusIndex < functions.length ? functions[focusIndex] : null;
   }
   onFunctionClick = (index: number, df: DiatonicFunction) => {
     this.stopAll();
     df.chord.play(0, 1);
     this.setState({
-      indexSelected: index,
+      focusIndex: index,
     });
   }
   onSaveClick = () => {
-    const selected = this.getSelected();
-    if (selected) {
-      this.props.onFunctionSet(selected);
+    const focused = this.getFocus();
+    if (focused) {
+      this.props.onFunctionSet(focused);
       this.props.closeModal();
     }
   }
@@ -131,7 +157,7 @@ export default class EditorApp extends Component {
       inversion,
       octave,
       functions,
-      indexSelected,
+      focusIndex,
     } = this.state;
     const {
       modalOpen,
@@ -153,7 +179,7 @@ export default class EditorApp extends Component {
             <DiatonicFunctionButton
               key={'df-'+dfi}
               df={df}
-              isFocused={indexSelected === dfi}
+              isFocused={focusIndex === dfi}
               callback={df => this.onFunctionClick(dfi, df)}
             />
           ))}
