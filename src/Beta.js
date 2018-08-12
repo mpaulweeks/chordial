@@ -5,7 +5,6 @@ import CommandRow from './view/CommandRow';
 import Keyboard from './view/Keyboard';
 import Editor from './view/Editor';
 import {
-  SectionHeader,
   ButtonRow,
   MediumButton,
 } from './component/Common';
@@ -166,7 +165,11 @@ export default class BetaApp extends Component {
         </ButtonRow>
 
         <p>
-          created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
+          created by <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://twitter.com/mpaulweeks"
+          >@mpaulweeks</a>
         </p>
 
         <Editor
