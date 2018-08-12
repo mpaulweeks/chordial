@@ -32,7 +32,7 @@ export default class EditorApp extends Component {
       octave: 0,
       inversion: inversions.none,
       functions: [],
-      selected: null,
+      indexSelected: 0,
     }
   }
   handleKeyPress(event) {
@@ -48,6 +48,7 @@ export default class EditorApp extends Component {
       rootKey,
       inversion,
       octave,
+      indexSelected,
     } = this.state;
     let baseFunctions = [];
     switch (mode){
@@ -69,8 +70,10 @@ export default class EditorApp extends Component {
       };
       return DiatonicFunction.fromRoughConfig(mergedConfig);
     });
+    const newIndexSelected = Math.min(indexSelected, newFunctions.length - 1);
     this.setState({
       functions: newFunctions,
+      indexSelected: newIndexSelected,
     });
   }
   setRootKey = (rootKey: number) => {
@@ -103,15 +106,19 @@ export default class EditorApp extends Component {
   stopAll = () => {
     this.state.functions.forEach(df => df.chord.stop());
   }
-  onFunctionClick = (df: DiatonicFunction) => {
+  getSelected =  () => {
+    const { functions, indexSelected } = this.state;
+    return indexSelected < functions.length ? functions[indexSelected] : null;
+  }
+  onFunctionClick = (index: number, df: DiatonicFunction) => {
     this.stopAll();
     df.chord.play(0, 1);
     this.setState({
-      selected: df,
+      indexSelected: index,
     });
   }
   onSaveClick = () => {
-    const { selected } = this.state;
+    const selected = this.getSelected();
     if (selected) {
       this.props.onFunctionSet(selected);
       this.props.closeModal();
@@ -124,7 +131,7 @@ export default class EditorApp extends Component {
       inversion,
       octave,
       functions,
-      selected,
+      indexSelected,
     } = this.state;
     const {
       modalOpen,
@@ -146,14 +153,14 @@ export default class EditorApp extends Component {
             <DiatonicFunctionButton
               key={'df-'+dfi}
               df={df}
-              isFocused={selected && selected.id === df.id}
-              callback={this.onFunctionClick}
+              isFocused={indexSelected === dfi}
+              callback={df => this.onFunctionClick(dfi, df)}
             />
           ))}
         </ButtonRow>
 
         <ButtonRow>
-          <BigButton onClick={this.onSaveClick} disabled={!selected}>
+          <BigButton onClick={this.onSaveClick}>
             Set Chord
           </BigButton>
         </ButtonRow>
