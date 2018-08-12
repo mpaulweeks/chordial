@@ -37,7 +37,6 @@ const BetaContainer = styled.div`
   }
 
   & a {
-    text-decoration: none;
     color: var(--foreground);
   }
 
@@ -164,6 +163,10 @@ export default class BetaApp extends Component {
             switch to {isDark ? 'light' : 'dark'} mode
           </MediumButton>
         </ButtonRow>
+
+        <p>
+          created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
+        </p>
 
         <Editor
           ref={(ref) => (this.editor = ref)}

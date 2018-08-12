@@ -17,6 +17,10 @@ const ButtonRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  & > a {
+    text-decoration: none;
+  }
 `;
 
 const SelectContainer = styled.div`
@@ -48,6 +52,7 @@ const BigButton = styled(BaseButton)`
   font-size: 1.5rem;
   font-weight: bold;
   border-radius: 1rem;
+  margin: 20px;
 `;
 
 const MediumButton = styled(BaseButton)`
