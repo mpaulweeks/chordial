@@ -59,6 +59,7 @@ export default class BetaApp extends Component {
 
     this.state = {
       displayFunc: null,
+      shareUrl: '?',
       isDark: this.cookies.get(CookieName.IsDark) === "true",
       modalOpen: false,
     };
@@ -70,6 +71,11 @@ export default class BetaApp extends Component {
       } else {
         this.commandRow.handleKeyPress(event);
       }
+    });
+  }
+  promiseState(newState) {
+    return new Promise((resolve, reject) => {
+      this.setState(newState, resolve);
     });
   }
   onFunctionSet = (df: DiatonicFunction) => {
@@ -87,6 +93,11 @@ export default class BetaApp extends Component {
     this.editor.setDefaults(df);
     this.onToggleModal();
   }
+  onCommandUpdateShare = (shareUrl: string) => {
+    return this.promiseState({
+      shareUrl: shareUrl,
+    });
+  }
   onToggleDark = () => {
     const newIsDark = !this.state.isDark;
     this.cookies.set(CookieName.IsDark, newIsDark, CookieOptions);
@@ -102,6 +113,7 @@ export default class BetaApp extends Component {
   render() {
     const {
       displayFunc,
+      shareUrl,
       isDark,
       modalOpen,
     } = this.state;
@@ -114,6 +126,7 @@ export default class BetaApp extends Component {
         />
         <CommandRow
           ref={(ref) => (this.commandRow = ref)}
+          onCommandUpdateShare={this.onCommandUpdateShare}
           onCommandPlay={this.onCommandPlay}
           onCommandEdit={this.onCommandEdit}
           onCommandCreate={this.onCommandCreate}
@@ -137,6 +150,11 @@ export default class BetaApp extends Component {
 
         <h3> Misc Options </h3>
         <ButtonRow>
+          <a href={shareUrl}>
+            <MediumButton>
+              share this config
+            </MediumButton>
+          </a>
           <MediumButton onClick={this.onToggleDark}>
             switch to {isDark ? 'light' : 'dark'} mode
           </MediumButton>

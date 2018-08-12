@@ -4,7 +4,6 @@ import Preset from '../audio/Preset';
 import DiatonicFunction from '../audio/DiatonicFunction';
 import {
   ButtonRow,
-  MediumButton,
 } from '../component/Common';
 import { CommandButton } from '../component/Playable';
 
@@ -159,9 +158,7 @@ export default class CommandRow extends Component {
     const qs = queryString.stringify({
       df: dfs.map(df => df.toSerialized()),
     });
-    return this.promiseState({
-      shareUrl: '?' + qs,
-    });
+    return this.props.onCommandUpdateShare('?' + qs);
   }
   onFocus(){
     return new Promise((resolve, reject) => {
@@ -172,7 +169,6 @@ export default class CommandRow extends Component {
   render() {
     const {
       focusIndex,
-      shareUrl,
     } = this.state;
     const {
       onCommandCreate,
@@ -208,14 +204,6 @@ export default class CommandRow extends Component {
               />
             );
           })}
-        </ButtonRow>
-        <br/>
-        <ButtonRow>
-          <a href={shareUrl}>
-            <MediumButton>
-              share this config
-            </MediumButton>
-          </a>
         </ButtonRow>
       </div>
     );
