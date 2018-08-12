@@ -12,11 +12,10 @@ import {
 
 const BetaContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 
   text-align: center;
   padding: 20px;
-  padding-top: 0px;
   box-sizing: border-box;
 
   ${props => props.isDark ? `
@@ -31,6 +30,11 @@ const BetaContainer = styled.div`
 
   background-color: var(--background);
   color: var(--foreground);
+
+  & > h1 {
+    margin: 20px;
+    margin-top: 0px;
+  }
 
   & a {
     text-decoration: none;
@@ -119,11 +123,13 @@ export default class BetaApp extends Component {
     } = this.state;
     return (
       <BetaContainer isDark={isDark}>
-        <SectionHeader> Chordial </SectionHeader>
+        <h1> Chordial </h1>
+
         <Keyboard
           ref={(ref) => (this.keyboard = ref)}
           displayFunc={displayFunc}
         />
+
         <CommandRow
           ref={(ref) => (this.commandRow = ref)}
           onCommandUpdateShare={this.onCommandUpdateShare}
@@ -134,8 +140,7 @@ export default class BetaApp extends Component {
 
         <p>
           Click on the squares or use the corresponding number keys to play a chord.
-        </p>
-        <p>
+          <br/>
           Click the buttons below the chords to edit/delete them.
         </p>
 

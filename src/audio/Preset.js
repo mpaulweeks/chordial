@@ -3,6 +3,8 @@ import {
 } from './Type';
 import DiatonicFunction, { majorFunctions } from './DiatonicFunction';
 
+//?df=3-0-ma-i--3-tma-0&df=3-0-ma-i--4-tma-1&df=3-5-ma-iv--3-tma-0&df=3-0-ma-i--4-tma-2&df=3-7-ma-v--3-tma-0&df=3-7-ma-v--3-7do-0&df=3-4-ma-iii--4-tmi-1
+
 const dfs = [
   {
     base: majorFunctions[0],

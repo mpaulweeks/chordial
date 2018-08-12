@@ -58,7 +58,7 @@ const ChordInversionText = styled.div`
 `;
 const CommandLabel = styled.div`
   text-align: center;
-  padding: 5px 0px;
+  margin: 10px 0px;
   font-weight: bold;
   font-size: 1.5rem;
 `;
@@ -129,6 +129,9 @@ export class CommandButton extends Component {
     });
     return (
       <div onClick={() => callback(key)}>
+        <CommandLabel>
+          Key: { key }
+        </CommandLabel>
         <DiatonicFunctionButton
           df={command.df}
           isFocused={isFocused}
@@ -151,9 +154,6 @@ export class CommandButton extends Component {
             </SmallButton>
           )}
         </ButtonRow>
-        <CommandLabel>
-          Key: { key }
-        </CommandLabel>
       </div>
     );
   }
