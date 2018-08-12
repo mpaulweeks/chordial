@@ -15,7 +15,7 @@ const ModalOuter = styled.div`
   padding: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 20;
