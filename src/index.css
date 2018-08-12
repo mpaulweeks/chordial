@@ -1,6 +1,12 @@
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
   margin: 0px;
+}
+code {
+  padding: 2px;
+  background-color: #DDD;
+  border: 1px solid #888;
+  border-radius: 6px;
 }
 @keyframes highlight {
   from {

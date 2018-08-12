@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Clickable = styled.div`
   cursor: pointer;
+
   color: var(--foreground);
   background-color: var(--background);
   border: 2px solid var(--foreground);

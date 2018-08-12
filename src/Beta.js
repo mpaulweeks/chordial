@@ -16,6 +16,7 @@ const BetaContainer = styled.div`
 
   text-align: center;
   padding: 20px;
+  padding-top: 0px;
   box-sizing: border-box;
 
   ${props => props.isDark ? `
@@ -32,7 +33,14 @@ const BetaContainer = styled.div`
   color: var(--foreground);
 
   & a {
+    text-decoration: none;
     color: var(--foreground);
+  }
+
+  & ul {
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
   }
 `;
 
@@ -99,18 +107,35 @@ export default class BetaApp extends Component {
     } = this.state;
     return (
       <BetaContainer isDark={isDark}>
+        <SectionHeader> Chordial </SectionHeader>
         <Keyboard
           ref={(ref) => (this.keyboard = ref)}
           displayFunc={displayFunc}
         />
-
-        <SectionHeader> Select a Keyboard Shortcut </SectionHeader>
         <CommandRow
           ref={(ref) => (this.commandRow = ref)}
           onCommandPlay={this.onCommandPlay}
           onCommandEdit={this.onCommandEdit}
           onCommandCreate={this.onCommandCreate}
         />
+
+        <p>
+          Click on the squares or use the corresponding number keys to play a chord.
+        </p>
+        <p>
+          Click the buttons below the chords to edit/delete them.
+        </p>
+
+        <h3> Keyboard shortcuts </h3>
+        <ButtonRow>
+          <ul>
+            <li><code>spacebar</code> to play the selected chord</li>
+            <li><code>left</code> or <code>right</code> arrow keys to quickly jump back and forth</li>
+            <li><code>backspace</code> or <code>delete</code> to delete the selected chord</li>
+          </ul>
+        </ButtonRow>
+
+        <h3> Misc Options </h3>
         <ButtonRow>
           <MediumButton onClick={this.onToggleDark}>
             switch to {isDark ? 'light' : 'dark'} mode
