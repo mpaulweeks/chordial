@@ -3,6 +3,7 @@
 import WebAudioFontPlayer from 'webaudiofont';
 import audioFont from './Font';
 import type { NoteController } from './Type';
+import Unlock from './Unlock';
 
 class OscWrapper implements NoteController {
   audioCtx: AudioContext;
@@ -81,6 +82,8 @@ class _Controller {
     return newMidi;
   }
   play(step: number, start: number, duration: number){
+    // todo https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
+    Unlock(this.audioCtx);
     if (this.useMidi){
       return this.playMidi(step, start, duration);
     }
