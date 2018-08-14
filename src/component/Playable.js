@@ -129,7 +129,7 @@ export class CommandButton extends Component {
     });
     return (
       <div onClick={() => callback(key)}>
-        <CommandLabel>
+        <CommandLabel className='desktop-only'>
           Key: { key }
         </CommandLabel>
         <DiatonicFunctionButton

@@ -9,11 +9,8 @@ code {
   border: 1px solid #888;
   border-radius: 6px;
 }
-@keyframes highlight {
-  from {
-    background-color: var(--highlight);
-  }
-  to {
-    background-color: inherit;
+@media (max-width: 700px){
+  .desktop-only {
+    display: none !important;
   }
 }

@@ -67,7 +67,7 @@ export default class Keyboard extends Component {
     const { displayFunc } = this.props;
     const toHighlight = displayFunc ? displayFunc.chord.notes.map(n => n.step) : [];
     return (
-      <KeyboardContainer>
+      <KeyboardContainer className='desktop-only'>
         {keys.map((key, ki) => (
           key.isBlack
           ? <BlackKey key={'kb-'+ki} highlight={toHighlight.includes(key.step)} />
